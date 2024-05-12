@@ -1,32 +1,36 @@
-import React from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { TextField, Button, Container, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí manejarías la lógica de login
-    console.log('Intento de login');
+    console.log("Intento de login");
   };
-
-
 
   const navigate = useNavigate();
 
   const handleRegister = () => {
     navigate("/register");
+  };
+
+  const handleSuccesfullLogine = () => {
+    navigate("/home");
   }
 
   return (
-
-    <Container component="main"maxWidth="xs" sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Typography component="h1" variant="h5">
         Iniciar sesión
       </Typography>
@@ -53,16 +57,17 @@ export const Login = () => {
           id="password"
           autoComplete="current-password"
         />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-        >
+        <Button type="submit" fullWidth variant="contained" color="primary">
           Iniciar Sesión
         </Button>
       </form>
-      
+      <Typography variant="body2" sx={{ mt: 2 }}>
+        ¿No tienes cuenta? <a href="/register">Regístrate ahora</a>
+      </Typography>
+      <Typography variant="body2" sx={{ mt: 1 }}>
+        ¿Olvidaste tu contraseña?{" "}
+        <a href="/">Recupérala aquí</a>
+      </Typography>
     </Container>
   );
 };
