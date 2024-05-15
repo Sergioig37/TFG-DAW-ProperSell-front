@@ -37,7 +37,6 @@ export const Register = () => {
       body: JSON.stringify(data),
     });
     navigate("/");
-    // Aquí puedes agregar la lógica para manejar los datos del formulario
   };
 
   return (
@@ -105,6 +104,9 @@ export const Register = () => {
           </Button>
         </form>
       </Paper>
+      <Typography variant="body2" sx={{ mt: 2 }}>
+        ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
+      </Typography>
     </Container>
   );
 };

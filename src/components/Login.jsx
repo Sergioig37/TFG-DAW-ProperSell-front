@@ -1,8 +1,12 @@
 import React from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export const Login = () => {
+
+  const [logged, setLogged] = useState(false);  
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí manejarías la lógica de login

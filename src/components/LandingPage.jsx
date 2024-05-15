@@ -22,6 +22,10 @@ import { NavbarGeneral } from "./NavbarGeneral";
 export const LandingPage = () => {
   const navigate = useNavigate();
 
+  const handleHome = () => {
+    navigate("/home");
+  }
+
   return (
     <>
       <NavbarGeneral />
@@ -36,7 +40,7 @@ export const LandingPage = () => {
           </Typography>
         </Box>
         <Box textAlign="center" my={4}>
-          <Button variant="contained" color="primary" size="large">
+          <Button variant="contained" color="primary" size="large" onClick={handleHome}>
             Ver propiedades
           </Button>
         </Box>
