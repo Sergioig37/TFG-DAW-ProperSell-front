@@ -19,7 +19,7 @@ export const Login = () => {
     navigate("/register");
   };
 
-  const handleSuccesfullLogine = () => {
+  const handleSuccesfullLogin = () => {
     navigate("/home");
   }
 

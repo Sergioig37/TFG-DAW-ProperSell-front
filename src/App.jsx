@@ -6,6 +6,8 @@ import { HomePage } from "./components/HomePage"
 import { AgenteDashboard } from "./components/agente/AgenteDashboard"
 import { InmobiliariaDashboard } from "./components/Inmobiliaria/InmobiliariaDashboard"
 import { ClienteDashboard } from "./components/cliente/ClienteDashboard"
+import { AdminPanel } from "./components/admin/AdminPanel"
+
 
 export const App = () => {
 
@@ -21,6 +23,7 @@ export const App = () => {
             <Route path="/agente-dashboard" element={<AgenteDashboard/>}/>
             <Route path="/inmobiliaria-dashboard" element={<InmobiliariaDashboard/>}/>
             <Route path="/cliente-dashboard" element={<ClienteDashboard/>}/>
+            <Route path="/admin-panel" element={<AdminPanel/>}/>
           </Routes> 
         </BrowserRouter>
     </>
