@@ -20,10 +20,10 @@ export const App = () => {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/home" element={<HomePage/>}/>
-            <Route path="/agente-dashboard" element={<AgenteDashboard/>}/>
-            <Route path="/inmobiliaria-dashboard" element={<InmobiliariaDashboard/>}/>
-            <Route path="/cliente-dashboard" element={<ClienteDashboard/>}/>
-            <Route path="/admin-panel" element={<AdminPanel/>}/>
+            <Route path="/admin/agentes-dashboard" element={<AgenteDashboard/>}/>
+            <Route path="/admin/inmobiliarias-dashboard" element={<InmobiliariaDashboard/>}/>
+            <Route path="/admin/clientes-dashboard" element={<ClienteDashboard/>}/>
+            <Route path="/admin" element={<AdminPanel/>}/>
           </Routes> 
         </BrowserRouter>
     </>
