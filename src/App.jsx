@@ -9,8 +9,11 @@ import { ClientesDashboard } from "./components/cliente/ClientesDashboard"
 import { AdminPanel } from "./components/admin/AdminPanel"
 import { PropiedadesDashboard } from "./components/propiedades/PropiedadesDashboard"
 import {AgenteProfile} from "./components/agente/AgenteProfile"
-import { AgenteCreate } from "./components/agente/AgenteCreate"
+import { AgenteCreate} from "./components/agente/AgenteCreate"
 import { AgenteUpdate } from "./components/agente/AgenteUpdate"
+import { ClienteProfile } from "./components/cliente/ClienteProfile"
+import { ClienteCreate } from "./components/cliente/ClienteCreate"
+import { ClienteUpdate } from "./components/cliente/ClienteUpdate"
 
 
 export const App = () => {
@@ -27,6 +30,10 @@ export const App = () => {
             <Route path="/agente/:id" element={<AgenteProfile/>} />
             <Route path="/agente/edit/:id" element={<AgenteUpdate/>}/>
             <Route path="/agente/create" element={<AgenteCreate/>}/>
+            <Route path="/cliente/:id" element={<ClienteProfile/>}/>
+            <Route path="/cliente/create" element={<ClienteCreate/>}/>
+            <Route path="/cliente/edit/:id" element={<ClienteUpdate/>}/>
+            <Route path="/cliente/:id" element={<ClienteProfile/>}/>
             <Route path="/admin/agentes-dashboard" element={<AgentesDashboard/>}/>
             <Route path="/admin/inmobiliarias-dashboard" element={<InmobiliariasDashboard/>}/>
             <Route path="/admin/clientes-dashboard" element={<ClientesDashboard/>}/>

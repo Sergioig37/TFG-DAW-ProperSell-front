@@ -31,49 +31,63 @@ export const ClientesDashboard = () => {
     navigate(`/cliente/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (idCliente) => {
     // Implementa la lógica de eliminación aquí
-    console.log("Eliminar cliente", id);
+    console.log("Eliminar cliente", idCliente);
+    var data = {
+      id: idCliente,
+    }
+
+    fetch(`http://localhost:9090/cliente/del/${data.id}`,{
+      method: 'DELETE',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    window.location.reload();
+    console.log("Eliminado Cliente", data.id);
+
   };
 
   const handleVer = (id) => {
     // Navega a la ruta de edición
     navigate(`/cliente/${id}`);
   };
+
   return (
     <>
-    <NavbarGeneral/>
-    <Button variant="contained" color="primary" href="/inmobiliaria/create" sx={{mt: 4}}>
+      <NavbarGeneral />
+      <Button
+        variant="contained"
+        color="primary"
+        href="/cliente/create"
+        sx={{ mt: 4 }}
+      >
         Crear Cliente
       </Button>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell align="right">Nombre</TableCell>
-              <TableCell align="right">Propiedades</TableCell>
+              <TableCell align="right">Correo</TableCell>
+              <TableCell align="right">Teléfono</TableCell>
               <TableCell align="right">Ver</TableCell>
               <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {clientes.map((cliente, index) => (
-              <TableRow key={index}>
+            {clientes.map((cliente) => (
+              <TableRow key={cliente.id}>
                 <TableCell component="th" scope="row">
                   {cliente.id}
                 </TableCell>
                 <TableCell align="right">{cliente.nombre}</TableCell>
-                <TableCell align="right">
-                  <ul>
-                    {cliente.propiedades.map((propiedad) => (
-                      <li key={propiedad.id}>
-                        {propiedad.tipo} - {propiedad.localizacion} - ${propiedad.precio}
-                      </li>
-                    ))}
-                  </ul>
-                </TableCell>
+                <TableCell align="right">{cliente.correo}</TableCell>
+                <TableCell align="right">{cliente.numeroTelefono}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(cliente.id)}>
                     <Visibility />
