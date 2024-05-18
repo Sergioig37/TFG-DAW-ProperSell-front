@@ -17,6 +17,9 @@ import { ClienteUpdate } from "./components/cliente/ClienteUpdate"
 import { InmobiliariaProfile } from "./components/Inmobiliaria/InmobiliariaProfile"
 import { InmobiliariaUpdate } from "./components/Inmobiliaria/InmobiliariaUpdate"
 import { InmobiliariaCreate } from "./components/Inmobiliaria/InmobiliariaCreate"
+import { PropiedadProfile } from "./components/propiedades/PropiedadProfile"
+import { PropiedadUpdate } from "./components/propiedades/PropieadUpdate"
+import { PropiedadCreate } from "./components/propiedades/PropiedadCreate"
 
 
 export const App = () => {
@@ -40,6 +43,9 @@ export const App = () => {
             <Route path="/inmobiliaria/:id" element={<InmobiliariaProfile/>}/>
             <Route path="/inmobiliaria/edit/:id" element={<InmobiliariaUpdate/>}/>
             <Route path="/inmobiliaria/create" element={<InmobiliariaCreate/>}/>
+            <Route path="/propiedad/:id" element={<PropiedadProfile/>}/>
+            <Route path="/propiedad/edit/:id" element={<PropiedadUpdate/>}/>
+            <Route path="/propiedad/create" element={<PropiedadCreate/>}/>
             <Route path="/admin/agentes-dashboard" element={<AgentesDashboard/>}/>
             <Route path="/admin/inmobiliarias-dashboard" element={<InmobiliariasDashboard/>}/>
             <Route path="/admin/clientes-dashboard" element={<ClientesDashboard/>}/>

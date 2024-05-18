@@ -32,9 +32,22 @@ export const PropiedadesDashboard = () => {
     navigate(`/propiedad/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (idPropiedad) => {
     // Implementa la lógica de eliminación aquí
-    console.log("Eliminar propiedad", id);
+    console.log("Eliminar propiedad", idPropiedad);
+    var data = {
+      id: idPropiedad,
+    }
+
+    fetch(`http://localhost:9090/propiedad/del/${data.id}`,{
+      method: 'DELETE',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    window.location.reload();
+    console.log("Eliminado propiedad", data.id);
   };
 
   const handleVer = (id) => {
@@ -45,7 +58,7 @@ export const PropiedadesDashboard = () => {
   return (
     <>
     <NavbarGeneral/>
-    <Button variant="contained" color="primary" href="/inmobiliaria/create" sx={{mt: 4}}>
+    <Button variant="contained" color="primary" href="/propiedad/create" sx={{mt: 4}}>
         Crear Propiedad
       </Button>
       <TableContainer component={Paper}>
