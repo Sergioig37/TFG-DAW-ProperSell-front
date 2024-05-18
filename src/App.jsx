@@ -3,10 +3,12 @@ import { LandingPage } from "./components/LandingPage"
 import { Login } from "./components/Login"
 import { Register } from "./components/Register"
 import { HomePage } from "./components/HomePage"
-import { AgenteDashboard } from "./components/agente/AgenteDashboard"
-import { InmobiliariaDashboard } from "./components/Inmobiliaria/InmobiliariaDashboard"
-import { ClienteDashboard } from "./components/cliente/ClienteDashboard"
+import { AgentesDashboard } from "./components/agente/AgentesDashboard"
+import { InmobiliariasDashboard } from "./components/Inmobiliaria/InmobiliariasDashboard"
+import { ClientesDashboard } from "./components/cliente/ClientesDashboard"
 import { AdminPanel } from "./components/admin/AdminPanel"
+import { PropiedadesDashboard } from "./components/propiedades/PropiedadesDashboard"
+import {AgenteProfile} from "./components/agente/AgenteProfile"
 
 
 export const App = () => {
@@ -20,10 +22,13 @@ export const App = () => {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/home" element={<HomePage/>}/>
-            <Route path="/admin/agentes-dashboard" element={<AgenteDashboard/>}/>
-            <Route path="/admin/inmobiliarias-dashboard" element={<InmobiliariaDashboard/>}/>
-            <Route path="/admin/clientes-dashboard" element={<ClienteDashboard/>}/>
+            <Route path="/agente/:id" element={<AgenteProfile/>} />
+            <Route path="/admin/agentes-dashboard" element={<AgentesDashboard/>}/>
+            <Route path="/admin/inmobiliarias-dashboard" element={<InmobiliariasDashboard/>}/>
+            <Route path="/admin/clientes-dashboard" element={<ClientesDashboard/>}/>
+            <Route path="/admin/propiedades-dashboard" element={<PropiedadesDashboard/>}/>
             <Route path="/admin" element={<AdminPanel/>}/>
+
           </Routes> 
         </BrowserRouter>
     </>
