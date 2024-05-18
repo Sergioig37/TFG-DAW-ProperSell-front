@@ -31,9 +31,22 @@ export const InmobiliariasDashboard = () => {
     navigate(`/inmobiliaria/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (idInmobiliaria) => {
     // Implementa la lógica de eliminación aquí
-    console.log("Eliminar inmobiliaria", id);
+    console.log("Eliminar inmobiliaria", idInmobiliaria);
+    var data = {
+      id: idInmobiliaria,
+    }
+
+    fetch(`http://localhost:9090/inmobiliaria/del/${data.id}`,{
+      method: 'DELETE',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    window.location.reload();
+    console.log("Eliminado Inmobiliaria", data.id);
   };
 
   const handleVer = (id) => {
