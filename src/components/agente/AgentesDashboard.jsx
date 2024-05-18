@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
-import { Edit, Delete, Visibility } from '@mui/icons-material';
+import { Edit, Delete, Visibility, Margin } from '@mui/icons-material';
 import { NavbarGeneral } from '../NavbarGeneral';
 
 export const AgentesDashboard = () => {
@@ -47,7 +47,7 @@ export const AgentesDashboard = () => {
   return (
     <>
     <NavbarGeneral/>
-      <Button variant="contained" color="primary" href="/inmobiliaria/create">
+      <Button variant="contained" color="primary" href="/agente/create" sx={{mt: 4}}>
         Crear Agente
       </Button>
       <TableContainer component={Paper}>
@@ -57,6 +57,7 @@ export const AgentesDashboard = () => {
               <TableCell>ID</TableCell>
               <TableCell align="right">Nombre</TableCell>
               <TableCell align="right">Número de Teléfono</TableCell>
+              <TableCell align="right">Correo Electrónico</TableCell>
               <TableCell align="right">Ver</TableCell>
               <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
@@ -70,6 +71,7 @@ export const AgentesDashboard = () => {
                 </TableCell>
                 <TableCell align="right">{agente.nombre}</TableCell>
                 <TableCell align="right">{agente.numeroTelefono}</TableCell>
+                <TableCell align='right'>{agente.correo}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(agente.id)}>
                     <Visibility />

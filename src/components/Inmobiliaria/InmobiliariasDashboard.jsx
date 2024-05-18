@@ -43,7 +43,7 @@ export const InmobiliariasDashboard = () => {
   return (
     <>
       <NavbarGeneral />
-      <Button variant="contained" color="primary" href="/inmobiliaria/create">
+      <Button variant="contained" color="primary" href="/inmobiliaria/create" sx={{mt: 4}}>
         Crear Inmobiliaria
       </Button>
       <TableContainer component={Paper}>

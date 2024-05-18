@@ -8,15 +8,7 @@ export const AgenteProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [agente, setAgente] = useState({
-    nombre: "",
-    numeroTelefono: "",
-    inmobiliaria: "",
-    email: "",
-    descripcion: "",
-    experiencia: "",
-    avatar: "",
-  });
+  const [agente, setAgente] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:9090/agente/${id}`)
@@ -57,26 +49,9 @@ export const AgenteProfile = () => {
               <strong>Teléfono:</strong> {agente.numeroTelefono}
             </Typography>
             <Typography variant="body1" gutterBottom>
-              <strong>Email:</strong> {agente.email}
+              <strong>Email:</strong> {agente.correo}
             </Typography>
             <Divider sx={{ my: 2 }} />
-            <Typography variant="h6" gutterBottom>
-              Acerca de Mí
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {agente.descripcion}
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="h6" gutterBottom>
-              Experiencia
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {agente.experiencia}
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="h6" gutterBottom>
-              Habilidades
-            </Typography>
           </Grid>
         </Grid>
       </Paper>
