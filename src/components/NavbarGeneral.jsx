@@ -10,6 +10,11 @@ import { useNavigate } from "react-router-dom";
 export const NavbarGeneral = () => {
   const navigate = useNavigate();
 
+
+  const handleExplorar = () => {
+    navigate("/explore");
+  }
+
   const handleLanding = () => {
     navigate("/");
   };
@@ -34,8 +39,11 @@ export const NavbarGeneral = () => {
               aria-label="menu"
               sx={{ mr: 2 }}
             ></IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Button variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={handleLanding}>ProperSell</Button>
+            <Typography variant="h6" component="div">
+              <Button variant="h6" component="div" onClick={handleLanding}>ProperSell</Button>
+            </Typography>
+             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Button variant="h6" component="div" onClick={handleExplorar}>Explorar </Button>
             </Typography>
             <Button color="inherit" onClick={handleLogin}>
               Login

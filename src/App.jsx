@@ -20,6 +20,7 @@ import { InmobiliariaCreate } from "./components/Inmobiliaria/InmobiliariaCreate
 import { PropiedadProfile } from "./components/propiedades/PropiedadProfile"
 import { PropiedadUpdate } from "./components/propiedades/PropieadUpdate"
 import { PropiedadCreate } from "./components/propiedades/PropiedadCreate"
+import { Explorar } from "./components/Explorar"
 
 
 export const App = () => {
@@ -33,6 +34,7 @@ export const App = () => {
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/home" element={<HomePage/>}/>
+            <Route path="/explore" element={<Explorar/>}/>
             <Route path="/agente/:id" element={<AgenteProfile/>} />
             <Route path="/agente/edit/:id" element={<AgenteUpdate/>}/>
             <Route path="/agente/create" element={<AgenteCreate/>}/>
