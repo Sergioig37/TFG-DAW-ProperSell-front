@@ -1,27 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 export const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const [logged, setLogged] = useState(false);  
+  const handleSuccessfulLogin = () => {
+ 
+    navigate("/home");
+  };
+
+  const handleLogin = () => {
+    const credentials = btoa(`${username}:${password}`); 
+    fetch('http://localhost:9090/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Credentials': 'true',
+        'Authorization': `Basic ${credentials}`
+      },
+      body: new URLSearchParams({
+        username: username,
+        password: password,
+      }),
+      credentials: 'include', // Incluir credenciales (cookies, encabezados de autorización, etc.)
+    })
+      .then(response => {
+        if (response.ok) {
+          handleSuccessfulLogin();
+        } else {
+          // Manejar error de autenticación
+          console.error("Error de autenticación");
+        }
+      })
+      .catch(error => {
+        console.error("Error al iniciar sesión:", error);
+      });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí manejarías la lógica de login
-    console.log("Intento de login");
+    handleLogin();
   };
-
-  const navigate = useNavigate();
-
-  const handleRegister = () => {
-    navigate("/register");
-  };
-
-  const handleSuccesfullLogin = () => {
-    navigate("/home");
-  }
 
   return (
     <Container
@@ -44,11 +66,12 @@ export const Login = () => {
           margin="normal"
           required
           fullWidth
-          id="email"
-          label="Correo Electrónico/Nombre de usuario"
-          name="email"
-          autoComplete="email"
+          id="username"
+          label="Nombre de usuario"
+          name="username"
+          autoComplete="username"
           autoFocus
+          onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
           variant="outlined"
@@ -60,6 +83,7 @@ export const Login = () => {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={(e) => setPassword(e.target.value)}
         />
         <Button type="submit" fullWidth variant="contained" color="primary">
           Iniciar Sesión

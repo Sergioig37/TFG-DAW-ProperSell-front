@@ -27,6 +27,7 @@ export const Explorar = () => {
   };
 
   return (
+    <>
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
         Explorar Propiedades
@@ -91,6 +92,7 @@ export const Explorar = () => {
         ))}
       </Grid>
     </Container>
+    </>
   );
 };
 

@@ -7,7 +7,6 @@ export const PropiedadCreate = () => {
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
   
-
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -36,40 +35,42 @@ export const PropiedadCreate = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Tipo"
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-            />
+    <>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Tipo"
+                value={tipo}
+                onChange={(e) => setTipo(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Localización"
+                value={localizacion}
+                onChange={(e) => setLocalizacion(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Precio"
+                value={precio}
+                onChange={(e) => setPrecio(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary">
+                Enviar
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Localización"
-              value={localizacion}
-              onChange={(e) => setLocalizacion(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Precio"
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Enviar
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+        </form>
+      </Container>
+    </>
   );
 };

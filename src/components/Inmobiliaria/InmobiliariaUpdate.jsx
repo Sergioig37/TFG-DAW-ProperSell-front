@@ -49,40 +49,42 @@ export const InmobiliariaUpdate = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Nombre"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-            />
+    <>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Número de Empleados"
+                value={numeroEmpleados}
+                onChange={(e) => setNumeroEmpleados(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Dirección"
+                value={direccion}
+                onChange={(e) => setDireccion(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary">
+                Enviar
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Número de Empleados"
-              value={numeroEmpleados}
-              onChange={(e) => setNumeroEmpleados(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Dirección"
-              value={direccion}
-              onChange={(e) => setDireccion(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Enviar
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+        </form>
+      </Container>
+    </>
   );
 };

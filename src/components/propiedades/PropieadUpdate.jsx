@@ -52,6 +52,7 @@ export const PropiedadUpdate = () => {
   };
 
   return (
+    <>
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
@@ -95,5 +96,6 @@ export const PropiedadUpdate = () => {
         </Grid>
       </form>
     </Container>
+    </>
   );
 };
