@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { App } from './App'
-import { AuthProvider, useAuth } from "react-auth-verification-context";
+import { AuthProvider } from './components/AuthProvider'
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
