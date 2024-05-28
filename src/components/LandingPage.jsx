@@ -32,7 +32,7 @@ export const LandingPage = () => {
       <Container>
         <Box mt={4}>
           <Typography variant="h4" align="center" gutterBottom>
-            ¡Bienvenido a nuestra ProperSell!
+            ¡Bienvenido a ProperSell!
           </Typography>
           <Typography variant="body1" align="center" paragraph>
             Somos una empresa dedicada a ayudarte a ayudarte a encontrar la casa

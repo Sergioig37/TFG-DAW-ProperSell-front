@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "./AuthProvider"; 
+
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+
 
   const handleSuccessfulLogin = (credentials) => {
     setAuth(credentials);
