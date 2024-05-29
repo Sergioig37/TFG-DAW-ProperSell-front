@@ -21,7 +21,6 @@ import { NavbarGeneral } from "./NavbarGeneral";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
-
   const handleHome = () => {
     navigate("/home");
   }

@@ -6,10 +6,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from './auth/AuthContext';
 
 export const NavbarGeneral = () => {
   const navigate = useNavigate();
-
+  const {clearToken} = useAuth();
 
   const handleExplorar = () => {
     navigate("/explore");
@@ -18,6 +19,11 @@ export const NavbarGeneral = () => {
   const handleLanding = () => {
     navigate("/");
   };
+
+  const handleLogout = () =>{
+    clearToken();
+    navigate("/login");
+    }
 
   const handleLogin = () => {
     navigate("/login");
@@ -50,6 +56,9 @@ export const NavbarGeneral = () => {
             </Button>
             <Button color="inherit" onClick={handleRegister}>
               Register
+            </Button>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
             </Button>
           </Toolbar>
         </AppBar>

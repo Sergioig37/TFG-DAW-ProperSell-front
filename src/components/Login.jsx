@@ -1,22 +1,22 @@
 import React, { useState, useContext } from "react";
 import { TextField, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from './auth/AuthContext';
 
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
+  const {setToken} = useAuth();
+  
   const navigate = useNavigate();
 
 
-  const handleSuccessfulLogin = (credentials) => {
-    setAuth(credentials);
+  const handleSuccessfulLogin = () => {
     navigate("/home");
   };
 
   const handleLogin = () => {
- 
     fetch('http://localhost:9090/auth/login', {
       method: 'POST',
       headers: {
@@ -29,9 +29,22 @@ export const Login = () => {
       credentials: 'include', // Incluir credenciales (cookies, encabezados de autorización, etc.)
     })
       .then(response => {
-          console.log(response.body);
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json(); // Llamar a la función json() correctamente
       })
+      .then(data => {
+        setToken(data.token);
+        handleSuccessfulLogin(); // Manejar la respuesta de manera adecuada
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+
+      handleSuccessfulLogin();
   };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, List, ListItem, ListItemText, Paper } from "@mui/material";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
+  const {getToken} = useAuth();
+
 
   const handleClienteRoute = () => {
     navigate("/admin/clientes-dashboard");
@@ -21,8 +24,18 @@ export const AdminPanel = () => {
   const handlePropiedades = () => {
     navigate("/admin/propiedades-dashboard");
   };
+
+  useEffect(() => {
+    const token = getToken();
+    if(!token){
+      navigate("/login");
+    }
+  }, [])
+  
+  
   return (
     <>
+    
       <NavbarGeneral />
       <Paper style={{ margin: 16, padding: 16 }}>
         <List>

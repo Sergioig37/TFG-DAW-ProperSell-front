@@ -28,16 +28,24 @@ export const Register = () => {
     event.preventDefault();
     console.log(values);
 
-    fetch("", {
+    fetch("http://localhost:9090/auth/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(
+        values
+      ),
+      credentials: 'include'
+    })
+    then(response => {
+      if(response.ok){
+        navigate("/login");
+      }
     });
-    navigate("/");
   };
+
 
   return (
     <Container component="main" maxWidth="xs">
