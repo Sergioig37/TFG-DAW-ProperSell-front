@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
   const navigate = useNavigate();
 
 
@@ -15,31 +16,21 @@ export const Login = () => {
   };
 
   const handleLogin = () => {
-    const credentials = btoa(`${username}:${password}`); 
-    fetch('http://localhost:9090/login', {
+ 
+    fetch('http://localhost:9090/auth/login', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Credentials': 'true',
-        'Authorization': `Basic ${credentials}`
+        'Content-Type': 'application/json',
       },
-      body: new URLSearchParams({
+      body: JSON.stringify({
         username: username,
         password: password,
       }),
       credentials: 'include', // Incluir credenciales (cookies, encabezados de autorización, etc.)
     })
       .then(response => {
-        if (response.ok) {
-          handleSuccessfulLogin(credentials);
-        } else {
-          // Manejar error de autenticación
-          console.error("Error de autenticación");
-        }
+          console.log(response.body);
       })
-      .catch(error => {
-        console.error("Error al iniciar sesión:", error);
-      });
   };
 
   const handleSubmit = (event) => {
