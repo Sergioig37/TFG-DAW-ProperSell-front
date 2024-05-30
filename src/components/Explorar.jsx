@@ -1,33 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Card, CardContent, CardMedia, TextField, MenuItem, Button } from "@mui/material";
+import { NavbarGeneral } from "./NavbarGeneral";
+import { useAuth } from "./auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);
   const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
+  const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch("http://localhost:9090/propiedad")
+    if(!token){
+      navigate("/login")
+    }else{
+      fetch("http://localhost:9090/propiedad",{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setPropiedades(data);
       });
+    }
+    
   }, []);
 
-  const handleSearch = () => {
-    let url = "http://localhost:9090/propiedades?";
-    if (tipo) url += `tipo=${tipo}&`;
-    if (localizacion) url += `localizacion=${localizacion}&`;
+  // const handleSearch = () => {
+  //   let url = "http://localhost:9090/propiedades?";
+  //   if (tipo) url += `tipo=${tipo}&`;
+  //   if (localizacion) url += `localizacion=${localizacion}&`;
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setPropiedades(data);
-      });
-  };
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setPropiedades(data);
+  //     });
+  // };
 
   return (
     <>
+    <NavbarGeneral/>
     <Container maxWidth="lg" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
         Explorar Propiedades
@@ -60,7 +76,7 @@ export const Explorar = () => {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={handleSearch}
+            
             sx={{ height: "100%" }}
           >
             Buscar

@@ -2,7 +2,6 @@ import { Route, BrowserRouter, Routes} from "react-router-dom"
 import { LandingPage } from "./components/LandingPage"
 import { Login } from "./components/Login"
 import { Register } from "./components/Register"
-import { HomePage } from "./components/HomePage"
 import { AgentesDashboard } from "./components/agente/AgentesDashboard"
 import { InmobiliariasDashboard } from "./components/Inmobiliaria/InmobiliariasDashboard"
 import { ClientesDashboard } from "./components/cliente/ClientesDashboard"
@@ -33,7 +32,6 @@ export const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/home" element={<HomePage/>}/>
             <Route path="/explore" element={<Explorar/>}/>
             <Route path="/agente/:id" element={<AgenteProfile/>} />
             <Route path="/agente/edit/:id" element={<AgenteUpdate/>}/>

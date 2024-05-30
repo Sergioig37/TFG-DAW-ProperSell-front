@@ -13,17 +13,27 @@ import {
 } from "@mui/material";
 import { Edit, Delete, Visibility } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const InmobiliariasDashboard = () => {
   const [inmobiliarias, setInmobiliarias] = useState([]);
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   useEffect(() => {
-    fetch("http://localhost:9090/inmobiliaria")
-      .then((res) => res.json())
-      .then((data) => {
-        setInmobiliarias(data);
-      });
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetch("http://localhost:9090/inmobiliaria", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setInmobiliarias(data);
+        });
+    }
   });
 
   const handleEdit = (id) => {
@@ -36,15 +46,16 @@ export const InmobiliariasDashboard = () => {
     console.log("Eliminar inmobiliaria", idInmobiliaria);
     var data = {
       id: idInmobiliaria,
-    }
+    };
 
-    fetch(`http://localhost:9090/inmobiliaria/del/${data.id}`,{
-      method: 'DELETE',
-      headers:{
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+    fetch(`http://localhost:9090/inmobiliaria/del/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
-    })
+    });
     window.location.reload();
     console.log("Eliminado Inmobiliaria", data.id);
   };
@@ -56,7 +67,12 @@ export const InmobiliariasDashboard = () => {
   return (
     <>
       <NavbarGeneral />
-      <Button variant="contained" color="primary" href="/inmobiliaria/create" sx={{mt: 4}}>
+      <Button
+        variant="contained"
+        color="primary"
+        href="/inmobiliaria/create"
+        sx={{ mt: 4 }}
+      >
         Crear Inmobiliaria
       </Button>
       <TableContainer component={Paper}>

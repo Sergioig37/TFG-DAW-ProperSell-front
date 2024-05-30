@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export const InmobiliariaUpdate = () => {
   const { id } = useParams();
@@ -8,18 +9,26 @@ export const InmobiliariaUpdate = () => {
   const [nombre, setNombre] = useState("");
   const [numeroEmpleados, setNumeroEmpleados] = useState("");
   const [direccion, setDireccion] = useState("");
-
+  const token = useAuth().getToken();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:9090/inmobiliaria/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setNombre(data.nombre);
-        setNumeroEmpleados(data.numeroEmpleados);
-        setDireccion(data.direccion);
-        setIdInmobiliaria(data.id);
-      });
+    if (!token) {
+    } else {
+      fetch(`http://localhost:9090/inmobiliaria/${id}`,{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setNombre(data.nombre);
+          setNumeroEmpleados(data.numeroEmpleados);
+          setDireccion(data.direccion);
+          setIdInmobiliaria(data.id);
+        });
+    }
   }, [id]);
 
   const handleSubmit = (e) => {
@@ -33,10 +42,11 @@ export const InmobiliariaUpdate = () => {
     };
 
     fetch(`http://localhost:9090/inmobiliaria/edit/${data.id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify(data),
     })

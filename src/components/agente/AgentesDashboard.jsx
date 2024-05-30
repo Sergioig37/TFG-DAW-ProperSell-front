@@ -1,19 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material';
-import { Edit, Delete, Visibility, Margin } from '@mui/icons-material';
-import { NavbarGeneral } from '../NavbarGeneral';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+} from "@mui/material";
+import { Edit, Delete, Visibility, Margin } from "@mui/icons-material";
+import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const AgentesDashboard = () => {
   const [agentes, setAgentes] = useState([]);
-  const navigate = useNavigate(); // Importa useNavigate para la navegación
+  const navigate = useNavigate();
+  const token = useAuth().getToken(); // Importa useNavigate para la navegación
 
   useEffect(() => {
-    fetch("http://localhost:9090/agente")
-      .then((res) => res.json())
-      .then((data) => {
-        setAgentes(data);
-      });
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetch("http://localhost:9090/agente", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setAgentes(data);
+        });
+    }
   }, []);
 
   const handleEdit = (id) => {
@@ -26,15 +47,16 @@ export const AgentesDashboard = () => {
 
     var data = {
       id: idAgente,
-    }
+    };
 
-    fetch(`http://localhost:9090/agente/del/${data.id}`,{
-      method: 'DELETE',
-      headers:{
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+    fetch(`http://localhost:9090/agente/del/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       },
-    })
+    });
     window.location.reload();
     console.log("Eliminado Agente", data.id);
   };
@@ -43,11 +65,16 @@ export const AgentesDashboard = () => {
     // Navega a la ruta de perfil del agente con el ID específico
     navigate(`/agente/${id}`);
   };
-  
+
   return (
     <>
-    <NavbarGeneral/>
-      <Button variant="contained" color="primary" href="/agente/create" sx={{mt: 4}}>
+      <NavbarGeneral />
+      <Button
+        variant="contained"
+        color="primary"
+        href="/agente/create"
+        sx={{ mt: 4 }}
+      >
         Crear Agente
       </Button>
       <TableContainer component={Paper}>
@@ -71,7 +98,7 @@ export const AgentesDashboard = () => {
                 </TableCell>
                 <TableCell align="right">{agente.nombre}</TableCell>
                 <TableCell align="right">{agente.numeroTelefono}</TableCell>
-                <TableCell align='right'>{agente.correo}</TableCell>
+                <TableCell align="right">{agente.correo}</TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(agente.id)}>
                     <Visibility />
@@ -83,7 +110,7 @@ export const AgentesDashboard = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                   <IconButton onClick={() => handleDelete(agente.id)}>
+                  <IconButton onClick={() => handleDelete(agente.id)}>
                     <Delete />
                   </IconButton>
                 </TableCell>

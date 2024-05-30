@@ -11,15 +11,17 @@ import {
   Container,
   Paper,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const [values, setValues] = useState({
     username: "",
     password: "",
     correo: "",
-    rol: "Cliente",
+    rol: "",
+    nombreReal: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -34,18 +36,14 @@ export const Register = () => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(
-        values
-      ),
-      credentials: 'include'
-    })
-    then(response => {
-      if(response.ok){
+      body: JSON.stringify(values),
+      credentials: "include",
+    }).then((response) => {
+      if (response.ok) {
         navigate("/login");
       }
     });
   };
-
 
   return (
     <Container component="main" maxWidth="xs">
@@ -54,6 +52,16 @@ export const Register = () => {
           Registro de Usuario
         </Typography>
         <form onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="nombreReal"
+            label="Nombre real"
+            value={values.nombreReal}
+            onChange={handleChange}
+            required
+          />
           <TextField
             variant="outlined"
             margin="normal"
@@ -90,12 +98,12 @@ export const Register = () => {
             <FormLabel component="legend">Rol</FormLabel>
             <RadioGroup name="rol" value={values.rol} onChange={handleChange}>
               <FormControlLabel
-                value="Cliente"
+                value="CLIENTE"
                 control={<Radio />}
                 label="Cliente"
               />
               <FormControlLabel
-                value="Inmobiliaria"
+                value="INMOBILIARIA"
                 control={<Radio />}
                 label="Inmobiliaria"
               />

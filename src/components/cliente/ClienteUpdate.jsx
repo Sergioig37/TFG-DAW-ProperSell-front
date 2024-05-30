@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export const ClienteUpdate = () => {
   const { id } = useParams();
@@ -8,11 +9,21 @@ export const ClienteUpdate = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
+  const token = useAuth().getToken();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:9090/cliente/${id}`)
+    if(!token){
+      navigate("/login");
+    }
+    else{
+      fetch(`http://localhost:9090/cliente/${id}`,{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setNombre(data.nombre);
@@ -20,6 +31,8 @@ export const ClienteUpdate = () => {
         setNumeroTelefono(data.numeroTelefono);
         setIdCliente(data.id);
       });
+    }
+    
   }, [id]);
 
   const handleSubmit = (e) => {
@@ -37,6 +50,8 @@ export const ClienteUpdate = () => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
+        
       },
       body: JSON.stringify(data),
     })

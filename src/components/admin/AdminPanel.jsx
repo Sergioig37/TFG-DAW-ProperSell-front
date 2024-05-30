@@ -6,7 +6,7 @@ import { useAuth } from "../auth/AuthContext";
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-  const {getToken} = useAuth();
+  const token = useAuth().getToken();
 
 
   const handleClienteRoute = () => {
@@ -26,7 +26,7 @@ export const AdminPanel = () => {
   };
 
   useEffect(() => {
-    const token = getToken();
+
     if(!token){
       navigate("/login");
     }

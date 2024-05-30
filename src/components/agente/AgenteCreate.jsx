@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export const AgenteCreate = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
+  const token = useAuth().getToken();
 
     const navigate = useNavigate();
 
+     useEffect(() => {
+    if(!token){
+      navigate("/login");
+    }
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", { nombre, correo, numeroTelefono });
     var data = {
         nombre: nombre,
         correo: correo,
@@ -23,6 +30,7 @@ export const AgenteCreate = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: "Bearer " +token
         },
         body: JSON.stringify(data),
       })

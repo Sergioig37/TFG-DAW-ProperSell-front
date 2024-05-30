@@ -3,19 +3,31 @@ import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mu
 import { useParams, useNavigate } from "react-router-dom";
 import { Edit } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const ClienteProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   const [cliente, setCliente] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:9090/cliente/${id}`)
+    if(!token){
+      navigate("/login");s
+    }
+    else{
+      fetch(`http://localhost:9090/cliente/${id}`,{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setCliente(data);
       });
+    }
+    
   }, [id]);
 
   const handleEdit = () => {

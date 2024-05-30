@@ -1,20 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Grid,
+  Avatar,
+  Button,
+  Paper,
+  Divider,
+} from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const InmobiliariaProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   const [inmobiliaria, setInmobiliaria] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:9090/inmobiliaria/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setInmobiliaria(data);
-      });
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:9090/inmobiliaria/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setInmobiliaria(data);
+        });
+    }
   }, [id]);
 
   const handleEdit = () => {
@@ -27,7 +45,16 @@ export const InmobiliariaProfile = () => {
       <Container maxWidth="md" sx={{ marginTop: 8 }}>
         <Paper elevation={3} sx={{ p: 4 }}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Avatar sx={{ width: 120, height: 120, mb: 2 }}>
                 {inmobiliaria.nombre ? inmobiliaria.nombre[0] : "I"}
               </Avatar>
@@ -45,7 +72,8 @@ export const InmobiliariaProfile = () => {
                 Información de la Inmobiliaria
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Número de Empleados:</strong> {inmobiliaria.numeroEmpleados}
+                <strong>Número de Empleados:</strong>{" "}
+                {inmobiliaria.numeroEmpleados}
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Dirección:</strong> {inmobiliaria.direccion}

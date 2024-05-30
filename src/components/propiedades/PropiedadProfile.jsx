@@ -2,19 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
   const [propiedad, setPropiedad] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:9090/propiedad/${id}`)
+    if(!token){
+      navigate("/login");
+    }
+    else{
+      fetch(`http://localhost:9090/propiedad/${id}`,{
+        method: "GET",
+        headers:{
+          Authorization: "Bearer " + token
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setPropiedad(data);
       });
+    }
+    
   }, [id]);
 
   const handleEdit = () => {

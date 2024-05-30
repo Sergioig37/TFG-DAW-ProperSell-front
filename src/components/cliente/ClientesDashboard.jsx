@@ -13,17 +13,30 @@ import {
 } from "@mui/material";
 import { Edit, Delete, Visibility } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const ClientesDashboard = () => {
   const [clientes, setClientes] = useState([]);
   const navigate = useNavigate();
-
+  const token = useAuth().getToken();
+  
   useEffect(() => {
-    fetch("http://localhost:9090/cliente")
+    if(!token){
+      navigate("/login");
+    }
+    else{
+      fetch("http://localhost:9090/cliente",{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
       .then((res) => res.json())
       .then((data) => {
         setClientes(data);
       });
+    }
+    
   }, []);
 
   const handleEdit = (id) => {
@@ -43,6 +56,7 @@ export const ClientesDashboard = () => {
       headers:{
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
     })
     window.location.reload();

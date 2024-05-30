@@ -13,7 +13,7 @@ export const Login = () => {
 
 
   const handleSuccessfulLogin = () => {
-    navigate("/home");
+    navigate("/explore");
   };
 
   const handleLogin = () => {

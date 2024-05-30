@@ -6,24 +6,25 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from './auth/AuthContext';
+import { useAuth } from "./auth/AuthContext";
 
 export const NavbarGeneral = () => {
   const navigate = useNavigate();
-  const {clearToken} = useAuth();
+  const { clearToken } = useAuth();
+  const token = useAuth().getToken();
 
   const handleExplorar = () => {
     navigate("/explore");
-  }
+  };
 
   const handleLanding = () => {
     navigate("/");
   };
 
-  const handleLogout = () =>{
+  const handleLogout = () => {
     clearToken();
-    navigate("/login");
-    }
+    navigate("/");
+  };
 
   const handleLogin = () => {
     navigate("/login");
@@ -46,20 +47,30 @@ export const NavbarGeneral = () => {
               sx={{ mr: 2 }}
             ></IconButton>
             <Typography variant="h6" component="div">
-              <Button variant="h6" component="div" onClick={handleLanding}>ProperSell</Button>
+              <Button variant="h6" component="div" onClick={handleLanding}>
+                ProperSell
+              </Button>
             </Typography>
-             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <Button variant="h6" component="div" onClick={handleExplorar}>Explorar </Button>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              <Button variant="h6" component="div" onClick={handleExplorar}>
+                Explorar{" "}
+              </Button>
             </Typography>
-            <Button color="inherit" onClick={handleLogin}>
-              Login
-            </Button>
-            <Button color="inherit" onClick={handleRegister}>
-              Register
-            </Button>
-            <Button color="inherit" onClick={handleLogout}>
-              Logout
-            </Button>
+            {!token ? (
+              <Typography variant="h6" component="div" f>
+                <Button color="inherit" onClick={handleLogin}>
+                  Login
+                </Button>
+                <Button color="inherit" onClick={handleRegister}>
+                  Register
+                </Button>
+              </Typography>
+              
+            ) : (
+              <Button color="inherit" onClick={handleLogout}>
+                Logout
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
       </Box>

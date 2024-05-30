@@ -14,17 +14,29 @@ import {
 import { Edit, Delete } from "@mui/icons-material";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadesDashboard = () => {
   const [propiedades, setPropiedades] = useState([]);
   const navigate = useNavigate();
+  const token = useAuth().getToken();
 
   useEffect(() => {
-    fetch("http://localhost:9090/propiedad")
+    if(!token){
+      navigate('/login');
+    }
+    else{
+      fetch("http://localhost:9090/propiedad",{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      })
       .then((res) => res.json())
       .then((data) => {
         setPropiedades(data);
       });
+    }
   }, []);
 
   const handleEdit = (id) => {
@@ -44,6 +56,7 @@ export const PropiedadesDashboard = () => {
       headers:{
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
     })
     window.location.reload();

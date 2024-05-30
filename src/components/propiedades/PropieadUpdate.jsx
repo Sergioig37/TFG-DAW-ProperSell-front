@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadUpdate = () => {
   const { id } = useParams();
@@ -9,19 +10,28 @@ export const PropiedadUpdate = () => {
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
   const [propietario, setPropietario] = useState("");
-
+  const token = useAuth().getToken();
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:9090/propiedad/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTipo(data.tipo);
-        setLocalizacion(data.localizacion);
-        setPrecio(data.precio);
-        setPropietario(data.propietario ? data.propietario.nombre : "");
-        setIdPropiedad(data.id);
-      });
+    if (!token) {
+      navigate("/login");
+    } else {
+      fetch(`http://localhost:9090/propiedad/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setTipo(data.tipo);
+          setLocalizacion(data.localizacion);
+          setPrecio(data.precio);
+          setPropietario(data.propietario ? data.propietario.nombre : "");
+          setIdPropiedad(data.id);
+        });
+    }
   }, [id]);
 
   const handleSubmit = (e) => {
@@ -36,10 +46,11 @@ export const PropiedadUpdate = () => {
     };
 
     fetch(`http://localhost:9090/propiedad/edit/${data.id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify(data),
     })
@@ -53,49 +64,49 @@ export const PropiedadUpdate = () => {
 
   return (
     <>
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Tipo"
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)}
-            />
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Tipo"
+                value={tipo}
+                onChange={(e) => setTipo(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Localización"
+                value={localizacion}
+                onChange={(e) => setLocalizacion(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Precio"
+                value={precio}
+                onChange={(e) => setPrecio(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Propietario"
+                value={propietario}
+                onChange={(e) => setPropietario(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary">
+                Enviar
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Localización"
-              value={localizacion}
-              onChange={(e) => setLocalizacion(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Precio"
-              value={precio}
-              onChange={(e) => setPrecio(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Propietario"
-              value={propietario}
-              onChange={(e) => setPropietario(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
-              Enviar
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+        </form>
+      </Container>
     </>
   );
 };

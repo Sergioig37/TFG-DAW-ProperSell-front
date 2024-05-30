@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext";
 
 export const InmobiliariaCreate = () => {
   const [nombre, setNombre] = useState("");
   const [numeroEmpleados, setNumeroEmpleados] = useState("");
   const [direccion, setDireccion] = useState("");
-
+  const token = useAuth().getToken();
   const navigate = useNavigate();
+ useEffect(() => {
+      if (!token) {
+        navigate("/login");
+      }
+    }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,11 +24,14 @@ export const InmobiliariaCreate = () => {
       direccion: direccion,
     };
 
+   
+
     fetch('http://localhost:9090/inmobiliaria/save', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+        Authorization: "Bearer " + token
       },
       body: JSON.stringify(data),
     })
