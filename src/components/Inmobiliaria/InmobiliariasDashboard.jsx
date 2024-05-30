@@ -19,20 +19,26 @@ export const InmobiliariasDashboard = () => {
   const [inmobiliarias, setInmobiliarias] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
+  
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch("http://localhost:9090/inmobiliaria", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setInmobiliarias(data);
-        });
+      if (rol != "ADMIN" ) {
+        navigate("/denegado");
+      } else {
+        fetch("http://localhost:9090/inmobiliaria", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setInmobiliarias(data);
+          });
+      }
     }
   });
 

@@ -26,6 +26,10 @@ export const AdminPanel = () => {
     navigate("/admin/propiedades-dashboard");
   };
 
+  const handleUsuarios = () => {
+    navigate("/admin/usuarios-dashboard");
+  };
+
   useEffect(() => {
 
     if(!token){
@@ -33,7 +37,7 @@ export const AdminPanel = () => {
     }
     else{
       if(rol!="ADMIN"){
-        navigate("/unauthorized");
+        navigate("/denegado");
       }
     }
   }, [])
@@ -69,6 +73,12 @@ export const AdminPanel = () => {
           <ListItem>
           <ListItemText primary="Propiedades" />
             <Button variant="outlined" onClick={handlePropiedades}>
+              Ver Dashboard
+            </Button>
+          </ListItem>
+          <ListItem>
+          <ListItemText primary="Usuarios" />
+            <Button variant="outlined" onClick={handleUsuarios}>
               Ver Dashboard
             </Button>
           </ListItem>

@@ -18,22 +18,26 @@ import { useAuth } from "../auth/AuthContext";
 export const AgentesDashboard = () => {
   const [agentes, setAgentes] = useState([]);
   const navigate = useNavigate();
-  const token = useAuth().getToken(); // Importa useNavigate para la navegación
-
+  const token = useAuth().getToken(); 
+  const rol = useAuth().getRol()
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch("http://localhost:9090/agente", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setAgentes(data);
-        });
+      if (rol != "ADMIN") {
+        navigate("/denegado");
+      } else {
+        fetch("http://localhost:9090/agente", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setAgentes(data);
+          });
+      }
     }
   }, []);
 
@@ -54,7 +58,7 @@ export const AgentesDashboard = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
     });
     window.location.reload();

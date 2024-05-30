@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mui/material";
-import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-export const ClienteProfile = () => {
-  const { id } = useParams();
+export const UsuarioProfile = () => {
+  const  username  = useAuth().getUser();
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const [cliente, setCliente] = useState({});
+  const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
     if(!token){
       navigate("/login");
     }
     else{
-      fetch(`http://localhost:9090/cliente/${id}`,{
+      fetch(`http://localhost:9090/usuario/${username}`,{
         method: "GET",
         headers: {
           Authorization: "Bearer " + token
@@ -23,14 +23,14 @@ export const ClienteProfile = () => {
       })
       .then((res) => res.json())
       .then((data) => {
-        setCliente(data);
+        setUsuario(data);
       });
     }
     
-  }, [id]);
+  }, [username]);
 
   const handleEdit = () => {
-    navigate(`/cliente/edit/${id}`);
+    navigate(`/perfil`);
   };
 
   return (
@@ -40,9 +40,9 @@ export const ClienteProfile = () => {
         <Paper elevation={3} sx={{ p: 4 }}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Avatar sx={{ width: 120, height: 120, mb: 2 }}>{cliente.nombre ? cliente.nombre[0] : "C"}</Avatar>
+              <Avatar sx={{ width: 120, height: 120, mb: 2 }}>{usuario.username ? usuario.username[0] : "C"}</Avatar>
               <Typography variant="h5" gutterBottom>
-                {cliente.nombre}
+                {usuario.username}
               </Typography>
               {/* Aquí puedes agregar más detalles según la información del cliente */}
               <Divider sx={{ my: 2 }} />
@@ -52,14 +52,14 @@ export const ClienteProfile = () => {
             </Grid>
             <Grid item xs={12} md={8}>
               <Typography variant="h6" gutterBottom>
-                Información de Contacto
+                Información de perfil
               </Typography>
               {/* Puedes mostrar más detalles de contacto aquí */}
               <Typography variant="body1" gutterBottom>
-                <strong>Correo:</strong> {cliente.correo}
+                <strong>Nombre completo:</strong> {usuario.nombreReal}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                <strong>Teléfono:</strong> {cliente.numeroTelefono}
+                <strong>Correo:</strong> {usuario.correo}
               </Typography>
               <Divider sx={{ my: 2 }} />
             </Grid>

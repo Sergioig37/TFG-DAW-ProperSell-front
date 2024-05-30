@@ -70,7 +70,7 @@ export const NavbarGeneral = () => {
               )}
             </Typography>
             {!token ? (
-              <Typography variant="h6" component="div" f>
+              <Typography variant="h6" component="div">
                 <Button color="inherit" onClick={handleLogin}>
                   Login
                 </Button>

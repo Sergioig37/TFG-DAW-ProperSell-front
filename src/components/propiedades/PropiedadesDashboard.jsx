@@ -12,7 +12,7 @@ import {
   Button,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
@@ -20,22 +20,26 @@ export const PropiedadesDashboard = () => {
   const [propiedades, setPropiedades] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
 
   useEffect(() => {
-    if(!token){
-      navigate('/login');
-    }
-    else{
-      fetch("http://localhost:9090/propiedad",{
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      })
-      .then((res) => res.json())
-      .then((data) => {
-        setPropiedades(data);
-      });
+    if (!token) {
+      navigate("/login");
+    } else {
+      if (rol !== "ADMIN") {
+        navigate("/denegado");
+      } else {
+        fetch("http://localhost:9090/propiedad", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setPropiedades(data);
+          });
+      }
     }
   }, []);
 
@@ -49,16 +53,16 @@ export const PropiedadesDashboard = () => {
     console.log("Eliminar propiedad", idPropiedad);
     var data = {
       id: idPropiedad,
-    }
+    };
 
-    fetch(`http://localhost:9090/propiedad/del/${data.id}`,{
-      method: 'DELETE',
-      headers:{
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + token
+    fetch(`http://localhost:9090/propiedad/del/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
-    })
+    });
     window.location.reload();
     console.log("Eliminado propiedad", data.id);
   };
@@ -70,8 +74,13 @@ export const PropiedadesDashboard = () => {
 
   return (
     <>
-    <NavbarGeneral/>
-    <Button variant="contained" color="primary" href="/propiedad/create" sx={{mt: 4}}>
+      <NavbarGeneral />
+      <Button
+        variant="contained"
+        color="primary"
+        href="/propiedad/create"
+        sx={{ mt: 4 }}
+      >
         Crear Propiedad
       </Button>
       <TableContainer component={Paper}>
@@ -97,9 +106,9 @@ export const PropiedadesDashboard = () => {
                 <TableCell align="right">{propiedad.localizacion}</TableCell>
                 <TableCell align="right">{propiedad.precio}</TableCell>
                 <TableCell align="right">
-                    <IconButton onClick={() => handleVer(propiedad.id)}>
-                        <VisibilityIcon></VisibilityIcon>
-                    </IconButton>
+                  <IconButton onClick={() => handleVer(propiedad.id)}>
+                    <VisibilityIcon></VisibilityIcon>
+                  </IconButton>
                 </TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => handleEdit(propiedad.id)}>

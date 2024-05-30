@@ -15,8 +15,8 @@ import { Edit, Delete, Visibility } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
-export const ClientesDashboard = () => {
-  const [clientes, setClientes] = useState([]);
+export const UsuariosDashboard = () => {
+  const [usuarios, setUsuarios] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
@@ -25,10 +25,10 @@ export const ClientesDashboard = () => {
     if (!token) {
       navigate("/login");
     } else {
-      if (rol != "ADMIN") {
+      if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch("http://localhost:9090/cliente", {
+        fetch("http://localhost:9090/usuario", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -36,39 +36,37 @@ export const ClientesDashboard = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            setClientes(data);
+            setUsuarios(data);
           });
       }
     }
   }, []);
 
   const handleEdit = (id) => {
-    // Navega a la ruta de edición
-    navigate(`/cliente/edit/${id}`);
+    navigate(`/usuario/edit/${id}`);
   };
 
-  const handleDelete = (idCliente) => {
-    // Implementa la lógica de eliminación aquí
-    console.log("Eliminar cliente", idCliente);
+  const handleDelete = (idUsuario) => {
+    console.log("Eliminar usuario", idUsuario);
     var data = {
-      id: idCliente,
+      id: idUsuario,
     };
 
-    fetch(`http://localhost:9090/cliente/del/${data.id}`, {
+    fetch(`http://localhost:9090/usuario/del/${data.id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
+    }).then(() => {
+      setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario.id !== idUsuario));
     });
-    window.location.reload();
-    console.log("Eliminado Cliente", data.id);
+    console.log("Eliminado Usuario", data.id);
   };
 
   const handleVer = (id) => {
-    // Navega a la ruta de edición
-    navigate(`/cliente/${id}`);
+    navigate(`/usuario/${id}`);
   };
 
   return (
@@ -77,45 +75,45 @@ export const ClientesDashboard = () => {
       <Button
         variant="contained"
         color="primary"
-        href="/cliente/create"
+        href="/usuario/create"
         sx={{ mt: 4 }}
       >
-        Crear Cliente
+        Crear Usuario
       </Button>
       <TableContainer component={Paper} sx={{ mt: 2 }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
-              <TableCell align="right">Nombre</TableCell>
+              <TableCell align="right">Username</TableCell>
               <TableCell align="right">Correo</TableCell>
-              <TableCell align="right">Teléfono</TableCell>
+              <TableCell align="right">Nombre Real</TableCell>
               <TableCell align="right">Ver</TableCell>
               <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {clientes.map((cliente) => (
-              <TableRow key={cliente.id}>
+            {usuarios.map((usuario) => (
+              <TableRow key={usuario.id}>
                 <TableCell component="th" scope="row">
-                  {cliente.id}
+                  {usuario.id}
                 </TableCell>
-                <TableCell align="right">{cliente.nombre}</TableCell>
-                <TableCell align="right">{cliente.correo}</TableCell>
-                <TableCell align="right">{cliente.numeroTelefono}</TableCell>
+                <TableCell align="right">{usuario.username}</TableCell>
+                <TableCell align="right">{usuario.correo}</TableCell>
+                <TableCell align="right">{usuario.nombreReal}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleVer(cliente.id)}>
+                  <IconButton onClick={() => handleVer(usuario.id)}>
                     <Visibility />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(cliente.id)}>
+                  <IconButton onClick={() => handleEdit(usuario.id)}>
                     <Edit />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(cliente.id)}>
+                  <IconButton onClick={() => handleDelete(usuario.id)}>
                     <Delete />
                   </IconButton>
                 </TableCell>

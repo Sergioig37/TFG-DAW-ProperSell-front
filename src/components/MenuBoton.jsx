@@ -23,6 +23,10 @@ export const MenuBoton = () => {
     navigate("/");
   };
 
+  const handleVerPerfil = () => {
+    navigate("/perfil");
+  }
+
   const colorStyle = { color: "white" };
 
   return (
@@ -46,8 +50,7 @@ export const MenuBoton = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleVerPerfil}>Mi cuenta</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
