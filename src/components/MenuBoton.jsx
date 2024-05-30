@@ -1,12 +1,16 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MenuIcon from '@mui/icons-material/Menu';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
 
 export const MenuBoton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
+  const { clearToken } = useAuth();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -14,19 +18,24 @@ export const MenuBoton = () => {
     setAnchorEl(null);
   };
 
-  const colorStyle = {color:"white"}
+  const handleLogout = () => {
+    clearToken();
+    navigate("/");
+  };
+
+  const colorStyle = { color: "white" };
 
   return (
     <div>
       <Button
         style={colorStyle}
         id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
+        aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <MenuIcon/>
+        <MenuIcon />
       </Button>
       <Menu
         id="basic-menu"
@@ -34,13 +43,13 @@ export const MenuBoton = () => {
         open={open}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'basic-button',
+          "aria-labelledby": "basic-button",
         }}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );
-}
+};

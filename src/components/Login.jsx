@@ -11,6 +11,7 @@ export const Login = () => {
   
   const navigate = useNavigate();
 
+  
 
   const handleSuccessfulLogin = () => {
     navigate("/explore");
@@ -41,7 +42,6 @@ export const Login = () => {
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
       });
-
       handleSuccessfulLogin();
   };
   

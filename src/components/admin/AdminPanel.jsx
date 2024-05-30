@@ -7,6 +7,7 @@ import { useAuth } from "../auth/AuthContext";
 export const AdminPanel = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
 
 
   const handleClienteRoute = () => {
@@ -29,6 +30,11 @@ export const AdminPanel = () => {
 
     if(!token){
       navigate("/login");
+    }
+    else{
+      if(rol!="ADMIN"){
+        navigate("/unauthorized");
+      }
     }
   }, [])
   

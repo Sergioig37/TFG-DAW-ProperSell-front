@@ -20,6 +20,7 @@ import { PropiedadProfile } from "./components/propiedades/PropiedadProfile"
 import { PropiedadUpdate } from "./components/propiedades/PropieadUpdate"
 import { PropiedadCreate } from "./components/propiedades/PropiedadCreate"
 import { Explorar } from "./components/Explorar"
+import { Unauthorized } from "./components/Unauthorized"
 
 
 export const App = () => {
@@ -51,6 +52,7 @@ export const App = () => {
             <Route path="/admin/clientes-dashboard" element={<ClientesDashboard/>}/>
             <Route path="/admin/propiedades-dashboard" element={<PropiedadesDashboard/>}/>
             <Route path="/admin" element={<AdminPanel/>}/>
+            <Route path="/unauthorized" element={<Unauthorized/>}/>
 
           </Routes> 
         </BrowserRouter>
