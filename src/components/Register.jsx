@@ -12,6 +12,7 @@ import {
   Paper,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./auth/AuthContext";
 
 export const Register = () => {
   const [values, setValues] = useState({
@@ -21,6 +22,7 @@ export const Register = () => {
     rol: "",
     nombreReal: "",
   });
+  const token = useAuth().getToken();
   const navigate = useNavigate();
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -39,8 +41,11 @@ export const Register = () => {
       body: JSON.stringify(values),
       credentials: "include",
     }).then((response) => {
-      if (response.ok) {
+      if (response.ok && !token) {
         navigate("/login");
+      }
+      else{
+        navigate("/admin/usuarios-dashboard")
       }
     });
   };

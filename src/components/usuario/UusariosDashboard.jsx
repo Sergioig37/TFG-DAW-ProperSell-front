@@ -42,17 +42,17 @@ export const UsuariosDashboard = () => {
     }
   }, []);
 
-  const handleEdit = (id) => {
-    navigate(`/usuario/edit/${id}`);
+  const handleEdit = (username) => {
+    navigate(`/usuario/edit/${username}`);
   };
 
-  const handleDelete = (idUsuario) => {
-    console.log("Eliminar usuario", idUsuario);
+  const handleDelete = (username) => {
+    console.log("Eliminar usuario");
     var data = {
-      id: idUsuario,
+      username: username,
     };
 
-    fetch(`http://localhost:9090/usuario/del/${data.id}`, {
+    fetch(`http://localhost:9090/usuario/del/${data.username}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -60,14 +60,15 @@ export const UsuariosDashboard = () => {
         Authorization: "Bearer " + token,
       },
     }).then(() => {
-      setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario.id !== idUsuario));
+      setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario.username !== username));
     });
-    console.log("Eliminado Usuario", data.id);
+    console.log("Eliminado Usuario", data.username);
   };
 
-  const handleVer = (id) => {
-    navigate(`/usuario/${id}`);
+  const handleVer = (username) => {
+    navigate(`/usuario/${username}`);
   };
+
 
   return (
     <>
@@ -75,8 +76,8 @@ export const UsuariosDashboard = () => {
       <Button
         variant="contained"
         color="primary"
-        href="/usuario/create"
         sx={{ mt: 4 }}
+        href="/register"
       >
         Crear Usuario
       </Button>
@@ -103,17 +104,17 @@ export const UsuariosDashboard = () => {
                 <TableCell align="right">{usuario.correo}</TableCell>
                 <TableCell align="right">{usuario.nombreReal}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleVer(usuario.id)}>
+                  <IconButton onClick={() => handleVer(usuario.username)}>
                     <Visibility />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(usuario.id)}>
+                  <IconButton onClick={() => handleEdit(usuario.username)}>
                     <Edit />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(usuario.id)}>
+                  <IconButton onClick={() => handleDelete(usuario.username)}>
                     <Delete />
                   </IconButton>
                 </TableCell>

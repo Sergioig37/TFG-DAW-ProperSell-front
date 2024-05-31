@@ -8,6 +8,7 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const {setToken} = useAuth();
+  const {setAuthPassword} = useAuth();
   
   const navigate = useNavigate();
 
@@ -36,6 +37,7 @@ export const Login = () => {
         return response.json(); // Llamar a la función json() correctamente
       })
       .then(data => {
+        setAuthPassword(password);
         setToken(data.token);
         handleSuccessfulLogin(); // Manejar la respuesta de manera adecuada
       })
@@ -97,10 +99,6 @@ export const Login = () => {
       </form>
       <Typography variant="body2" sx={{ mt: 2 }}>
         ¿No tienes cuenta? <a href="/register">Regístrate ahora</a>
-      </Typography>
-      <Typography variant="body2" sx={{ mt: 1 }}>
-        ¿Olvidaste tu contraseña?{" "}
-        <a href="/">Recupérala aquí</a>
       </Typography>
     </Container>
   );

@@ -24,7 +24,7 @@ export const MenuBoton = () => {
   };
 
   const handleVerPerfil = () => {
-    navigate("/perfil");
+    navigate("/account");
   }
 
   const colorStyle = { color: "white" };

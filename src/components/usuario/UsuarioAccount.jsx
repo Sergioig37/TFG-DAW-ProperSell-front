@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mui/material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const UsuarioProfile = () => {
-  const  {username}  = useParams(); 
+export const UsuarioAccount = () => {
+  const  username  = useAuth().getUser();
+  console.log(username)
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
@@ -30,7 +31,7 @@ export const UsuarioProfile = () => {
   }, [username]);
 
   const handleEdit = () => {
-    navigate(`/`);
+    navigate(`/usuario/edit/${username}`);
   };
 
   return (

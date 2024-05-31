@@ -21,8 +21,10 @@ import { PropiedadUpdate } from "./components/propiedades/PropieadUpdate"
 import { PropiedadCreate } from "./components/propiedades/PropiedadCreate"
 import { Explorar } from "./components/Explorar"
 import { Unauthorized } from "./components/Unauthorized"
-import { UsuarioProfile } from "./components/usuario/UsuarioProfile"
 import { UsuariosDashboard } from "./components/usuario/UusariosDashboard"
+import { UsuarioAccount } from "./components/usuario/UsuarioAccount"
+import { UsuarioProfile } from "./components/usuario/UsuarioProfile"
+import { UsuarioUpdate } from "./components/usuario/UsuarioUpdate"
 
 
 export const App = () => {
@@ -56,7 +58,10 @@ export const App = () => {
             <Route path="/admin/usuarios-dashboard" element={<UsuariosDashboard/>}/>
             <Route path="/admin" element={<AdminPanel/>}/>
             <Route path="/denegado" element={<Unauthorized/>}/>
-            <Route path="/perfil" element={<UsuarioProfile/>}/>
+            <Route path="/account" element={<UsuarioAccount/>}/>
+            <Route path="/usuario/:username" element={<UsuarioProfile/>}/>
+            <Route path="/usuario/edit/:username" element={<UsuarioUpdate/>}/>
+            <Route path="/account" element={<UsuarioAccount/>}/>
 
           </Routes> 
         </BrowserRouter>
