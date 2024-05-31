@@ -43,6 +43,9 @@ export const InmobiliariaProfile = () => {
     navigate(`/inmobiliaria/edit/${id}`);
   };
 
+  const handleCrearAgente = (id) => {
+  navigate(`/inmobiliaria/${id}/agente/create`);
+};
   return (
     <>
       <NavbarGeneral />
@@ -69,6 +72,14 @@ export const InmobiliariaProfile = () => {
               <Button variant="contained" color="primary" onClick={handleEdit}>
                 Editar Perfil
               </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleCrearAgente(inmobiliaria.id)}
+                sx={{ mt: 2 }}
+              >
+                Crear Agente
+              </Button>
             </Grid>
             <Grid item xs={12} md={8}>
               <Typography variant="h6" gutterBottom>
@@ -85,26 +96,26 @@ export const InmobiliariaProfile = () => {
               <Typography variant="h6" gutterBottom>
                 Agentes de la Inmobiliaria
               </Typography>
-              {
-                !inmobiliaria.agentes?(
-                  <List sx={{ width: "100%" }}>
-                {inmobiliaria.agentes &&
-                  inmobiliaria.agentes.map((agente) => (
-                    <ListItem key={agente.id}>
-                      <ListItemAvatar>
-                        <Avatar src={agente.avatar} alt={agente.nombre} />
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary={agente.nombre}
-                        secondary={agente.numeroTelefono}
-                      />
-                    </ListItem>
-                  ))}
-              </List>
-                ):
-                <Typography variant="body1" gutterBottom>No hay agentes</Typography>
-              }
-              
+              {inmobiliaria.agentes ? (
+                <List sx={{ width: "100%" }}>
+                  {inmobiliaria.agentes &&
+                    inmobiliaria.agentes.map((agente) => (
+                      <ListItem key={agente.id}>
+                        <ListItemAvatar>
+                          <Avatar src={agente.avatar} alt={agente.nombre} />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={agente.nombre}
+                          secondary={agente.numeroTelefono}
+                        />
+                      </ListItem>
+                    ))}
+                </List>
+              ) : (
+                <Typography variant="body1" gutterBottom>
+                  No hay agentes
+                </Typography>
+              )}
             </Grid>
           </Grid>
         </Paper>

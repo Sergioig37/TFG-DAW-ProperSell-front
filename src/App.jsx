@@ -46,6 +46,7 @@ export const App = () => {
             <Route path="/cliente/edit/:id" element={<ClienteUpdate/>}/>
             <Route path="/cliente/:id" element={<ClienteProfile/>}/>
             <Route path="/inmobiliaria/:id" element={<InmobiliariaProfile/>}/>
+            <Route path="/inmobiliaria/:id/agente/create" element={<AgenteCreate/>}/>
             <Route path="/inmobiliaria/edit/:id" element={<InmobiliariaUpdate/>}/>
             <Route path="/inmobiliaria/create" element={<InmobiliariaCreate/>}/>
             <Route path="/propiedad/:id" element={<PropiedadProfile/>}/>

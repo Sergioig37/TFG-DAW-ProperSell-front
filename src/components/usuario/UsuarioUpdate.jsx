@@ -70,7 +70,7 @@ export const UsuarioUpdate = () => {
         if (res.token) {
           setToken(res.token);
         }
-        navigate(-1)
+        navigate(-1, {replace: true})
       })
       .catch((error) => {
         console.error("Error updating user data:", error);

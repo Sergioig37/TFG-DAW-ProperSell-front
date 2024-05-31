@@ -20,12 +20,11 @@ export const InmobiliariasDashboard = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
-  
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      if (rol != "ADMIN" ) {
+      if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
         fetch("http://localhost:9090/inmobiliaria", {
@@ -37,10 +36,14 @@ export const InmobiliariasDashboard = () => {
           .then((res) => res.json())
           .then((data) => {
             setInmobiliarias(data);
+          })
+          .catch((error) => {
+            console.error("Error al obtener las inmobiliarias:", error);
           });
       }
     }
-  });
+  }, []); // Lista de dependencias vacía
+  
 
   const handleEdit = (id) => {
     // Navega a la ruta de edición

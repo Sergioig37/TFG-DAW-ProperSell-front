@@ -39,6 +39,7 @@ export const InmobiliariaUpdate = () => {
       nombre: nombre,
       numeroEmpleados: numeroEmpleados,
       direccion: direccion,
+      
     };
 
     fetch(`http://localhost:9090/inmobiliaria/edit/${data.id}`, {

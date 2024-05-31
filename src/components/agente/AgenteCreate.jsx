@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export const AgenteCreate = () => {
+  const {id} = useParams();
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
@@ -23,9 +24,10 @@ export const AgenteCreate = () => {
         nombre: nombre,
         correo: correo,
         numeroTelefono: numeroTelefono,
+        inmobiliaria: id
       };
     
-      fetch('http://localhost:9090/agente/save', {
+      fetch(`http://localhost:9090/agente/save`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -34,7 +36,8 @@ export const AgenteCreate = () => {
         },
         body: JSON.stringify(data),
       })
-      navigate(-1)
+      navigate(-1, {replace: true})
+      
   };
 
 
@@ -69,12 +72,19 @@ export const AgenteCreate = () => {
                 value={numeroTelefono}
                 onChange={(e) => setNumeroTelefono(e.target.value)}
               />
+            </Grid> <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Inmobiliaria"
+                value={id}
+              />
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary">
                 Enviar
               </Button>
             </Grid>
+           
           </Grid>
         </form>
       </Container>
