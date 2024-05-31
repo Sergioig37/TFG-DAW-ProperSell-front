@@ -36,7 +36,7 @@ export const InmobiliariaCreate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate("/admin/inmobiliarias-dashboard");
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al enviar los datos:", error);

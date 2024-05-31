@@ -56,7 +56,7 @@ export const ClienteUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate("/admin/clientes-dashboard");
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);

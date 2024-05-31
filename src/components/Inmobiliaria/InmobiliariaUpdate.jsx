@@ -51,7 +51,7 @@ export const InmobiliariaUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate("/admin/inmobiliarias-dashboard");
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);

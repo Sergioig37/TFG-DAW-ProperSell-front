@@ -34,7 +34,7 @@ export const AgenteCreate = () => {
         },
         body: JSON.stringify(data),
       })
-      navigate("/admin/agentes-dashboard");
+      navigate(-1)
   };
 
 

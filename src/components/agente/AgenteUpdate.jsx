@@ -56,7 +56,7 @@ export const AgenteUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    window.location.replace("/admin/agentes-dashboard");
+    navigate(-1)
   };
   0;
 

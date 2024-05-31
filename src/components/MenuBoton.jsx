@@ -51,7 +51,7 @@ export const MenuBoton = () => {
         }}
       >
         <MenuItem onClick={handleVerPerfil}>Mi cuenta</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
       </Menu>
     </div>
   );

@@ -34,7 +34,7 @@ export const ClienteCreate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate("/admin/clientes-dashboard");
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al enviar los datos:", error);

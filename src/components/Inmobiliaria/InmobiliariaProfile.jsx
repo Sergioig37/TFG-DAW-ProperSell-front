@@ -7,6 +7,10 @@ import {
   Button,
   Paper,
   Divider,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
@@ -33,7 +37,7 @@ export const InmobiliariaProfile = () => {
           setInmobiliaria(data);
         });
     }
-  }, [id]);
+  }, [id, token, navigate]);
 
   const handleEdit = () => {
     navigate(`/inmobiliaria/edit/${id}`);
@@ -61,7 +65,6 @@ export const InmobiliariaProfile = () => {
               <Typography variant="h5" gutterBottom>
                 {inmobiliaria.nombre}
               </Typography>
-              {/* Aquí puedes agregar más detalles según la información de la inmobiliaria */}
               <Divider sx={{ my: 2 }} />
               <Button variant="contained" color="primary" onClick={handleEdit}>
                 Editar Perfil
@@ -79,6 +82,29 @@ export const InmobiliariaProfile = () => {
                 <strong>Dirección:</strong> {inmobiliaria.direccion}
               </Typography>
               <Divider sx={{ my: 2 }} />
+              <Typography variant="h6" gutterBottom>
+                Agentes de la Inmobiliaria
+              </Typography>
+              {
+                !inmobiliaria.agentes?(
+                  <List sx={{ width: "100%" }}>
+                {inmobiliaria.agentes &&
+                  inmobiliaria.agentes.map((agente) => (
+                    <ListItem key={agente.id}>
+                      <ListItemAvatar>
+                        <Avatar src={agente.avatar} alt={agente.nombre} />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={agente.nombre}
+                        secondary={agente.numeroTelefono}
+                      />
+                    </ListItem>
+                  ))}
+              </List>
+                ):
+                <Typography variant="body1" gutterBottom>No hay agentes</Typography>
+              }
+              
             </Grid>
           </Grid>
         </Paper>

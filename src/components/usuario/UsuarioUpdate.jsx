@@ -70,11 +70,7 @@ export const UsuarioUpdate = () => {
         if (res.token) {
           setToken(res.token);
         }
-        if (rol === "ADMIN") {
-          navigate("/admin/usuarios-dashboard");
-        } else {
-          navigate(`/usuario/${data.username}`);
-        }
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error updating user data:", error);
