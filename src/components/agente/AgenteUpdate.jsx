@@ -56,7 +56,7 @@ export const AgenteUpdate = () => {
       },
       body: JSON.stringify(data),
     });
-    navigate(-1)
+    navigate(-1, {replace: true})
   };
   0;
 

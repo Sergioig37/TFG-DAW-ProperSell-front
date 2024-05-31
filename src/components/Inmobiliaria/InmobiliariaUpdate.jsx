@@ -52,7 +52,7 @@ export const InmobiliariaUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate(-1)
+        navigate(-1, {replace: true})
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);

@@ -55,7 +55,7 @@ export const PropiedadUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate("/admin/propiedades-dashboard");
+        navigate(-1, {replace: true})
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);
