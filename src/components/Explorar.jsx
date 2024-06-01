@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Grid, Card, CardContent, CardMedia, TextField, MenuItem, Button } from "@mui/material";
+import { Container, Typography, Grid, Card, CardContent, CardMedia, TextField, Button } from "@mui/material";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);
-  const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
+  const [precioMin, setPrecioMin] = useState("");
+  const [precioMax, setPrecioMax] = useState("");
   const navigate = useNavigate();
   const token = useAuth().getToken();
 
@@ -27,19 +28,32 @@ export const Explorar = () => {
       });
     }
     
-  }, []);
+  }, [token]);
 
-  // const handleSearch = () => {
-  //   let url = "http://localhost:9090/propiedades?";
-  //   if (tipo) url += `tipo=${tipo}&`;
-  //   if (localizacion) url += `localizacion=${localizacion}&`;
+  const handleSearch = (event) => {
+    event.preventDefault();
 
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setPropiedades(data);
-  //     });
-  // };
+    if(localizacion===""){
+      setLocalizacion("void")
+    }
+    if(precioMax===""){
+      setPrecioMax("void");
+    }
+    if(precioMin===""){
+      setPrecioMin("void");
+    }
+
+    fetch(`http://localhost:9090/propiedad/${localizacion}/${precioMin}/${precioMax}`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPropiedades(data);
+      });
+  };
 
   return (
     <>
@@ -49,40 +63,47 @@ export const Explorar = () => {
         Explorar Propiedades
       </Typography>
 
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            select
-            fullWidth
-            label="Tipo"
-            value={tipo}
-            onChange={(e) => setTipo(e.target.value)}
-          >
-            <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="venta">Venta</MenuItem>
-            <MenuItem value="alquiler">Alquiler</MenuItem>
-          </TextField>
+      <form onSubmit={handleSearch}>
+        <Grid container spacing={2} sx={{ mb: 4 }}>
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              fullWidth
+              label="Localización"
+              value={localizacion}
+              onChange={(e) => setLocalizacion(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              fullWidth
+              label="Precio Mínimo"
+              type="number"
+              value={precioMin}
+              onChange={(e) => setPrecioMin(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <TextField
+              fullWidth
+              label="Precio Máximo"
+              type="number"
+              value={precioMax}
+              onChange={(e) => setPrecioMax(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={3}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              type="submit"
+              sx={{ height: "100%" }}
+            >
+              Buscar
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <TextField
-            fullWidth
-            label="Localización"
-            value={localizacion}
-            onChange={(e) => setLocalizacion(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            
-            sx={{ height: "100%" }}
-          >
-            Buscar
-          </Button>
-        </Grid>
-      </Grid>
+      </form>
 
       <Grid container spacing={4}>
         {propiedades.map((propiedad) => (
@@ -111,5 +132,3 @@ export const Explorar = () => {
     </>
   );
 };
-
-
