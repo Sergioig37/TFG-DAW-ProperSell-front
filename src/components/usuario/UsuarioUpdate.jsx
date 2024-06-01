@@ -12,7 +12,7 @@ export const UsuarioUpdate = () => {
   const [password, setPassword] = useState("");
   const token = useAuth().getToken();
   const passwrd = useAuth().getAuthPassword();
-  const rol = useAuth().getRol();
+  const user = useAuth().getUser();
   const { setToken } = useAuth();
   const navigate = useNavigate();
 
@@ -105,7 +105,9 @@ export const UsuarioUpdate = () => {
               onChange={(e) => setCorreo(e.target.value)}
             />
           </Grid>
-          <Grid item xs={12}>
+          {
+            user===username?(
+               <Grid item xs={12}>
             <TextField
               fullWidth
               label="Password"
@@ -127,6 +129,11 @@ export const UsuarioUpdate = () => {
               }}
             />
           </Grid>
+            ):(
+              <></>
+            )
+          }
+         
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
               Enviar

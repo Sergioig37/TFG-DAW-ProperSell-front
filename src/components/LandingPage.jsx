@@ -34,7 +34,7 @@ export const LandingPage = () => {
             ¡Bienvenido a ProperSell!
           </Typography>
           <Typography variant="body1" align="center" paragraph>
-            Somos una empresa dedicada a ayudarte a ayudarte a encontrar la casa
+            Somos una empresa dedicada a ayudarte a encontrar la casa
             de tus sueños.
           </Typography>
         </Box>
