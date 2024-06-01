@@ -8,6 +8,7 @@ export const AgenteCreate = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
+  const [inmobiliaria, setInmobiliaria] = useState(id?id:"");
   const token = useAuth().getToken();
 
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const AgenteCreate = () => {
         nombre: nombre,
         correo: correo,
         numeroTelefono: numeroTelefono,
-        inmobiliaria: id
+        inmobiliaria: inmobiliaria
       };
     
       fetch(`http://localhost:9090/agente/save`, {
@@ -32,16 +33,14 @@ export const AgenteCreate = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: "Bearer " +token
+          Authorization: "Bearer " + token
         },
         body: JSON.stringify(data),
       })
       navigate(-1, {replace: true})
       
+      
   };
-
-
-
 
 
   return (
@@ -76,7 +75,8 @@ export const AgenteCreate = () => {
               <TextField
                 fullWidth
                 label="Inmobiliaria"
-                value={id}
+                value={inmobiliaria}
+                onChange={(e) => setInmobiliaria(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

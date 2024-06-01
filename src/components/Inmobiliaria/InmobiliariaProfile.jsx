@@ -11,16 +11,37 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  IconButton
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import { Delete } from "@mui/icons-material";
 
 export const InmobiliariaProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [inmobiliaria, setInmobiliaria] = useState({});
+
+  const handleDelete = (idAgente) => {
+    // Implementa la lógica de eliminación aquí
+
+    var data = {
+      id: idAgente,
+    };
+
+    fetch(`http://localhost:9090/agente/del/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    window.location.reload();
+    console.log("Eliminado Agente", data.id);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -44,8 +65,8 @@ export const InmobiliariaProfile = () => {
   };
 
   const handleCrearAgente = (id) => {
-  navigate(`/inmobiliaria/${id}/agente/create`);
-};
+    navigate(`/inmobiliaria/${id}/agente/create`);
+  };
   return (
     <>
       <NavbarGeneral />
@@ -108,6 +129,9 @@ export const InmobiliariaProfile = () => {
                           primary={agente.nombre}
                           secondary={agente.numeroTelefono}
                         />
+                        <IconButton onClick={() => handleDelete(agente.id)}>
+                          <Delete />
+                        </IconButton>
                       </ListItem>
                     ))}
                 </List>

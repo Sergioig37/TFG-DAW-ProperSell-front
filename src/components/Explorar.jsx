@@ -30,20 +30,17 @@ export const Explorar = () => {
     
   }, [token]);
 
+  const handleVer = (id) => {
+    // Navega a la ruta de edición
+    navigate(`/propiedad/${id}`);
+  };
+
   const handleSearch = (event) => {
     event.preventDefault();
+    
 
-    if(localizacion===""){
-      setLocalizacion("void")
-    }
-    if(precioMax===""){
-      setPrecioMax("void");
-    }
-    if(precioMin===""){
-      setPrecioMin("void");
-    }
+    fetch(`http://localhost:9090/propiedad/${localizacion===""?"void":localizacion}/${precioMin===""?"void":precioMin}/${precioMax===""?"void":precioMax}`, {
 
-    fetch(`http://localhost:9090/propiedad/${localizacion}/${precioMin}/${precioMax}`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + token
@@ -123,6 +120,9 @@ export const Explorar = () => {
                 <Typography variant="body1" color="textPrimary">
                   ${propiedad.precio}
                 </Typography>
+                <Button onClick={() => handleVer(propiedad.id)}>
+                  Ver propiedad
+                </Button>
               </CardContent>
             </Card>
           </Grid>

@@ -46,7 +46,6 @@ export const PropiedadProfile = () => {
               <Typography variant="h5" gutterBottom>
                 {propiedad.tipo}
               </Typography>
-              {/* Aquí puedes agregar más detalles según la información de la propiedad */}
               <Divider sx={{ my: 2 }} />
               <Button variant="contained" color="primary" onClick={handleEdit}>
                 Editar Propiedad
@@ -61,9 +60,6 @@ export const PropiedadProfile = () => {
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Precio:</strong> ${propiedad.precio}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                <strong>Propietario:</strong> {propiedad.propietario ? propiedad.propietario.nombre : "N/A"}
               </Typography>
               <Divider sx={{ my: 2 }} />
             </Grid>
