@@ -42,7 +42,6 @@ export const PropiedadUpdate = () => {
       tipo: tipo,
       localizacion: localizacion,
       precio: precio,
-      propietario: { nombre: propietario },
     };
 
     fetch(`http://localhost:9090/propiedad/edit/${data.id}`, {
@@ -55,7 +54,7 @@ export const PropiedadUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate(-1, {replace: true})
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);
@@ -89,14 +88,6 @@ export const PropiedadUpdate = () => {
                 label="Precio"
                 value={precio}
                 onChange={(e) => setPrecio(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Propietario"
-                value={propietario}
-                onChange={(e) => setPropietario(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

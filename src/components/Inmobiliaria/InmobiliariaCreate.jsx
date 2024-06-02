@@ -20,7 +20,6 @@ export const InmobiliariaCreate = () => {
     console.log("Datos enviados:", { nombre, numeroEmpleados, direccion });
     var data = {
       nombre: nombre,
-      numeroEmpleados: numeroEmpleados,
       direccion: direccion,
     };
 
@@ -54,14 +53,6 @@ export const InmobiliariaCreate = () => {
                 label="Nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Número de Empleados"
-                value={numeroEmpleados}
-                onChange={(e) => setNumeroEmpleados(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>

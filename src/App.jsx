@@ -45,6 +45,7 @@ export const App = () => {
             <Route path="/cliente/create" element={<ClienteCreate/>}/>
             <Route path="/cliente/edit/:id" element={<ClienteUpdate/>}/>
             <Route path="/cliente/:id" element={<ClienteProfile/>}/>
+            <Route path="/cliente/:id/propiedad/create" element={<PropiedadCreate/>}/>
             <Route path="/inmobiliaria/:id" element={<InmobiliariaProfile/>}/>
             <Route path="/inmobiliaria/:id/agente/create" element={<AgenteCreate/>}/>
             <Route path="/inmobiliaria/edit/:id" element={<InmobiliariaUpdate/>}/>

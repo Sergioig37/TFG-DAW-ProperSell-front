@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { TextField, Button, Grid, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadCreate = () => {
+  const {id} = useParams();
   const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
   const token = useAuth().getToken();
+  const [cliente, setCliente] = useState(id?id:"");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,6 +25,7 @@ export const PropiedadCreate = () => {
       tipo: tipo,
       localizacion: localizacion,
       precio: precio,
+      propietario: cliente,
     };
 
     fetch('http://localhost:9090/propiedad/save', {
@@ -35,7 +38,7 @@ export const PropiedadCreate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate(-1, {replace: true})
+        navigate(-1);
       })
       .catch((error) => {
         console.error("Error al enviar los datos:", error);

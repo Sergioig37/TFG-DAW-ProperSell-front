@@ -11,10 +11,13 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  IconButton,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import { Edit, Delete } from "@mui/icons-material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export const ClienteProfile = () => {
   const { id } = useParams();
@@ -43,6 +46,33 @@ export const ClienteProfile = () => {
     navigate(`/cliente/edit/${id}`);
   };
 
+  const handleDelete = (idPropiedad) => {
+    // Implementa la lógica de eliminación aquí
+    console.log("Eliminar propiedad", idPropiedad);
+    var data = {
+      id: idPropiedad,
+    };
+
+    fetch(`http://localhost:9090/propiedad/del/${data.id}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    window.location.reload();
+    console.log("Eliminado propiedad", data.id);
+  };
+
+  const handleCrearPropiedad = (id) => {
+    navigate(`/cliente/${id}/propiedad/create`);
+  };
+
+  const handleVer = (id) => {
+    // Navega a la ruta de edición
+    navigate(`/propiedad/${id}`);
+  };
   return (
     <>
       <NavbarGeneral />
@@ -72,6 +102,14 @@ export const ClienteProfile = () => {
               <Button variant="contained" color="primary" onClick={handleEdit}>
                 Editar Perfil
               </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleCrearPropiedad(cliente.id)}
+                sx={{ mt: 2 }}
+              >
+                Añadir Propiedad
+              </Button>
             </Grid>
             <Grid item xs={12} md={8}>
               <Typography variant="h6" gutterBottom>
@@ -98,6 +136,12 @@ export const ClienteProfile = () => {
                         primary={propiedad.tipo}
                         secondary={`Localización: ${propiedad.localizacion}, Precio: ${propiedad.precio} $`}
                       />
+                      <IconButton onClick={() => handleVer(propiedad.id)}>
+                        <VisibilityIcon></VisibilityIcon>
+                      </IconButton>
+                      <IconButton onClick={() => handleDelete(propiedad.id)}>
+                        <Delete />
+                      </IconButton>
                     </ListItem>
                   ))}
               </List>

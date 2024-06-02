@@ -11,12 +11,13 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import { Delete } from "@mui/icons-material";
+import { Edit, Delete } from "@mui/icons-material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export const InmobiliariaProfile = () => {
   const { id } = useParams();
@@ -67,6 +68,12 @@ export const InmobiliariaProfile = () => {
   const handleCrearAgente = (id) => {
     navigate(`/inmobiliaria/${id}/agente/create`);
   };
+
+  const handleVer = (id) => {
+    // Navega a la ruta de perfil del agente con el ID específico
+    navigate(`/agente/${id}`);
+  };
+
   return (
     <>
       <NavbarGeneral />
@@ -108,7 +115,7 @@ export const InmobiliariaProfile = () => {
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Número de Empleados:</strong>{" "}
-                {inmobiliaria.numeroEmpleados}
+                {inmobiliaria.agentes ? inmobiliaria.agentes.length : 0}
               </Typography>
               <Typography variant="body1" gutterBottom>
                 <strong>Dirección:</strong> {inmobiliaria.direccion}
@@ -129,6 +136,9 @@ export const InmobiliariaProfile = () => {
                           primary={agente.nombre}
                           secondary={agente.numeroTelefono}
                         />
+                        <IconButton onClick={() => handleVer(agente.id)}>
+                          <VisibilityIcon />
+                        </IconButton>
                         <IconButton onClick={() => handleDelete(agente.id)}>
                           <Delete />
                         </IconButton>

@@ -37,7 +37,7 @@ export const AgenteCreate = () => {
         },
         body: JSON.stringify(data),
       })
-      navigate(-1, {replace: true})
+     navigate(-1);
       
       
   };
@@ -71,14 +71,7 @@ export const AgenteCreate = () => {
                 value={numeroTelefono}
                 onChange={(e) => setNumeroTelefono(e.target.value)}
               />
-            </Grid> <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Inmobiliaria"
-                value={inmobiliaria}
-                onChange={(e) => setInmobiliaria(e.target.value)}
-              />
-            </Grid>
+            </Grid> 
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary">
                 Enviar

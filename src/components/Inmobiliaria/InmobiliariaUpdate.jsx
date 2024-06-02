@@ -37,7 +37,6 @@ export const InmobiliariaUpdate = () => {
     var data = {
       id: idInmobiliaria,
       nombre: nombre,
-      numeroEmpleados: numeroEmpleados,
       direccion: direccion,
       
     };
@@ -52,7 +51,7 @@ export const InmobiliariaUpdate = () => {
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate(-1, {replace: true})
+        navigate(-1)
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);
@@ -70,14 +69,6 @@ export const InmobiliariaUpdate = () => {
                 label="Nombre"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Número de Empleados"
-                value={numeroEmpleados}
-                onChange={(e) => setNumeroEmpleados(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
