@@ -12,6 +12,8 @@ export const PropiedadUpdate = () => {
   const [propietario, setPropietario] = useState("");
   const token = useAuth().getToken();
   const navigate = useNavigate();
+  const rol = useAuth().getRol();
+  
 
   useEffect(() => {
     if (!token) {

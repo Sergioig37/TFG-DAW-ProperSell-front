@@ -11,6 +11,7 @@ export const InmobiliariaUpdate = () => {
   const [direccion, setDireccion] = useState("");
   const token = useAuth().getToken();
   const navigate = useNavigate();
+  const rol = useAuth().getRol();
 
   useEffect(() => {
     if (!token) {

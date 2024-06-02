@@ -17,7 +17,7 @@ import { InmobiliariaProfile } from "./components/Inmobiliaria/InmobiliariaProfi
 import { InmobiliariaUpdate } from "./components/Inmobiliaria/InmobiliariaUpdate"
 import { InmobiliariaCreate } from "./components/Inmobiliaria/InmobiliariaCreate"
 import { PropiedadProfile } from "./components/propiedades/PropiedadProfile"
-import { PropiedadUpdate } from "./components/propiedades/PropieadUpdate"
+import { PropiedadUpdate } from "./components/propiedades/PropiedadUpdate"
 import { PropiedadCreate } from "./components/propiedades/PropiedadCreate"
 import { Explorar } from "./components/Explorar"
 import { Unauthorized } from "./components/Unauthorized"

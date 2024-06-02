@@ -16,6 +16,7 @@ export const AgenteUpdate = () => {
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
   const navigate = useNavigate();
 
   useEffect(() => {
