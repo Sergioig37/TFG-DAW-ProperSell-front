@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Menu, MenuItem, Avatar } from "@mui/material";
+import { Button, Menu, MenuItem, Avatar, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 
@@ -30,15 +30,18 @@ export const MenuBoton = () => {
 
   return (
     <div>
+     <Box display="flex" alignItems="center">
+      <Typography variant="h6" sx={{ marginRight: 2 }}>
+        {user}
+      </Typography>
       <Button
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{ display: 'flex', alignItems: 'center' }}
       >
-        <Avatar  alt={user?.name}>
-          
-        </Avatar>
+        <Avatar sx={{ marginRight: 1 }} />
       </Button>
       <Menu
         id="basic-menu"
@@ -49,10 +52,10 @@ export const MenuBoton = () => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem >{user}</MenuItem>
         <MenuItem onClick={handleVerPerfil}>Mi cuenta</MenuItem>
         <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
       </Menu>
+    </Box>
     </div>
   );
 };

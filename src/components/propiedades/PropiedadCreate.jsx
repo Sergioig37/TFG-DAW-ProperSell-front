@@ -25,6 +25,7 @@ export const PropiedadCreate = () => {
       localizacion: localizacion,
       precio: precio,
       propietario: user,
+      habilitado: true
     };
 
     fetch('http://localhost:9090/propiedad/save', {

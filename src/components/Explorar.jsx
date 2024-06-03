@@ -9,6 +9,7 @@ import {
   TextField,
   Button,
   Box,
+  Paper
 } from "@mui/material";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
@@ -84,14 +85,15 @@ export const Explorar = () => {
 
   return (
     <>
-      <NavbarGeneral />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Explorar Propiedades
-        </Typography>
+    <NavbarGeneral />
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        Explorar Propiedades
+      </Typography>
 
+      <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
         <form onSubmit={handleSearch}>
-          <Grid container spacing={2} sx={{ mb: 4 }}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={3}>
               <TextField
                 fullWidth
@@ -133,8 +135,8 @@ export const Explorar = () => {
               <Button
                 fullWidth
                 variant="contained"
-                color="primary"
-                onClick={() => handleBorrarFiltros()}
+                color="secondary"
+                onClick={handleBorrarFiltros}
                 sx={{ height: "100%" }}
               >
                 Borrar Filtros
@@ -142,51 +144,52 @@ export const Explorar = () => {
             </Grid>
           </Grid>
         </form>
+      </Paper>
 
-        {propiedades.length >= 1 ? (
-          <Grid container spacing={4}>
-            {propiedades.map((propiedad) => (
-              <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    alt="Imagen de la propiedad"
-                    height="140"
-                    image="/path/to/default/image.jpg" // Aquí puedes poner una imagen por defecto o el atributo propiedad.imagen si tienes la URL de la imagen
-                  />
-                  <CardContent>
-                    <Typography variant="h6">{propiedad.tipo}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {propiedad.localizacion}
-                    </Typography>
-                    <Typography variant="body1" color="textPrimary">
-                      ${propiedad.precio}
-                    </Typography>
-                    <Button onClick={() => handleVer(propiedad.id)}>
-                      Ver propiedad
-                    </Button>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        ) : (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="300px"
-            flexDirection="column"
-          >
-            <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
-              Sin resultados
-            </Typography>
-            <Typography variant="body1" color="textSecondary">
-              Intenta ajustar tus filtros de búsqueda.
-            </Typography>
-          </Box>
-        )}
-      </Container>
-    </>
+      {propiedades.length >= 1 ? (
+        <Grid container spacing={4}>
+          {propiedades.map((propiedad) => (
+            <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
+              <Card>
+                <CardMedia
+                  component="img"
+                  alt="Imagen de la propiedad"
+                  height="140"
+                  image="/path/to/default/image.jpg" // Sustituye esto con el atributo propiedad.imagen si tienes la URL de la imagen
+                />
+                <CardContent>
+                  <Typography variant="h6">{propiedad.tipo}</Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    {propiedad.localizacion}
+                  </Typography>
+                  <Typography variant="body1" color="textPrimary">
+                    ${propiedad.precio}
+                  </Typography>
+                  <Button onClick={() => handleVer(propiedad.id)}>
+                    Ver propiedad
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          height="300px"
+          flexDirection="column"
+        >
+          <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
+            Sin resultados
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Intenta ajustar tus filtros de búsqueda.
+          </Typography>
+        </Box>
+      )}
+    </Container>
+  </>
   );
 };

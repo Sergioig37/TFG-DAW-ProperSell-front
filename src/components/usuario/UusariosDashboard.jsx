@@ -112,7 +112,7 @@ export const UsuariosDashboard = () => {
               <TableCell align="right">Nombre Real</TableCell>
               <TableCell align="right">Habilitado</TableCell>
               <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Deshabilitar</TableCell>
+              <TableCell align="right">Deshabilitar/Habilitar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

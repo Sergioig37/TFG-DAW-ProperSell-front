@@ -9,12 +9,12 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Button,
 } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const PropiedadesDashboard = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -67,6 +67,41 @@ export const PropiedadesDashboard = () => {
     navigate(`/propiedad/${id}`);
   };
 
+
+  const handleDarDeBaja = (idPropiedad) => {
+    console.log("Eliminar usuario");
+    var data = {
+      id: idPropiedad,
+    };
+
+    fetch(`http://localhost:9090/propiedad/disable/${data.id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+    window.location.reload();
+  };
+
+  const handleDarDeAlta = (idPropiedad) => {
+    console.log("Eliminar usuario");
+    var data = {
+      id: idPropiedad,
+    };
+
+    fetch(`http://localhost:9090/propiedad/enable/${data.id}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    })
+    window.location.reload();
+  };
+
   return (
     <>
       <NavbarGeneral />
@@ -79,7 +114,8 @@ export const PropiedadesDashboard = () => {
               <TableCell align="right">Localización</TableCell>
               <TableCell align="right">Precio</TableCell>
               <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Borrar</TableCell>
+              <TableCell align="right">Habilitado</TableCell>
+              <TableCell align="right">Deshabilitar/Habilitar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -97,9 +133,24 @@ export const PropiedadesDashboard = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(propiedad.id)}>
-                    <Delete />
-                  </IconButton>
+                  {
+                    propiedad.habilitado===true?"Si":"No"
+                  }
+                </TableCell>
+                <TableCell align="right">
+                {propiedad.habilitado == true ? (
+                    <IconButton
+                      onClick={() => handleDarDeBaja(propiedad.id)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={() => handleDarDeAlta(propiedad.id)}
+                    >
+                      <CheckIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
