@@ -14,6 +14,8 @@ import {
 import { Edit, Delete, Visibility } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const UsuariosDashboard = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -43,30 +45,51 @@ export const UsuariosDashboard = () => {
     }
   }, []);
 
-
-  const handleDelete = (username) => {
+  const handleDarDeBaja = (username) => {
     console.log("Eliminar usuario");
     var data = {
       username: username,
     };
 
-    fetch(`http://localhost:9090/usuario/del/${data.username}`, {
-      method: "DELETE",
+    fetch(`http://localhost:9090/usuario/disable/${data.username}`, {
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
     }).then(() => {
-      setUsuarios((prevUsuarios) => prevUsuarios.filter((usuario) => usuario.username !== username));
+      setUsuarios((prevUsuarios) =>
+        prevUsuarios.filter((usuario) => usuario.username !== username)
+      );
     });
-    console.log("Eliminado Usuario", data.username);
+    window.location.reload();
+  };
+
+  const handleDarDeAlta = (username) => {
+    console.log("Eliminar usuario");
+    var data = {
+      username: username,
+    };
+
+    fetch(`http://localhost:9090/usuario/enable/${data.username}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }).then(() => {
+      setUsuarios((prevUsuarios) =>
+        prevUsuarios.filter((usuario) => usuario.username !== username)
+      );
+    });
+    window.location.reload();
   };
 
   const handleVer = (username) => {
     navigate(`/usuario/${username}`);
   };
-
 
   return (
     <>
@@ -87,8 +110,9 @@ export const UsuariosDashboard = () => {
               <TableCell align="right">Username</TableCell>
               <TableCell align="right">Correo</TableCell>
               <TableCell align="right">Nombre Real</TableCell>
+              <TableCell align="right">Habilitado</TableCell>
               <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Borrar</TableCell>
+              <TableCell align="right">Deshabilitar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -101,14 +125,27 @@ export const UsuariosDashboard = () => {
                 <TableCell align="right">{usuario.correo}</TableCell>
                 <TableCell align="right">{usuario.nombreReal}</TableCell>
                 <TableCell align="right">
+                  {usuario.habilitado === true ? "Si" : "No"}
+                </TableCell>
+                <TableCell align="right">
                   <IconButton onClick={() => handleVer(usuario.username)}>
                     <Visibility />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(usuario.username)}>
-                    <Delete />
-                  </IconButton>
+                  {usuario.habilitado == true ? (
+                    <IconButton
+                      onClick={() => handleDarDeBaja(usuario.username)}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={() => handleDarDeAlta(usuario.username)}
+                    >
+                      <CheckIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

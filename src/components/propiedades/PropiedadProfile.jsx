@@ -64,7 +64,7 @@ export const PropiedadProfile = () => {
     <>
       <NavbarGeneral />
       <Container maxWidth="md" sx={{ marginTop: 8 }}>
-        <Paper elevation={3} sx={{ p: 4 }}>
+        <Paper elevation={3} sx={{ p: 4, backgroundColor: "#f5f5f5" }}>
           <Grid container spacing={3}>
             <Grid
               item
@@ -74,9 +74,19 @@ export const PropiedadProfile = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                backgroundColor: "#ffffff",
+                padding: "20px",
+                borderRadius: "10px",
               }}
             >
-              <Avatar sx={{ width: 120, height: 120, mb: 2 }}>
+              <Avatar
+                sx={{
+                  width: 120,
+                  height: 120,
+                  mb: 2,
+                  backgroundColor: "#3f51b5",
+                }}
+              >
                 {propiedad.tipo ? propiedad.tipo[0] : "P"}
               </Avatar>
               <Typography variant="h5" gutterBottom>
@@ -88,6 +98,7 @@ export const PropiedadProfile = () => {
                   variant="contained"
                   color="primary"
                   onClick={handleEdit}
+                  sx={{ backgroundColor: "#3f51b5" }}
                 >
                   Editar Propiedad
                 </Button>
