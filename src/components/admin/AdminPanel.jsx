@@ -18,10 +18,6 @@ export const AdminPanel = () => {
     navigate("/admin/agentes-dashboard");
   };
 
-  const handleInmobiliarias = () => {
-    navigate("/admin/inmobiliarias-dashboard");
-  };
-
   const handlePropiedades = () => {
     navigate("/admin/propiedades-dashboard");
   };
@@ -60,13 +56,6 @@ export const AdminPanel = () => {
             <ListItemText primary="Agentes Inmobiliarios" />
 
             <Button variant="outlined" onClick={handleAgenteRoute}>
-              Ver Dashboard
-            </Button>
-          </ListItem>
-          <ListItem>
-            <ListItemText primary="Inmobiliarias" />
-
-            <Button variant="outlined" onClick={handleInmobiliarias}>
               Ver Dashboard
             </Button>
           </ListItem>

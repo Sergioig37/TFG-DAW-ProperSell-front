@@ -18,9 +18,11 @@ import { useNavigate } from "react-router-dom";
 import { faqs, itemData } from "./data/Data";
 import { StyledAccordion, StyledImageList } from "./styles/Styles";
 import { NavbarGeneral } from "./NavbarGeneral";
+import { useAuth } from "./auth/AuthContext";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
+  const token = useAuth().getToken();
   const handleHome = () => {
     navigate("/explore");
   }
@@ -38,11 +40,19 @@ export const LandingPage = () => {
             de tus sueños.
           </Typography>
         </Box>
-        <Box textAlign="center" my={4}>
+        {
+          token?(
+            <Box textAlign="center" my={4}>
           <Button variant="contained" color="primary" size="large" onClick={handleHome}>
             Ver propiedades
           </Button>
         </Box>
+          ):(
+            <>
+            </>
+          )
+        }
+        
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} md={6}>
             <Paper elevation={6} sx={{ p: 2 }}>

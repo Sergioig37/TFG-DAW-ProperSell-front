@@ -8,7 +8,6 @@ export const AgenteCreate = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
-  const [inmobiliaria, setInmobiliaria] = useState(id?id:"");
   const token = useAuth().getToken();
 
     const navigate = useNavigate();
@@ -25,7 +24,6 @@ export const AgenteCreate = () => {
         nombre: nombre,
         correo: correo,
         numeroTelefono: numeroTelefono,
-        inmobiliaria: inmobiliaria
       };
     
       fetch(`http://localhost:9090/agente/save`, {

@@ -99,21 +99,6 @@ export const Register = () => {
             onChange={handleChange}
             required
           />
-          <FormControl component="fieldset" style={{ marginTop: "16px" }}>
-            <FormLabel component="legend">Rol</FormLabel>
-            <RadioGroup name="rol" value={values.rol} onChange={handleChange}>
-              <FormControlLabel
-                value="CLIENTE"
-                control={<Radio />}
-                label="Cliente"
-              />
-              <FormControlLabel
-                value="INMOBILIARIA"
-                control={<Radio />}
-                label="Inmobiliaria"
-              />
-            </RadioGroup>
-          </FormControl>
           <Button
             type="submit"
             fullWidth

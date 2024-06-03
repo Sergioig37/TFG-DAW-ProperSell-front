@@ -41,12 +41,19 @@ export const NavbarGeneral = () => {
               color="inherit"
               aria-label="menu"
               sx={{ mr: 2 }}
-            ></IconButton>
-            <Typography variant="h6" component="div">
+            >PropeSell</IconButton>
+            {
+              token?(
+                <Typography variant="h6" component="div">
               <Button variant="h6" component="div" onClick={handleLanding}>
-                ProperSell
+                Inicio
               </Button>
             </Typography>
+              ):(
+                <></>
+              )
+            }
+            
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               {token && rol === "ADMIN" ? (
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

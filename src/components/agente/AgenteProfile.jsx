@@ -8,6 +8,10 @@ import {
   Divider,
   Button,
   Box,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { Edit } from "@mui/icons-material";
@@ -18,8 +22,9 @@ export const AgenteProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [agente, setAgente] = useState({});
+  const [clientes, setClientes] = useState({});
   const token = useAuth().getToken();
-  
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -35,6 +40,14 @@ export const AgenteProfile = () => {
       .then((res) => res.json())
       .then((data) => {
         setAgente(data);
+        fetch(`http://localhost:9090/agenteCliente/clientes/${data.id}`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => res?res.json():null)
+          .then((clientesData) => setClientes(clientesData?clientesData:{}));
       });
   }, [id, token, navigate]);
 
@@ -98,7 +111,26 @@ export const AgenteProfile = () => {
                 </Typography>
               </Box>
               <Divider sx={{ my: 2 }} />
-              {/* Aquí puedes agregar más detalles adicionales del agente si existen */}
+              <Typography variant="h6" gutterBottom>
+                Clientes del Agente
+              </Typography>
+              <List>
+                {clientes.length > 0 ? (
+                  clientes.map((cliente) => (
+                    <ListItem key={cliente.id}>
+                      <ListItemAvatar>
+                        <Avatar>{cliente.nombre[0]}</Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={cliente.nombre}
+                        secondary={`Email: ${cliente.correo}, Teléfono: ${cliente.numeroTelefono}`}
+                      />
+                    </ListItem>
+                  ))
+                ) : (
+                  <Typography>No está trabajando con nadie</Typography>
+                )}
+              </List>
             </Grid>
           </Grid>
         </Paper>
