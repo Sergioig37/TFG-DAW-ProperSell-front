@@ -10,12 +10,8 @@ export const AdminPanel = () => {
   const rol = useAuth().getRol();
 
 
-  const handleClienteRoute = () => {
-    navigate("/admin/clientes-dashboard");
-  };
-
-  const handleAgenteRoute = () => {
-    navigate("/admin/agentes-dashboard");
+  const handleAlertaRoute = () => {
+    navigate("/admin/alerta-dashboard");
   };
 
   const handlePropiedades = () => {
@@ -45,17 +41,9 @@ export const AdminPanel = () => {
       <NavbarGeneral />
       <Paper style={{ margin: 16, padding: 16 }}>
         <List>
-          <ListItem divider>
-            <ListItemText primary="Clientes" />
-
-            <Button variant="outlined" onClick={handleClienteRoute}>
-              Ver Dashboard
-            </Button>
-          </ListItem>
-          <ListItem divider>
-            <ListItemText primary="Agentes Inmobiliarios" />
-
-            <Button variant="outlined" onClick={handleAgenteRoute}>
+        <ListItem>
+          <ListItemText primary="Alertas" />
+            <Button variant="outlined" onClick={handleAlertaRoute}>
               Ver Dashboard
             </Button>
           </ListItem>

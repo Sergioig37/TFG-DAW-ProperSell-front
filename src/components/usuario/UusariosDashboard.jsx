@@ -20,6 +20,7 @@ export const UsuariosDashboard = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
+  const user = useAuth().getUser();
 
   useEffect(() => {
     if (!token) {
@@ -28,7 +29,7 @@ export const UsuariosDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch("http://localhost:9090/usuario", {
+        fetch(`http://localhost:9090/usuarioExcluido/${user}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -42,9 +43,6 @@ export const UsuariosDashboard = () => {
     }
   }, []);
 
-  const handleEdit = (username) => {
-    navigate(`/usuario/edit/${username}`);
-  };
 
   const handleDelete = (username) => {
     console.log("Eliminar usuario");
@@ -90,7 +88,6 @@ export const UsuariosDashboard = () => {
               <TableCell align="right">Correo</TableCell>
               <TableCell align="right">Nombre Real</TableCell>
               <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
             </TableRow>
           </TableHead>
@@ -106,11 +103,6 @@ export const UsuariosDashboard = () => {
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(usuario.username)}>
                     <Visibility />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(usuario.username)}>
-                    <Edit />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">

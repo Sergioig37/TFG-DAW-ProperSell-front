@@ -43,11 +43,6 @@ export const PropiedadesDashboard = () => {
     }
   }, []);
 
-  const handleEdit = (id) => {
-    // Navega a la ruta de edición
-    navigate(`/propiedad/edit/${id}`);
-  };
-
   const handleDelete = (idPropiedad) => {
     // Implementa la lógica de eliminación aquí
     console.log("Eliminar propiedad", idPropiedad);
@@ -75,14 +70,6 @@ export const PropiedadesDashboard = () => {
   return (
     <>
       <NavbarGeneral />
-      <Button
-        variant="contained"
-        color="primary"
-        href="/propiedad/create"
-        sx={{ mt: 4 }}
-      >
-        Crear Propiedad
-      </Button>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -92,7 +79,6 @@ export const PropiedadesDashboard = () => {
               <TableCell align="right">Localización</TableCell>
               <TableCell align="right">Precio</TableCell>
               <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
             </TableRow>
           </TableHead>
@@ -108,11 +94,6 @@ export const PropiedadesDashboard = () => {
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(propiedad.id)}>
                     <VisibilityIcon></VisibilityIcon>
-                  </IconButton>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(propiedad.id)}>
-                    <Edit />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">

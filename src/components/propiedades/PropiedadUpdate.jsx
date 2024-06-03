@@ -13,7 +13,7 @@ export const PropiedadUpdate = () => {
   const token = useAuth().getToken();
   const navigate = useNavigate();
   const rol = useAuth().getRol();
-  
+  const user = useAuth().getUser();
 
   useEffect(() => {
     if (!token) {
@@ -27,11 +27,30 @@ export const PropiedadUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setTipo(data.tipo);
-          setLocalizacion(data.localizacion);
-          setPrecio(data.precio);
-          setPropietario(data.propietario ? data.propietario.nombre : "");
-          setIdPropiedad(data.id);
+        
+          fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+
+              if(data.username!==user){
+                navigate(-1);
+              }
+              else{
+                
+              }
+            });
+
+            setTipo(data.tipo);
+            setLocalizacion(data.localizacion);
+            setPrecio(data.precio);
+            setPropietario(data.propietario ? data.propietario.nombre : "");
+            setIdPropiedad(data.id);
+          
         });
     }
   }, [id]);
@@ -51,12 +70,12 @@ export const PropiedadUpdate = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify(data),
     })
       .then(() => {
-        navigate(-1)
+        navigate(-1);
       })
       .catch((error) => {
         console.error("Error al actualizar los datos:", error);

@@ -38,35 +38,38 @@ export const UsuarioAccount = () => {
     <>
       <NavbarGeneral />
       <Container maxWidth="md" sx={{ marginTop: 8 }}>
-        <Paper elevation={3} sx={{ p: 4 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Avatar sx={{ width: 120, height: 120, mb: 2 }}>{usuario.username ? usuario.username[0] : "C"}</Avatar>
-              <Typography variant="h5" gutterBottom>
-                {usuario.username}
-              </Typography>
-              {/* Aquí puedes agregar más detalles según la información del cliente */}
-              <Divider sx={{ my: 2 }} />
-              <Button variant="contained" color="primary" onClick={handleEdit}>
-                Editar Perfil
-              </Button>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Typography variant="h6" gutterBottom>
-                Información de perfil
-              </Typography>
-              {/* Puedes mostrar más detalles de contacto aquí */}
-              <Typography variant="body1" gutterBottom>
-                <strong>Nombre completo:</strong> {usuario.nombreReal}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                <strong>Correo:</strong> {usuario.correo}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-            </Grid>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
+        <Grid container spacing={4}>
+          {/* Perfil del Usuario */}
+          <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: "primary.main" }}>
+              {usuario.username ? usuario.username[0] : "C"}
+            </Avatar>
+            <Typography variant="h5" gutterBottom>
+              {usuario.username}
+            </Typography>
+            <Divider sx={{ width: '100%', my: 2 }} />
+            <Button variant="contained" color="primary" onClick={handleEdit}>
+              Editar Perfil
+            </Button>
           </Grid>
-        </Paper>
-      </Container>
+          
+          {/* Información del Perfil */}
+          <Grid item xs={12} md={8}>
+            <Typography variant="h6" gutterBottom>
+              Información de perfil
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+            <Typography variant="body1" gutterBottom>
+              <strong>Nombre completo:</strong> {usuario.nombreReal}
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Correo:</strong> {usuario.correo}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
     </>
   );
 };

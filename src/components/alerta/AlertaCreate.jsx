@@ -3,11 +3,9 @@ import { TextField, Button, Grid, Container } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
-export const AgenteCreate = () => {
-  const {id} = useParams();
+export const AlertaCreate = () => {
+  const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [numeroTelefono, setNumeroTelefono] = useState("");
   const token = useAuth().getToken();
 
     const navigate = useNavigate();
@@ -21,12 +19,11 @@ export const AgenteCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     var data = {
-        nombre: nombre,
-        correo: correo,
-        numeroTelefono: numeroTelefono,
+        descripcion: descripcion,
+        nombre: nombre
       };
     
-      fetch(`http://localhost:9090/agente/save`, {
+      fetch(`http://localhost:9090/alerta/save`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -46,10 +43,10 @@ export const AgenteCreate = () => {
       <Container maxWidth="sm" sx={{ mt: 4 }}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Nombre"
+                label="Nombre de la alerta"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
               />
@@ -57,19 +54,11 @@ export const AgenteCreate = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Correo"
-                value={correo}
-                onChange={(e) => setCorreo(e.target.value)}
+                label="Descripcion de la alerta"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
               />
             </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Número de Teléfono"
-                value={numeroTelefono}
-                onChange={(e) => setNumeroTelefono(e.target.value)}
-              />
-            </Grid> 
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary">
                 Enviar

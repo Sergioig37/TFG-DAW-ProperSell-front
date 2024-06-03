@@ -16,6 +16,8 @@ export const PropiedadProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
+  const user = useAuth().getUser();
+  const [propietario, setPropietario] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const [propiedad, setPropiedad] = useState({});
 
@@ -31,15 +33,25 @@ export const PropiedadProfile = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          setPropiedad(data);
-          fetch(`http://localhost:9090/clienteNumero/${data.id}`, {
+          fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
             method: "GET",
             headers: {
               Authorization: "Bearer " + token,
             },
           })
-            .then((res) => res.json()) 
-            .then((data) => setNumeroTelefono(data.numeroTelefono)); 
+            .then((res) => res.json())
+            .then((data) => setPropietario(data.username));
+
+          setPropiedad(data);
+
+          fetch(`http://localhost:9090/usuarioInfoContacto/${user}`, {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => setNumeroTelefono(data.numeroTelefono));
         });
     }
   }, [id, token, navigate]);
@@ -71,9 +83,17 @@ export const PropiedadProfile = () => {
                 {propiedad.tipo}
               </Typography>
               <Divider sx={{ my: 2 }} />
-              <Button variant="contained" color="primary" onClick={handleEdit}>
-                Editar Propiedad
-              </Button>
+              {propietario === user ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleEdit}
+                >
+                  Editar Propiedad
+                </Button>
+              ) : (
+                <></>
+              )}
             </Grid>
             <Grid item xs={12} md={8}>
               <Typography variant="h6" gutterBottom>

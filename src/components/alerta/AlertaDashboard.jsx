@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -9,18 +10,16 @@ import {
   TableRow,
   Paper,
   IconButton,
-  Button,
 } from "@mui/material";
-import { Edit, Delete, Visibility } from "@mui/icons-material";
+import { Edit, Delete, Visibility, Margin } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
-export const ClientesDashboard = () => {
-  const [clientes, setClientes] = useState([]);
+export const AlertasDashboard = () => {
+  const [alertas, setAlertas] = useState([]);
   const navigate = useNavigate();
-  const token = useAuth().getToken();
-  const rol = useAuth().getRol();
-
+  const token = useAuth().getToken(); 
+  const rol = useAuth().getRol()
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -28,7 +27,7 @@ export const ClientesDashboard = () => {
       if (rol != "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch("http://localhost:9090/cliente", {
+        fetch("http://localhost:9090/alerta", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -36,25 +35,25 @@ export const ClientesDashboard = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            setClientes(data);
+            setAlertas(data);
           });
       }
     }
   }, []);
 
   const handleEdit = (id) => {
-    // Navega a la ruta de edición
-    navigate(`/cliente/edit/${id}`);
+    // Navega a la ruta de edición del agente con el ID proporcionado
+    navigate(`/alerta/edit/${id}`);
   };
 
-  const handleDelete = (idCliente) => {
+  const handleDelete = (idAlerta) => {
     // Implementa la lógica de eliminación aquí
-    console.log("Eliminar cliente", idCliente);
+
     var data = {
-      id: idCliente,
+      id: idAlerta,
     };
 
-    fetch(`http://localhost:9090/cliente/del/${data.id}`, {
+    fetch(`http://localhost:9090/alerta/del/${data.id}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -63,12 +62,12 @@ export const ClientesDashboard = () => {
       },
     });
     window.location.reload();
-    console.log("Eliminado Cliente", data.id);
+    
   };
 
   const handleVer = (id) => {
-    // Navega a la ruta de edición
-    navigate(`/cliente/${id}`);
+    // Navega a la ruta de perfil del agente con el ID específico
+    navigate(`/alerta/${id}`);
   };
 
   return (
@@ -77,45 +76,43 @@ export const ClientesDashboard = () => {
       <Button
         variant="contained"
         color="primary"
-        href="/cliente/create"
+        href="/alerta/create"
         sx={{ mt: 4 }}
       >
-        Crear Cliente
+        Crear Alerta
       </Button>
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell align="right">Nombre</TableCell>
-              <TableCell align="right">Correo</TableCell>
-              <TableCell align="right">Teléfono</TableCell>
+              <TableCell align="right">Descripcion</TableCell>
               <TableCell align="right">Ver</TableCell>
               <TableCell align="right">Editar</TableCell>
               <TableCell align="right">Borrar</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {clientes.map((cliente) => (
-              <TableRow key={cliente.id}>
+            {alertas.map((alerta, index) => (
+              <TableRow key={index}>
                 <TableCell component="th" scope="row">
-                  {cliente.id}
+                  {alerta.id}
                 </TableCell>
-                <TableCell align="right">{cliente.nombre}</TableCell>
-                <TableCell align="right">{cliente.correo}</TableCell>
-                <TableCell align="right">{cliente.numeroTelefono}</TableCell>
+                <TableCell align="right">{alerta.nombre}</TableCell>
+                <TableCell align="right">{alerta.descripcion}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleVer(cliente.id)}>
+                  <IconButton onClick={() => handleVer(alerta.id)}>
                     <Visibility />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(cliente.id)}>
+                  <IconButton onClick={() => handleEdit(alerta.id)}>
                     <Edit />
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(cliente.id)}>
+                  <IconButton onClick={() => handleDelete(alerta.id)}>
                     <Delete />
                   </IconButton>
                 </TableCell>

@@ -20,13 +20,15 @@ export const Explorar = () => {
   const [precioMin, setPrecioMin] = useState("");
   const [precioMax, setPrecioMax] = useState("");
   const navigate = useNavigate();
+  const user = useAuth().getUser();
   const token = useAuth().getToken();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch("http://localhost:9090/propiedad", {
+      // Aquí puedes cargar todas las propiedades disponibles inicialmente
+      fetch(`http://localhost:9090/propiedadExcluida/${user}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -47,24 +49,38 @@ export const Explorar = () => {
   const handleSearch = (event) => {
     event.preventDefault();
 
-    fetch(
-      `http://localhost:9090/propiedad/${
-        localizacion === "" ? "void" : localizacion
-      }/${precioMin === "" ? "void" : precioMin}/${
-        precioMax === "" ? "void" : precioMax
-      }`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+    // Realiza el filtrado de propiedades en función de los criterios de búsqueda
+    const filteredPropiedades = propiedades.filter((propiedad) => {
+      // Filtra por localización
+      if (localizacion && propiedad.localizacion !== localizacion) {
+        return false;
       }
-    )
-      .then((res) => (!res.ok ? {} : res.json()))
-      .then((data) => {
-        data ? setPropiedades(data) : setPropiedades([]);
-      });
+      // Filtra por precio mínimo
+      if (precioMin && propiedad.precio < precioMin) {
+        return false;
+      }
+      // Filtra por precio máximo
+      if (precioMax && propiedad.precio > precioMax) {
+        return false;
+      }
+      return true;
+    });
+
+    if (localizacion == "" && precioMax == "" && precioMin == "") {
+      window.location.reload();
+    }
+
+    setLocalizacion("");
+    setPrecioMin("");
+    setPrecioMax("");
+
+    // Actualiza el estado con las propiedades filtradas
+    setPropiedades(filteredPropiedades);
   };
+
+  const handleBorrarFiltros = () => {
+    window.location.reload();
+  }
 
   return (
     <>
@@ -110,7 +126,18 @@ export const Explorar = () => {
                 type="submit"
                 sx={{ height: "100%" }}
               >
-                Buscar
+                Filtrar
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={() => handleBorrarFiltros()}
+                sx={{ height: "100%" }}
+              >
+                Borrar Filtros
               </Button>
             </Grid>
           </Grid>

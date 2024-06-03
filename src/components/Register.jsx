@@ -21,6 +21,7 @@ export const Register = () => {
     correo: "",
     rol: "",
     nombreReal: "",
+    numeroTelefono:""
   });
   const token = useAuth().getToken();
   const navigate = useNavigate();
@@ -96,6 +97,16 @@ export const Register = () => {
             label="Correo Electrónico"
             type="email"
             value={values.correo}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="numeroTelefono"
+            label="Número de teléfono"
+            value={values.numeroTelefono}
             onChange={handleChange}
             required
           />

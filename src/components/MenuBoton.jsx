@@ -1,8 +1,5 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Button, Menu, MenuItem, Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 
@@ -10,10 +7,14 @@ export const MenuBoton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
-  const { clearToken } = useAuth();
+  const user = useAuth().getUser();
+  const {clearToken} = useAuth();
+  
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -25,21 +26,19 @@ export const MenuBoton = () => {
 
   const handleVerPerfil = () => {
     navigate("/account");
-  }
-
-  const colorStyle = { color: "white" };
+  };
 
   return (
     <div>
       <Button
-        style={colorStyle}
-        id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <MenuIcon />
+        <Avatar  alt={user?.name}>
+          
+        </Avatar>
       </Button>
       <Menu
         id="basic-menu"
@@ -50,6 +49,7 @@ export const MenuBoton = () => {
           "aria-labelledby": "basic-button",
         }}
       >
+        <MenuItem >{user}</MenuItem>
         <MenuItem onClick={handleVerPerfil}>Mi cuenta</MenuItem>
         <MenuItem onClick={handleLogout}>Cerrar Sesión</MenuItem>
       </Menu>

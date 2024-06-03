@@ -1,45 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Grid,
+  Container,
+  useStepContext,
+} from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
-export const ClienteCreate = () => {
+export const AlertaUpdate = () => {
+  const { id } = useParams();
+  const [idAlerta, setIdAlerta] = useState(0);
   const [nombre, setNombre] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [numeroTelefono, setNumeroTelefono] = useState("");
+  const [descripcion, setDescripcion] = useState("");
   const token = useAuth().getToken();
-
+  const rol = useAuth().getRol();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
+    } else {
+      if (rol === "ADMIN") {
+        fetch(`http://localhost:9090/alerta/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            setNombre(data.nombre);
+            setDescripcion(data.descripcion)
+            setIdAlerta(data.id);
+          });
+      }
+      else{
+        navigate("/denegado");
+      }
     }
-  }, []);
+  }, [id]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     var data = {
+      id: idAlerta,
       nombre: nombre,
-      correo: correo,
-      numeroTelefono: numeroTelefono,
+      descripcion: descripcion
     };
 
-    fetch("http://localhost:9090/cliente/save", {
-      method: "POST",
+    fetch(`http://localhost:9090/alerta/edit/${data.id}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
       body: JSON.stringify(data),
-    })
-      .then(() => {
-        navigate(-1)
-      })
-      .catch((error) => {
-        console.error("Error al enviar los datos:", error);
-      });
+    });
+    navigate(-1);
   };
+  0;
 
   return (
     <>
@@ -57,22 +79,14 @@ export const ClienteCreate = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Correo"
-                value={correo}
-                onChange={(e) => setCorreo(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Número de Teléfono"
-                value={numeroTelefono}
-                onChange={(e) => setNumeroTelefono(e.target.value)}
+                label="Descripcion"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
               <Button type="submit" variant="contained" color="primary">
-                Enviar
+                Guardar
               </Button>
             </Grid>
           </Grid>

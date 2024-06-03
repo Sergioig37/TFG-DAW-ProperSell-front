@@ -30,67 +30,71 @@ export const NavbarGeneral = () => {
     navigate("/register");
   };
 
+  const handleMisPropiedades = () => {
+    navigate("/mis-propiedades")
+  }
+
+  const handleMisAlertas = () => {
+    navigate("/mis-alertas")
+  }
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >PropeSell</IconButton>
-            {
-              token?(
-                <Typography variant="h6" component="div">
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            PropeSell
+          </IconButton>
+
+          {token && (
+            <Typography variant="h6" component="div">
               <Button variant="h6" component="div" onClick={handleLanding}>
                 Inicio
               </Button>
             </Typography>
-              ):(
-                <></>
-              )
-            }
-            
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {token && rol === "ADMIN" ? (
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                  <Button variant="h6" component="div" onClick={handleExplorar}>
-                    Explorar{" "}
-                  </Button>
-                  <Button
-                    variant="h6"
-                    component="div"
-                    onClick={() => navigate("/admin")}
-                  >
-                    Panel de admin
-                  </Button>
-                </Typography>
-              ) : token && rol !== "ADMIN" ? (
+          )}
+
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {token && rol === "ADMIN" ? (
+              <>
                 <Button variant="h6" component="div" onClick={handleExplorar}>
-                  Explorar{" "}
+                  Explorar
                 </Button>
-              ) : (
-                <></>
-              )}
+                <Button variant="h6" component="div" onClick={() => navigate("/admin")}>
+                  Panel de admin
+                </Button>
+              </>
+            ) : token && rol !== "ADMIN" ? (
+              <>
+                <Button variant="h6" component="div" onClick={handleExplorar}>
+                  Explorar
+                </Button>
+                <Button variant="h6" component="div" onClick={handleMisPropiedades}>
+                  Mis Propiedades
+                </Button>
+                <Button variant="h6" component="div" onClick={handleMisAlertas}>
+                  Mis Alertas
+                </Button>
+              </>
+            ) : null}
+          </Typography>
+
+          {!token ? (
+            <Typography variant="h6" component="div">
+              <Button color="inherit" onClick={handleLogin}>
+                Login
+              </Button>
+              <Button color="inherit" onClick={handleRegister}>
+                Register
+              </Button>
             </Typography>
-            {!token ? (
-              <Typography variant="h6" component="div">
-                <Button color="inherit" onClick={handleLogin}>
-                  Login
-                </Button>
-                <Button color="inherit" onClick={handleRegister}>
-                  Register
-                </Button>
-              </Typography>
-            ) : (
-              <MenuBoton />
-            )}
-          </Toolbar>
-        </AppBar>
-      </Box>
+          ) : (
+            <MenuBoton />
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
     </>
   );
 };

@@ -4,12 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadCreate = () => {
-  const {id} = useParams();
   const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
   const token = useAuth().getToken();
-  const [cliente, setCliente] = useState(id?id:"");
+ const user = useAuth().getUser();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const PropiedadCreate = () => {
       tipo: tipo,
       localizacion: localizacion,
       precio: precio,
-      propietario: cliente,
+      propietario: user,
     };
 
     fetch('http://localhost:9090/propiedad/save', {
