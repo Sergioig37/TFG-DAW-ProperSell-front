@@ -66,6 +66,9 @@ export const UsuarioAccount = () => {
             <Typography variant="body1" gutterBottom>
               <strong>Correo:</strong> {usuario.correo}
             </Typography>
+            <Typography variant="body1" gutterBottom>
+              <strong>Número de teléfono:</strong> {usuario.numeroTelefono}
+            </Typography>
           </Grid>
         </Grid>
       </Paper>

@@ -10,6 +10,7 @@ export const UsuarioUpdate = () => {
   const [nombreReal, setNombreReal] = useState("");
   const [usernameEdit, setUsernameEdit] = useState("");
   const [password, setPassword] = useState("");
+  const [numeroTelefono, setNumeroTelefono] = useState("");
   const token = useAuth().getToken();
   const passwrd = useAuth().getAuthPassword();
   const user = useAuth().getUser();
@@ -31,6 +32,7 @@ export const UsuarioUpdate = () => {
           setUsernameEdit(data.username);
           setCorreo(data.correo);
           setNombreReal(data.nombreReal);
+          setNumeroTelefono(data.numeroTelefono);
           setPassword(passwrd);
           // Password shouldn't be set from server for security reasons
         })
@@ -53,6 +55,7 @@ export const UsuarioUpdate = () => {
       username: usernameEdit,
       correo: correo,
       nombreReal: nombreReal,
+      numeroTelefono: numeroTelefono,
       password: password, // Ensure to hash password before sending to the server
     };
 
@@ -95,6 +98,14 @@ export const UsuarioUpdate = () => {
               label="Nombre de Usuario"
               value={usernameEdit}
               onChange={(e) => setUsernameEdit(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Número de teléfono"
+              value={numeroTelefono}
+              onChange={(e) => setNumeroTelefono(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
