@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { Delete, Edit, Add } from "@mui/icons-material";
+import '../styles/mispropiedades.css';
 
 export const MisPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -68,19 +69,19 @@ export const MisPropiedades = () => {
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
+      <Container maxWidth="lg" className="container">
+        <Typography variant="h4" gutterBottom className="heading">
           Mis Propiedades
         </Typography>
 
         {propiedades.length > 0 && (
-          <Box sx={{ textAlign: "right", mb: 4 }}>
+          <Box className="add-property-box">
             <Button
               variant="contained"
               color="primary"
               onClick={() => navigate("/propiedad/create")}
               startIcon={<Add />}
-              sx={{ textTransform: "none" }}
+              className="add-property-button"
             >
               Añadir propiedad
             </Button>
@@ -91,26 +92,15 @@ export const MisPropiedades = () => {
           <Grid container spacing={4}>
             {propiedades.map((propiedad) => (
               <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-                    transition: "transform 0.2s",
-                    "&:hover": {
-                      transform: "scale(1.02)",
-                    },
-                  }}
-                >
+                <Card className="card">
                   <CardMedia
                     component="img"
                     alt="Imagen de la propiedad"
                     height="200"
                     image="/path/to/default/image.jpg"
-                    sx={{ objectFit: "cover" }}
+                    className="card-media"
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
+                  <CardContent className="card-content">
                     <Typography variant="h6" gutterBottom>
                       {propiedad.tipo}
                     </Typography>
@@ -121,7 +111,7 @@ export const MisPropiedades = () => {
                       ${propiedad.precio}
                     </Typography>
                   </CardContent>
-                  <Box sx={{ p: 2, textAlign: "center" }}>
+                  <Box className="card-actions">
                     <IconButton onClick={() => handleEdit(propiedad.id)}>
                       <Edit color="primary" />
                     </IconButton>
@@ -134,20 +124,11 @@ export const MisPropiedades = () => {
             ))}
           </Grid>
         ) : (
-          <Paper
-            elevation={3}
-            sx={{
-              p: 4,
-              textAlign: "center",
-              backgroundColor: "#f5f5f5",
-              borderRadius: 2,
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
+          <Paper elevation={3} className="no-properties-paper">
+            <Typography variant="h6" className="no-properties-title">
               No tienes propiedades
             </Typography>
-            <Typography variant="body1" color="textSecondary" sx={{ mb: 2 }}>
+            <Typography variant="body1" className="no-properties-text">
               Intenta añadir algunas propiedades.
             </Typography>
             <Button
@@ -155,7 +136,7 @@ export const MisPropiedades = () => {
               color="primary"
               onClick={() => navigate("/propiedad/create")}
               startIcon={<Add />}
-              sx={{ mt: 2, textTransform: "none" }}
+              className="no-properties-button"
             >
               Añadir propiedad
             </Button>

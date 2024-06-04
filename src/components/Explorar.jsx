@@ -9,11 +9,12 @@ import {
   TextField,
   Button,
   Box,
-  Paper
+  Paper,
 } from "@mui/material";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "./styles/explorar.css";
 
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -25,21 +26,30 @@ export const Explorar = () => {
   const token = useAuth().getToken();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      // Aquí puedes cargar todas las propiedades disponibles inicialmente
+    // Aquí puedes cargar todas las propiedades disponibles inicialmente
+    if(token){
       fetch(`http://localhost:9090/propiedadExcluida/${user}`, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPropiedades(data);
-        });
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPropiedades(data);
+      });
     }
+    else{
+      fetch(`http://localhost:9090/propiedad`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPropiedades(data);
+      });
+
+    }
+    
   }, [token]);
 
   const handleVer = (id) => {
@@ -81,24 +91,17 @@ export const Explorar = () => {
 
   const handleBorrarFiltros = () => {
     window.location.reload();
-  }
+  };
 
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "#3f51b5" }}
-        >
+      <Container maxWidth="lg" className="container">
+        <Typography variant="h4" gutterBottom className="explorar-heading">
           Explorar Propiedades
         </Typography>
 
-        <Paper
-          elevation={3}
-          sx={{ p: 3, mb: 4, backgroundColor: "#e3f2fd", borderRadius: 2 }}
-        >
+        <Paper elevation={3} className="explorar-paper">
           <form onSubmit={handleSearch}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={3}>
@@ -108,10 +111,7 @@ export const Explorar = () => {
                   value={localizacion}
                   onChange={(e) => setLocalizacion(e.target.value)}
                   variant="outlined"
-                  sx={{
-                    backgroundColor: "#fff",
-                    borderRadius: 1,
-                  }}
+                  className="explorar-textfield"
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -122,10 +122,7 @@ export const Explorar = () => {
                   value={precioMin}
                   onChange={(e) => setPrecioMin(e.target.value)}
                   variant="outlined"
-                  sx={{
-                    backgroundColor: "#fff",
-                    borderRadius: 1,
-                  }}
+                  className="explorar-textfield"
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -136,10 +133,7 @@ export const Explorar = () => {
                   value={precioMax}
                   onChange={(e) => setPrecioMax(e.target.value)}
                   variant="outlined"
-                  sx={{
-                    backgroundColor: "#fff",
-                    borderRadius: 1,
-                  }}
+                  className="explorar-textfield"
                 />
               </Grid>
               <Grid item xs={12} sm={6} md={3}>
@@ -148,7 +142,7 @@ export const Explorar = () => {
                   variant="contained"
                   color="primary"
                   type="submit"
-                  sx={{ height: "100%", textTransform: "none" }}
+                  className="explorar-button-submit"
                 >
                   Filtrar
                 </Button>
@@ -159,7 +153,7 @@ export const Explorar = () => {
                   variant="contained"
                   color="secondary"
                   onClick={handleBorrarFiltros}
-                  sx={{ height: "100%", textTransform: "none" }}
+                  className="explorar-button-clear"
                 >
                   Borrar Filtros
                 </Button>
@@ -172,27 +166,15 @@ export const Explorar = () => {
           <Grid container spacing={4}>
             {propiedades.map((propiedad) => (
               <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    backgroundColor: "#fff3e0",
-                    borderRadius: 2,
-                    boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                  }}
-                >
+                <Card className="explorar-card">
                   <CardMedia
                     component="img"
                     alt="Imagen de la propiedad"
                     height="140"
                     image="/path/to/default/image.jpg" // Sustituye esto con el atributo propiedad.imagen si tienes la URL de la imagen
                   />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: "bold", color: "#ff7043" }}
-                    >
+                  <CardContent className="explorar-card-content">
+                    <Typography variant="h6" className="explorar-card-title">
                       {propiedad.tipo}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
@@ -203,14 +185,7 @@ export const Explorar = () => {
                     </Typography>
                     <Button
                       onClick={() => handleVer(propiedad.id)}
-                      sx={{
-                        mt: 2,
-                        textTransform: "none",
-                        color: "#3f51b5",
-                        "&:hover": {
-                          backgroundColor: "#e3f2fd",
-                        },
-                      }}
+                      className="explorar-button-view"
                     >
                       Ver propiedad
                     </Button>
@@ -220,24 +195,11 @@ export const Explorar = () => {
             ))}
           </Grid>
         ) : (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            height="300px"
-            flexDirection="column"
-            sx={{
-              backgroundColor: "#f5f5f5",
-              borderRadius: 2,
-              p: 4,
-              textAlign: "center",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
+          <Box className="explorar-no-results-box">
+            <Typography variant="h6" className="explorar-no-results-title">
               Sin resultados
             </Typography>
-            <Typography variant="body1" color="textSecondary">
+            <Typography variant="body1" className="explorar-no-results-text">
               Intenta ajustar tus filtros de búsqueda.
             </Typography>
           </Box>

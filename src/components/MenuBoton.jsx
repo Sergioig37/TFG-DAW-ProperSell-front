@@ -8,6 +8,7 @@ export const MenuBoton = () => {
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const user = useAuth().getUser();
+  const rol = useAuth().getRol();
   const {clearToken} = useAuth();
   
 
@@ -32,7 +33,7 @@ export const MenuBoton = () => {
     <div>
      <Box display="flex" alignItems="center">
       <Typography variant="h6" sx={{ marginRight: 2 }}>
-        {user}
+        {user} ({rol})
       </Typography>
       <Button
         aria-controls={open ? "basic-menu" : undefined}

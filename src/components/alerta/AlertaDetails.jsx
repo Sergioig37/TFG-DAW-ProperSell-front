@@ -18,7 +18,7 @@ import { Edit } from "@mui/icons-material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
-export const AlertaProfile = () => {
+export const AlertaDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [alerta, setAgente] = useState({});

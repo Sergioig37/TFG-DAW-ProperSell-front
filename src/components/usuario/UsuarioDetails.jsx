@@ -12,7 +12,7 @@ import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const UsuarioProfile = () => {
+export const UsuarioDetails = () => {
   const { username } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();

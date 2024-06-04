@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, List, ListItem, ListItemText, Paper, Container, Typography } from "@mui/material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-
+import '../styles/adminpanel.css';
 export const AdminPanel = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
@@ -38,116 +38,41 @@ export const AdminPanel = () => {
   return (
     <>
     <NavbarGeneral />
-    <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          backgroundColor: "#f5f5f5",
-          borderRadius: 2,
-        }}
-      >
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{
-            mb: 3,
-            fontWeight: "bold",
-            color: "#3f51b5",
-          }}
-        >
+    <Container maxWidth="md" className="container">
+      <Paper elevation={3} className="control-panel-paper">
+        <Typography variant="h5" gutterBottom className="control-panel-title">
           Panel de Control
         </Typography>
         <List>
-          <ListItem
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 2,
-              p: 2,
-              borderRadius: 2,
-              backgroundColor: "#e3f2fd",
-              "&:hover": {
-                backgroundColor: "#bbdefb",
-              },
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+          <ListItem className="list-item">
             <ListItemText primary="Alertas" />
             <Button
               variant="contained"
               color="primary"
               onClick={handleAlertaRoute}
-              sx={{
-                textTransform: "none",
-                backgroundColor: "#3f51b5",
-                "&:hover": {
-                  backgroundColor: "#303f9f",
-                },
-              }}
+              className="button-alertas"
             >
               Ver Dashboard
             </Button>
           </ListItem>
-          <ListItem
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 2,
-              p: 2,
-              borderRadius: 2,
-              backgroundColor: "#e3f2fd",
-              "&:hover": {
-                backgroundColor: "#bbdefb",
-              },
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+          <ListItem className="list-item">
             <ListItemText primary="Propiedades" />
             <Button
               variant="contained"
               color="primary"
               onClick={handlePropiedades}
-              sx={{
-                textTransform: "none",
-                backgroundColor: "#4caf50",
-                "&:hover": {
-                  backgroundColor: "#388e3c",
-                },
-              }}
+              className="button-propiedades"
             >
               Ver Dashboard
             </Button>
           </ListItem>
-          <ListItem
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 2,
-              p: 2,
-              borderRadius: 2,
-              backgroundColor: "#e3f2fd",
-              "&:hover": {
-                backgroundColor: "#bbdefb",
-              },
-              boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
+          <ListItem className="list-item">
             <ListItemText primary="Usuarios" />
             <Button
               variant="contained"
               color="primary"
               onClick={handleUsuarios}
-              sx={{
-                textTransform: "none",
-                backgroundColor: "#ff9800",
-                "&:hover": {
-                  backgroundColor: "#f57c00",
-                },
-              }}
+              className="button-usuarios"
             >
               Ver Dashboard
             </Button>

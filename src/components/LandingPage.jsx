@@ -25,7 +25,7 @@ export const LandingPage = () => {
   const token = useAuth().getToken();
   const handleHome = () => {
     navigate("/explore");
-  }
+  };
 
   return (
     <>
@@ -36,23 +36,22 @@ export const LandingPage = () => {
             ¡Bienvenido a ProperSell!
           </Typography>
           <Typography variant="body1" align="center" paragraph>
-            Somos una empresa dedicada a ayudarte a encontrar la casa
-            de tus sueños.
+            Somos una empresa dedicada a ayudarte a encontrar la casa de tus
+            sueños.
           </Typography>
         </Box>
-        {
-          token?(
-            <Box textAlign="center" my={4}>
-          <Button variant="contained" color="primary" size="large" onClick={handleHome}>
+
+        <Box textAlign="center" my={4}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleHome}
+          >
             Ver propiedades
           </Button>
         </Box>
-          ):(
-            <>
-            </>
-          )
-        }
-        
+
         <Grid container spacing={2} justifyContent="center">
           <Grid item xs={12} md={6}>
             <Paper elevation={6} sx={{ p: 2 }}>

@@ -12,7 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
-export const PropiedadProfile = () => {
+export const PropiedadDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
