@@ -13,8 +13,7 @@ import { NavbarGeneral } from "../NavbarGeneral";
 export const Estadisticas = () => {
   const [propiedadesMasCaras, setPropiedadesMasCaras] = useState(null);
   const [usuariosConXAlertas, setUsuariosConXAlertas] = useState(null);
-  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] =
-    useState(null);
+  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad]=useState(null);
   const [alertasPopulares, setAlertasPopulares] = useState(null);
   const [usuariosBaneados, setUsuariosBaneados] = useState(null);
   const [alertasLargas, setAlertasLargas] = useState(null);
@@ -75,7 +74,7 @@ export const Estadisticas = () => {
   }, []);
 
   const handleVerAlertasLargas = () => {
-    fetch(`http://localhost:9090/estadisticas/alertas/0`, {
+    fetch(`http://localhost:9090/estadisticas/alertas/${tamanoDescripcion}`, {
       method: "GET",
     })
       .then((res) => res.json())
