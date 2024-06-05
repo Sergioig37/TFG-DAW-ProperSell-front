@@ -93,13 +93,7 @@ export const MisPropiedades = () => {
             {propiedades.map((propiedad) => (
               <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
                 <Card className="card">
-                  <CardMedia
-                    component="img"
-                    alt="Imagen de la propiedad"
-                    height="200"
-                    image="/path/to/default/image.jpg"
-                    className="card-media"
-                  />
+                
                   <CardContent className="card-content">
                     <Typography variant="h6" gutterBottom>
                       {propiedad.tipo}

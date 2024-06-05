@@ -29,9 +29,11 @@ export const AlertaDetails = () => {
     window.location.reload
     if (!token) {
       navigate("/login");
-      return;
+      
     }
-
+    if(rol!=="ADMIN"){
+      navigate("/denegado")
+    }
     fetch(`http://localhost:9090/alerta/${id}`, {
       method: "GET",
       headers: {

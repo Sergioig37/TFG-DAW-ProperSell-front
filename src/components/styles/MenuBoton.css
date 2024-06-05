@@ -1,0 +1,16 @@
+/* MenuBoton.css */
+.dropdown-toggle::after {
+    display: none;
+  }
+  
+  .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+  .dropdown-toggle::after {
+    display: none;
+  }
+  .navbar-brand {
+    cursor: pointer;
+  }
+  

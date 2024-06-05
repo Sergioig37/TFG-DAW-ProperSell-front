@@ -27,34 +27,36 @@ export const Explorar = () => {
 
   useEffect(() => {
     // Aquí puedes cargar todas las propiedades disponibles inicialmente
-    if(token){
+    if (token) {
       fetch(`http://localhost:9090/propiedadExcluida/${user}`, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPropiedades(data);
-      });
-    }
-    else{
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPropiedades(data);
+        });
+    } else {
       fetch(`http://localhost:9090/propiedad`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPropiedades(data);
-      });
-
+        method: "GET",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPropiedades(data);
+        });
     }
-    
   }, [token]);
 
   const handleVer = (id) => {
     // Navega a la ruta de edición
-    navigate(`/propiedad/${id}`);
+
+    if (token) {
+      navigate(`/propiedad/${id}`);
+    } else {
+      navigate("/login");
+    }
   };
 
   const handleSearch = (event) => {
@@ -81,9 +83,7 @@ export const Explorar = () => {
       window.location.reload();
     }
 
-    setLocalizacion("");
-    setPrecioMin("");
-    setPrecioMax("");
+    
 
     // Actualiza el estado con las propiedades filtradas
     setPropiedades(filteredPropiedades);
@@ -167,12 +167,6 @@ export const Explorar = () => {
             {propiedades.map((propiedad) => (
               <Grid item key={propiedad.id} xs={12} sm={6} md={4}>
                 <Card className="explorar-card">
-                  <CardMedia
-                    component="img"
-                    alt="Imagen de la propiedad"
-                    height="140"
-                    image="/path/to/default/image.jpg" // Sustituye esto con el atributo propiedad.imagen si tienes la URL de la imagen
-                  />
                   <CardContent className="explorar-card-content">
                     <Typography variant="h6" className="explorar-card-title">
                       {propiedad.tipo}
@@ -183,12 +177,16 @@ export const Explorar = () => {
                     <Typography variant="body1" color="textPrimary">
                       ${propiedad.precio}
                     </Typography>
-                    <Button
-                      onClick={() => handleVer(propiedad.id)}
-                      className="explorar-button-view"
-                    >
-                      Ver propiedad
-                    </Button>
+                    {token ? (
+                      <Button
+                        onClick={() => handleVer(propiedad.id)}
+                        className="explorar-button-view"
+                      >
+                        Ver propiedad
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                   </CardContent>
                 </Card>
               </Grid>

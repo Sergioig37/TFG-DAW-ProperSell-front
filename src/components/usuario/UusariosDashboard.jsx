@@ -43,16 +43,13 @@ export const UsuariosDashboard = () => {
           });
       }
     }
-  }, []);
+  }, [token, rol, user, navigate]);
 
   const handleDarDeBaja = (username) => {
-    console.log("Eliminar usuario");
-    var data = {
-      username: username,
-    };
+    const enabled = false;
 
-    fetch(`http://localhost:9090/usuario/disable/${data.username}`, {
-      method: "GET",
+    fetch(`http://localhost:9090/usuario/enabled/${username}/${enabled}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -60,20 +57,20 @@ export const UsuariosDashboard = () => {
       },
     }).then(() => {
       setUsuarios((prevUsuarios) =>
-        prevUsuarios.filter((usuario) => usuario.username !== username)
+        prevUsuarios.map((usuario) =>
+          usuario.username === username
+            ? { ...usuario, habilitado: false }
+            : usuario
+        )
       );
     });
-    window.location.reload();
   };
 
   const handleDarDeAlta = (username) => {
-    console.log("Eliminar usuario");
-    var data = {
-      username: username,
-    };
+    const enabled = true;
 
-    fetch(`http://localhost:9090/usuario/enable/${data.username}`, {
-      method: "GET",
+    fetch(`http://localhost:9090/usuario/enabled/${username}/${enabled}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -81,10 +78,13 @@ export const UsuariosDashboard = () => {
       },
     }).then(() => {
       setUsuarios((prevUsuarios) =>
-        prevUsuarios.filter((usuario) => usuario.username !== username)
+        prevUsuarios.map((usuario) =>
+          usuario.username === username
+            ? { ...usuario, habilitado: true }
+            : usuario
+        )
       );
     });
-    window.location.reload();
   };
 
   const handleVer = (username) => {
@@ -125,7 +125,7 @@ export const UsuariosDashboard = () => {
                 <TableCell align="right">{usuario.correo}</TableCell>
                 <TableCell align="right">{usuario.nombreReal}</TableCell>
                 <TableCell align="right">
-                  {usuario.habilitado === true ? "Si" : "No"}
+                  {usuario.habilitado ? "Si" : "No"}
                 </TableCell>
                 <TableCell align="right">
                   <IconButton onClick={() => handleVer(usuario.username)}>
@@ -133,16 +133,12 @@ export const UsuariosDashboard = () => {
                   </IconButton>
                 </TableCell>
                 <TableCell align="right">
-                  {usuario.habilitado == true ? (
-                    <IconButton
-                      onClick={() => handleDarDeBaja(usuario.username)}
-                    >
+                  {usuario.habilitado ? (
+                    <IconButton onClick={() => handleDarDeBaja(usuario.username)}>
                       <CloseIcon />
                     </IconButton>
                   ) : (
-                    <IconButton
-                      onClick={() => handleDarDeAlta(usuario.username)}
-                    >
+                    <IconButton onClick={() => handleDarDeAlta(usuario.username)}>
                       <CheckIcon />
                     </IconButton>
                   )}

@@ -18,11 +18,15 @@ export const UsuarioDetails = () => {
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
   const  user  = useAuth().getUser();
+  const  rol  = useAuth().getRol();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
+      if(rol!=="ADMIN"){
+        navigate("/denegado")
+      }
       fetch(`http://localhost:9090/usuario/${username}`, {
         method: "GET",
         headers: {

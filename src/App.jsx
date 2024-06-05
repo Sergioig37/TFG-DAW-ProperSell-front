@@ -19,6 +19,7 @@ import { UsuarioDetails } from "./components/usuario/UsuarioDetails"
 import { UsuarioUpdate } from "./components/usuario/UsuarioUpdate"
 import { MisPropiedades } from "./components/propiedades/MisPropiedades"
 import { MisAlertas } from "./components/alerta/MisAlertas"
+import { Estadisticas } from "./components/estadisticas/Estadisticas"
 
 
 
@@ -50,7 +51,8 @@ export const App = () => {
             <Route path="/usuario/edit/:username" element={<UsuarioUpdate/>}/>
             <Route path="/account" element={<UsuarioAccount/>}/>
             <Route path="/mis-propiedades" element={<MisPropiedades/>}/>
-            <Route path="mis-alertas" element={<MisAlertas/>}/>
+            <Route path="/mis-alertas" element={<MisAlertas/>}/>
+            <Route path="/estadisticas" element={<Estadisticas/>}/>
             
           </Routes> 
         </BrowserRouter>

@@ -1,112 +1,82 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import { Navbar, Nav, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import { MenuBoton } from "./MenuBoton";
 
 export const NavbarGeneral = () => {
   const navigate = useNavigate();
-  const token = useAuth().getToken();
-  const rol = useAuth().getRol();
+  const { getToken, getRol } = useAuth();
+  const token = getToken();
+  const rol = getRol();
 
-  const handleExplorar = () => {
-    navigate("/explore");
-  };
-
-  const handleLanding = () => {
-    navigate("/");
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleRegister = () => {
-    navigate("/register");
-  };
-
-  const handleMisPropiedades = () => {
-    navigate("/mis-propiedades");
-  };
-
-  const handleMisAlertas = () => {
-    navigate("/mis-alertas");
+  const handleNavigation = (path) => {
+    navigate(path);
   };
 
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              PropeSell
-            </IconButton>
-
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Navbar.Brand onClick={() => handleNavigation("/")}>
+          PropeSell
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
             {token && (
-              <Typography variant="h6" component="div">
-                <Button variant="h6" component="div" onClick={handleLanding}>
-                  Inicio
-                </Button>
-              </Typography>
+              <>
+                <Nav.Link onClick={() => handleNavigation("/explore")}>
+                  Explorar
+                </Nav.Link>
+                {rol === "ADMIN" ? (
+                  <>
+                    <Nav.Link onClick={() => handleNavigation("/")}>
+                      Inicio
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNavigation("/admin")}>
+                      Panel de Admin
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNavigation("/estadisticas")}>
+                      Estadísticas
+                    </Nav.Link>
+                  </>
+                ) : (
+                  <>
+                    <Nav.Link onClick={() => handleNavigation("/")}>
+                      Inicio
+                    </Nav.Link>
+                    <Nav.Link
+                      onClick={() => handleNavigation("/mis-propiedades")}
+                    >
+                      Mis Propiedades
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNavigation("/mis-alertas")}>
+                      Mis Alertas
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNavigation("/estadisticas")}>
+                      Estadísticas
+                    </Nav.Link>
+                  </>
+                )}
+              </>
             )}
-
-            {token && rol === "ADMIN" ? (
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Button variant="h6" component="div" onClick={handleExplorar}>
-                  Explorar
-                </Button>
-                <Button
-                  variant="h6"
-                  component="div"
-                  onClick={() => navigate("/admin")}
-                >
-                  Panel de admin
-                </Button>
-              </Typography>
-            ) : token && rol !== "ADMIN" ? (
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <Button variant="h6" component="div" onClick={handleExplorar}>
-                  Explorar
-                </Button>
-                <Button
-                  variant="h6"
-                  component="div"
-                  onClick={handleMisPropiedades}
-                >
-                  Mis Propiedades
-                </Button>
-                <Button variant="h6" component="div" onClick={handleMisAlertas}>
-                  Mis Alertas
-                </Button>
-              </Typography>
-            ) : null}
-
+          </Nav>
+          <Nav className="ms-auto">
             {!token ? (
-              <Typography variant="h6" component="div">
-                <Button color="inherit" onClick={handleLogin}>
-                  Login
-                </Button>
-                <Button color="inherit" onClick={handleRegister}>
-                  Register
-                </Button>
-              </Typography>
+              <>
+                <Nav.Link onClick={() => handleNavigation("/login")}>
+                  Iniciar Sesión
+                </Nav.Link>
+                <Nav.Link onClick={() => handleNavigation("/register")}>
+                  Registrarse
+                </Nav.Link>
+              </>
             ) : (
               <MenuBoton />
             )}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };

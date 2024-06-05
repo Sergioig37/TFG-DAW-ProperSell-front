@@ -7,12 +7,18 @@ export const AlertaCreate = () => {
   const [descripcion, setDescripcion] = useState("");
   const [nombre, setNombre] = useState("");
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
 
     const navigate = useNavigate();
 
      useEffect(() => {
     if(!token){
       navigate("/login");
+    }
+    else{
+      if(rol!=="ADMIN"){
+        navigate("/denegado")
+      }
     }
   }, [])
 
