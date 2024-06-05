@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { Delete, Edit, Add } from "@mui/icons-material";
-import '../styles/mispropiedades.css';
+
 
 export const MisPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);

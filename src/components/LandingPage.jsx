@@ -1,22 +1,7 @@
 import React from "react";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-
-import Paper from "@mui/material/Paper";
-
-import Typography from "@mui/material/Typography";
-
-import { ImageListItem } from "@mui/material";
-import { AccordionSummary } from "@mui/material";
-import { ExpandMore } from "@mui/icons-material";
-import { AccordionDetails } from "@mui/material";
-
+import { Container, Row, Col, Button, Card, Accordion } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { faqs, itemData } from "./data/Data";
-import { StyledAccordion, StyledImageList } from "./styles/Styles";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
 
@@ -31,87 +16,90 @@ export const LandingPage = () => {
     <>
       <NavbarGeneral />
       <Container>
-        <Box mt={4}>
-          <Typography variant="h4" align="center" gutterBottom>
-            ¡Bienvenido a ProperSell!
-          </Typography>
-          <Typography variant="body1" align="center" paragraph>
-            Somos una empresa dedicada a ayudarte a encontrar la casa de tus
-            sueños.
-          </Typography>
-        </Box>
-
-        <Box textAlign="center" my={4}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleHome}
-          >
-            Ver propiedades
-          </Button>
-        </Box>
-
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} md={6}>
-            <Paper elevation={6} sx={{ p: 2 }}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Encuentra tu Hogar
-              </Typography>
-              <Typography variant="body2" align="center">
-                Explora una amplia gama de propiedades e inmobiliarias
-                dispuestas a ayudarte encontrar un hogar.
-              </Typography>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Paper elevation={6} sx={{ p: 2 }}>
-              <Typography variant="h5" align="center" gutterBottom>
-                Vende tu Propiedad
-              </Typography>
-              <Typography variant="body2" align="center">
-                Benefíciate de nuestra experiencia y red de contactos para
-                vender tu propiedad rápidamente.
-              </Typography>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Box my={4}>
-          {/* Galería de imágenes */}
-          <StyledImageList cols={3} gap={8}>
-            {itemData.map((item) => (
-              <ImageListItem key={item.img}>
-                <img
-                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                />
-              </ImageListItem>
-            ))}
-          </StyledImageList>
-        </Box>
-        <Box my={4}>
-          {/* Sección de FAQ */}
-          <Typography variant="h5" align="center" gutterBottom>
-            Preguntas Frecuentes
-          </Typography>
-          {faqs.map((faq) => (
-            <StyledAccordion key={faq.question}>
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>{faq.question}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.answer}</Typography>
-              </AccordionDetails>
-            </StyledAccordion>
-          ))}
-        </Box>
+        <Row className="mt-4 text-center">
+          <Col>
+            <h4>¡Bienvenido a ProperSell!</h4>
+            <p>
+              Somos una empresa dedicada a ayudarte a encontrar la casa de tus
+              sueños.
+            </p>
+          </Col>
+        </Row>
+        <Row className="text-center my-4">
+          <Col>
+            <Button variant="primary" size="lg" onClick={handleHome}>
+              Ver propiedades
+            </Button>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col xs={12} md={6} className="mb-3">
+            <Card>
+              <Card.Body>
+                <Card.Title className="text-center">Encuentra tu Hogar</Card.Title>
+                <Card.Text className="text-center">
+                  Explora una amplia gama de propiedades e inmobiliarias
+                  dispuestas a ayudarte a encontrar un hogar.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col xs={12} md={6} className="mb-3">
+            <Card>
+              <Card.Body>
+                <Card.Title className="text-center">Vende tu Propiedad</Card.Title>
+                <Card.Text className="text-center">
+                  Benefíciate de nuestra experiencia y red de contactos para
+                  vender tu propiedad rápidamente.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row className="my-4">
+          <Col>
+            <h5 className="text-center">Galería de Imágenes</h5>
+            <div className="d-flex flex-wrap justify-content-center">
+              {itemData.map((item) => (
+                <div key={item.img} className="m-2 image-container">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="img-fluid image-item"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </Col>
+        </Row>
+        <Row className="my-4">
+          <Col>
+            <h5 className="text-center">Preguntas Frecuentes</h5>
+            <Accordion>
+              {faqs.map((faq, index) => (
+                <Accordion.Item eventKey={index} key={faq.question}>
+                  <Accordion.Header>{faq.question}</Accordion.Header>
+                  <Accordion.Body>{faq.answer}</Accordion.Body>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+          </Col>
+        </Row>
       </Container>
+
+      <style jsx>{`
+        .image-container {
+          width: 300px;
+          height: 300px;
+          overflow: hidden;
+        }
+        .image-item {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      `}</style>
     </>
   );
 };

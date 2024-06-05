@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  TextField,
-  Button,
-  Typography,
-  Container,
-  Paper,
-  FormControl,
-  FormHelperText,
-} from "@mui/material";
+import { Form, Button, Container, Row, Col, Card, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 
@@ -16,7 +8,6 @@ export const Register = () => {
     username: "",
     password: "",
     correo: "",
-    rol: "",
     nombreReal: "",
     numeroTelefono: "",
   });
@@ -83,7 +74,7 @@ export const Register = () => {
       formIsValid = false;
       errors["numeroTelefono"] =
         "El número de teléfono debe contener solo números";
-    } else if (values.numeroTelefono.trim().length !== 9) {
+    } else if (values.numeroTelefono.trim().length !== 10) {
       formIsValid = false;
       errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
     }
@@ -93,93 +84,86 @@ export const Register = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={6} style={{ marginTop: "16px", padding: "32px" }}>
-        <Typography component="h1" variant="h5">
-          Registro de Usuario
-        </Typography>
-        <form onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
-          <FormControl fullWidth error={errors["nombreReal"]}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="nombreReal"
-              label="Nombre real"
-              value={values.nombreReal}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>{errors["nombreReal"]}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth error={errors["username"]}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="username"
-              label="Nombre de usuario"
-              value={values.username}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>{errors["username"]}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth error={errors["password"]}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>{errors["password"]}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth error={errors["correo"]}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="correo"
-              label="Correo Electrónico"
-              type="email"
-              value={values.correo}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>{errors["correo"]}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth error={errors["numeroTelefono"]}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="numeroTelefono"
-              label="Número de teléfono"
-              value={values.numeroTelefono}
-              onChange={handleChange}
-              required
-            />
-            <FormHelperText>{errors["numeroTelefono"]}</FormHelperText>
-          </FormControl>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            style={{ marginTop: "24px" }}
-          >
-            Registrarse
-          </Button>
-        </form>
-      </Paper>
-      <Typography variant="body2" sx={{ mt: 2 }}>
-        ¿Ya tienes cuenta? <a href="/login">Inicia sesión</a>
-      </Typography>
+    <Container>
+      <Row className="justify-content-md-center mt-5">
+        <Col md={6}>
+          <Card>
+            <Card.Body>
+              <Card.Title className="text-center mb-4">Registro de Usuario</Card.Title>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="nombreReal">
+                  <Form.Label>Nombre real</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="nombreReal"
+                    value={values.nombreReal}
+                    onChange={handleChange}
+                    isInvalid={!!errors.nombreReal}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.nombreReal}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="username" className="mt-3">
+                  <Form.Label>Nombre de usuario</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="username"
+                    value={values.username}
+                    onChange={handleChange}
+                    isInvalid={!!errors.username}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="password" className="mt-3">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleChange}
+                    isInvalid={!!errors.password}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="correo" className="mt-3">
+                  <Form.Label>Correo Electrónico</Form.Label>
+                  <Form.Control
+                    type="email"
+                    name="correo"
+                    value={values.correo}
+                    onChange={handleChange}
+                    isInvalid={!!errors.correo}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.correo}</Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group controlId="numeroTelefono" className="mt-3">
+                  <Form.Label>Número de teléfono</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="numeroTelefono"
+                    value={values.numeroTelefono}
+                    onChange={handleChange}
+                    isInvalid={!!errors.numeroTelefono}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.numeroTelefono}</Form.Control.Feedback>
+                </Form.Group>
+                <Button variant="primary" type="submit" className="mt-4" block>
+                  Registrarse
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+          <div className="text-center mt-3">
+            <Alert variant="secondary">
+              ¿Ya tienes cuenta? <Alert.Link href="/login">Inicia sesión</Alert.Link>
+            </Alert>
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 };

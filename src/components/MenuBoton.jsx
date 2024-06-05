@@ -1,25 +1,14 @@
 import * as React from "react";
-import { Button, Menu, MenuItem, Avatar, Typography, Box } from "@mui/material";
+import { Dropdown, ButtonGroup, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 export const MenuBoton = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  const open = Boolean(anchorEl);
   const user = useAuth().getUser();
   const rol = useAuth().getRol();
   const { clearToken } = useAuth();
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleLogout = () => {
     clearToken();
@@ -31,41 +20,26 @@ export const MenuBoton = () => {
   };
 
   return (
-    <div>
-      <Box display="flex" alignItems="center">
-        <Typography variant="h6" sx={{ marginRight: 2, color: "#fff" }}> {/* Cambio del color del texto a blanco */}
-          {user} ({rol})
-        </Typography>
-        <Button
-          aria-controls={open ? "basic-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          sx={{ display: "flex", alignItems: "center" }}
-        >
-          <Avatar sx={{ marginRight: 1 }}>
-            <AccountCircleIcon />
-          </Avatar>
+    <div className="d-flex align-items-center">
+      <span className="me-2 text-white">
+        {user} ({rol})
+      </span>
+      <Dropdown as={ButtonGroup}>
+        <Button variant="outline-light" className="d-flex align-items-center">
+          <FaUserCircle size={24} />
         </Button>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <MenuItem onClick={handleVerPerfil}>
-            <AccountCircleIcon sx={{ marginRight: 1 }} />
+        <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic" />
+        <Dropdown.Menu align="end">
+          <Dropdown.Item onClick={handleVerPerfil}>
+            <FaUserCircle className="me-2" />
             Mi cuenta
-          </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <LogoutIcon sx={{ marginRight: 1 }} />
+          </Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>
+            <FaSignOutAlt className="me-2" />
             Cerrar Sesión
-          </MenuItem>
-        </Menu>
-      </Box>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
 };

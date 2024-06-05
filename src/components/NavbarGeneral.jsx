@@ -23,6 +23,10 @@ export const NavbarGeneral = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            <Nav className="d-lg-none">
+              {/* Show MenuBoton first when screen is small */}
+              {token && <MenuBoton />}
+            </Nav>
             {token && (
               <>
                 <Nav.Link onClick={() => handleNavigation("/explore")}>
@@ -45,9 +49,7 @@ export const NavbarGeneral = () => {
                     <Nav.Link onClick={() => handleNavigation("/")}>
                       Inicio
                     </Nav.Link>
-                    <Nav.Link
-                      onClick={() => handleNavigation("/mis-propiedades")}
-                    >
+                    <Nav.Link onClick={() => handleNavigation("/mis-propiedades")}>
                       Mis Propiedades
                     </Nav.Link>
                     <Nav.Link onClick={() => handleNavigation("/mis-alertas")}>

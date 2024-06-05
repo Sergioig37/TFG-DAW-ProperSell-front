@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, List, ListItem, ListItemText, Paper, Container, Typography } from "@mui/material";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import '../styles/adminpanel.css';
+
 export const AdminPanel = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
