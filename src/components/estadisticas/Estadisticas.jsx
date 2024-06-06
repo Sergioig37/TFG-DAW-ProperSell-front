@@ -92,7 +92,7 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-info">Número de Propiedades que cuestan más de {precioPropiedad} euros:</h5>
+            <h5 className="text-info">Número de propiedades que cuestan más de {precioPropiedad} euros:</h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={1}>
@@ -122,7 +122,7 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-success">Usuarios con Más de {numeroAlertas} Alertas:</h5>
+            <h5 className="text-success">Usuarios con más de {numeroAlertas} alertas:</h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={1}>
@@ -152,7 +152,7 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-warning">Usuarios con Más de Una Propiedad:</h5>
+            <h5 className="text-warning">Usuarios con más de una propiedad:</h5>
             <div className="mt-3">
               <strong>Cantidad:</strong> {usuariosConMasDeUnaPropiedad}
             </div>
@@ -170,7 +170,7 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-secondary">Usuarios Bloqueados:</h5>
+            <h5 className="text-secondary">Usuarios bloqueados:</h5>
             <div className="mt-3">
               <strong>Cantidad:</strong> {usuariosBaneados}
             </div>
