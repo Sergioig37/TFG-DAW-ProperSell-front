@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-  ListGroup,
-} from "react-bootstrap";
+import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faEnvelope, faPhone, faEdit } from "@fortawesome/free-solid-svg-icons";
+import styles from "../styles/usuarioAccount.module.css";
 
 export const UsuarioAccount = () => {
   const username = useAuth().getUser();
@@ -45,30 +39,33 @@ export const UsuarioAccount = () => {
     <>
       <NavbarGeneral />
       <Container className="mt-4">
-        <Card>
-          <Card.Body>
+        <Card className={`shadow-lg border-0 ${styles.card}`}>
+          <Card.Body className={styles["card-body"]}>
             <Row>
               <Col xs={12} md={4} className="text-center">
-                <div className="avatar-icon">
+                <div className={`mb-3 ${styles["avatar-icon"]}`}>
                   <FontAwesomeIcon icon={faUser} size="7x" />
                 </div>
-                <h5>{usuario.username}</h5>
-                <Button variant="primary" onClick={handleEdit}>
+                <h5 className="text-primary">{usuario.username}</h5>
+                <Button variant="outline-primary" onClick={handleEdit} className="mt-3">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />
                   Editar Perfil
                 </Button>
               </Col>
               <Col xs={12} md={8}>
-                <h6>Información de perfil</h6>
-                <ListGroup>
-                  <ListGroup.Item>
-                    <strong>Nombre completo:</strong> {usuario.nombreReal}
+                <h6 className="text-muted mb-3">Información de perfil</h6>
+                <ListGroup variant="flush">
+                  <ListGroup.Item className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faUser} className="me-3 text-secondary" />
+                    <strong>Nombre completo:</strong> <span className="ms-2">{usuario.nombreReal}</span>
                   </ListGroup.Item>
-                  <ListGroup.Item>
-                    <strong>Correo:</strong> {usuario.correo}
+                  <ListGroup.Item className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faEnvelope} className="me-3 text-secondary" />
+                    <strong>Correo:</strong> <span className="ms-2">{usuario.correo}</span>
                   </ListGroup.Item>
-                  <ListGroup.Item>
-                    <strong>Número de teléfono:</strong>{" "}
-                    {usuario.numeroTelefono}
+                  <ListGroup.Item className="d-flex align-items-center">
+                    <FontAwesomeIcon icon={faPhone} className="me-3 text-secondary" />
+                    <strong>Número de teléfono:</strong> <span className="ms-2">{usuario.numeroTelefono}</span>
                   </ListGroup.Item>
                 </ListGroup>
               </Col>

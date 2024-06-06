@@ -45,8 +45,7 @@ export const Estadisticas = () => {
   };
 
   useEffect(() => {
-
-    if(!token || rol !== "ADMIN"){
+    if (!token || rol !== "ADMIN") {
       navigate("/denegado");
     }
 
@@ -89,25 +88,27 @@ export const Estadisticas = () => {
     <>
       <NavbarGeneral />
       <Container className="mt-4">
-        <h4 className="mb-4">Estadísticas</h4>
+        <h4 className="mb-4 text-primary">Estadísticas</h4>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Número de Propiedades que cuestan más de {precioPropiedad} euros:</h5>
+            <h5 className="text-info">Número de Propiedades que cuestan más de {precioPropiedad} euros:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={6}>
+                <Col xs={1}>
                   <Form.Group controlId="precioPropiedad">
                     <Form.Control
                       type="number"
                       placeholder="Precio"
                       value={precioPropiedad}
                       onChange={(e) => setPrecioPropiedad(e.target.value)}
+                      className="border-info form-control-sm"
+                      min="0"
                     />
                   </Form.Group>
                 </Col>
                 <Col xs={6}>
-                  <Button variant="primary" onClick={handleVerPropiedadesMasCaras}>
+                  <Button variant="info" onClick={handleVerPropiedadesMasCaras}>
                     Ver
                   </Button>
                 </Col>
@@ -119,23 +120,25 @@ export const Estadisticas = () => {
           </Card.Body>
         </Card>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Usuarios con Más de {numeroAlertas} Alertas:</h5>
+            <h5 className="text-success">Usuarios con Más de {numeroAlertas} Alertas:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={6}>
+                <Col xs={1}>
                   <Form.Group controlId="numeroAlertas">
                     <Form.Control
                       type="number"
                       placeholder="Número de Alertas"
                       value={numeroAlertas}
                       onChange={(e) => setNumeroAlertas(e.target.value)}
+                      className="border-success form-control-sm"
+                      min="0"
                     />
                   </Form.Group>
                 </Col>
                 <Col xs={6}>
-                  <Button variant="primary" onClick={handleVerUsuariosConXAlertas}>
+                  <Button variant="success" onClick={handleVerUsuariosConXAlertas}>
                     Ver
                   </Button>
                 </Col>
@@ -147,45 +150,47 @@ export const Estadisticas = () => {
           </Card.Body>
         </Card>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Usuarios con Más de Una Propiedad:</h5>
+            <h5 className="text-warning">Usuarios con Más de Una Propiedad:</h5>
             <div className="mt-3">
               <strong>Cantidad:</strong> {usuariosConMasDeUnaPropiedad}
             </div>
           </Card.Body>
         </Card>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Alertas con más de una suscripción:</h5>
+            <h5 className="text-danger">Alertas con más de una suscripción:</h5>
             <div className="mt-3">
               <strong>Cantidad:</strong> {alertasPopulares}
             </div>
           </Card.Body>
         </Card>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Usuarios Bloqueados:</h5>
+            <h5 className="text-secondary">Usuarios Bloqueados:</h5>
             <div className="mt-3">
               <strong>Cantidad:</strong> {usuariosBaneados}
             </div>
           </Card.Body>
         </Card>
 
-        <Card className="mb-4">
+        <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5>Alertas con más de {tamanoDescripcion} número de caracteres:</h5>
+            <h5 className="text-primary">Alertas con más de {tamanoDescripcion} número de caracteres:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={6}>
+                <Col xs={1}>
                   <Form.Group controlId="tamanoDescripcion">
                     <Form.Control
                       type="number"
                       placeholder="Tamaño de Descripción"
                       value={tamanoDescripcion}
                       onChange={(e) => setTamanoDescripcion(e.target.value)}
+                      className="border-primary form-control-sm"
+                      min="0"
                     />
                   </Form.Group>
                 </Col>
