@@ -14,11 +14,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const UsuarioDetails = () => {
-  const { username } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
-  const user = useAuth().getUser();
   const rol = useAuth().getRol();
 
   useEffect(() => {
@@ -28,7 +27,7 @@ export const UsuarioDetails = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       }
-      fetch(`http://localhost:9090/usuario/${username}`, {
+      fetch(`http://localhost:9090/usuario/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -39,11 +38,8 @@ export const UsuarioDetails = () => {
           setUsuario(data);
         });
     }
-  }, [username]);
+  }, [id]);
 
-  const handleEdit = () => {
-    navigate(`/`);
-  };
 
   return (
     <>
@@ -57,11 +53,6 @@ export const UsuarioDetails = () => {
                   <FontAwesomeIcon icon={faUser} size="7x" />
                 </div>
                 <h5>{usuario.username}</h5>
-                {user === usuario.username && (
-                  <Button variant="primary" onClick={handleEdit}>
-                    Editar Perfil
-                  </Button>
-                )}
               </Col>
               <Col xs={12} md={8}>
                 <h6>Información de perfil</h6>

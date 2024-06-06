@@ -15,7 +15,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const UsuarioAccount = () => {
   const username = useAuth().getUser();
-  console.log(username);
+  const id = useAuth().getId();
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
@@ -24,7 +24,7 @@ export const UsuarioAccount = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/${username}`, {
+      fetch(`http://localhost:9090/usuario/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -38,7 +38,7 @@ export const UsuarioAccount = () => {
   }, [username]);
 
   const handleEdit = () => {
-    navigate(`/usuario/edit/${username}`);
+    navigate(`/usuario/edit/${id}`);
   };
 
   return (

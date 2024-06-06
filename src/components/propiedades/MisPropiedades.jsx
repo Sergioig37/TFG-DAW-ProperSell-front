@@ -16,13 +16,13 @@ export const MisPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/propiedades/${user}`, {
+      fetch(`http://localhost:9090/usuario/propiedades/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -33,7 +33,7 @@ export const MisPropiedades = () => {
           setPropiedades(data ? data : []);
         });
     }
-  }, [token, user, navigate]);
+  }, [token, idUser, navigate]);
 
   const handleEdit = (id) => {
     navigate(`/propiedad/edit/${id}`);

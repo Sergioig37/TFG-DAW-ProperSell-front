@@ -9,7 +9,7 @@ export const UsuariosDashboard = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
 
   useEffect(() => {
     if (!token) {
@@ -18,7 +18,7 @@ export const UsuariosDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(`http://localhost:9090/usuarioExcluido/${user}`, {
+        fetch(`http://localhost:9090/usuarioExcluido/${idUser}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -30,12 +30,12 @@ export const UsuariosDashboard = () => {
           });
       }
     }
-  }, [token, rol, user, navigate]);
+  }, [token, rol, idUser, navigate]);
 
-  const handleDarDeBaja = (username) => {
+  const handleDarDeBaja = (id) => {
     const enabled = false;
 
-    fetch(`http://localhost:9090/usuario/enabled/${username}/${enabled}`, {
+    fetch(`http://localhost:9090/usuario/enabled/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -45,16 +45,16 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.username === username ? { ...usuario, habilitado: false } : usuario
+          usuario.id === id ? { ...usuario, habilitado: false } : usuario
         )
       );
     });
   };
 
-  const handleDarDeAlta = (username) => {
+  const handleDarDeAlta = (id) => {
     const enabled = true;
 
-    fetch(`http://localhost:9090/usuario/enabled/${username}/${enabled}`, {
+    fetch(`http://localhost:9090/usuario/enabled/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -64,25 +64,20 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.username === username ? { ...usuario, habilitado: true } : usuario
+          usuario.id === id ? { ...usuario, habilitado: true } : usuario
         )
       );
     });
   };
 
-  const handleVer = (username) => {
-    navigate(`/usuario/${username}`);
+  const handleVer = (id) => {
+    navigate(`/usuario/${id}`);
   };
 
   return (
     <>
       <NavbarGeneral />
       <Container className="mt-4">
-        <div className="d-flex justify-content-end mb-2">
-          <Button variant="primary" href="/register">
-            Crear Usuario
-          </Button>
-        </div>
         <h5>Usuarios Dashboard</h5>
         <Table striped bordered hover>
           <thead>
@@ -105,17 +100,17 @@ export const UsuariosDashboard = () => {
                 <td>{usuario.nombreReal}</td>
                 <td>{usuario.habilitado ? "Si" : "No"}</td>
                 <td>
-                  <Button variant="info" onClick={() => handleVer(usuario.username)}>
+                  <Button variant="info" onClick={() => handleVer(usuario.id)}>
                     Ver
                   </Button>
                 </td>
                 <td>
                   {usuario.habilitado ? (
-                    <Button variant="danger" onClick={() => handleDarDeBaja(usuario.username)}>
+                    <Button variant="danger" onClick={() => handleDarDeBaja(usuario.id)}>
                       Deshabilitar
                     </Button>
                   ) : (
-                    <Button variant="success" onClick={() => handleDarDeAlta(usuario.username)}>
+                    <Button variant="success" onClick={() => handleDarDeAlta(usuario.id)}>
                       Habilitar
                     </Button>
                   )}

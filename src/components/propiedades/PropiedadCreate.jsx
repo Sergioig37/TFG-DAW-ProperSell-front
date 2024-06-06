@@ -9,7 +9,7 @@ export const PropiedadCreate = () => {
   const [precio, setPrecio] = useState("");
   const [errors, setErrors] = useState({});
   const token = useAuth().getToken();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const rol = useAuth().getRol();
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export const PropiedadCreate = () => {
         tipo: tipo,
         localizacion: localizacion,
         precio: precio,
-        propietario: user,
+        propietario: idUser,
         habilitado: true
       };
 

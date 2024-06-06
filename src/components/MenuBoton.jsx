@@ -7,6 +7,7 @@ import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 export const MenuBoton = () => {
   const navigate = useNavigate();
   const user = useAuth().getUser();
+  const id = useAuth().getId();
   const rol = useAuth().getRol();
   const { clearToken } = useAuth();
 

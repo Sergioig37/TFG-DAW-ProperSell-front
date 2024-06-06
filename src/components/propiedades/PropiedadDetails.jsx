@@ -17,7 +17,7 @@ export const PropiedadDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const [propietario, setPropietario] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const [propiedad, setPropiedad] = useState({});
@@ -45,7 +45,7 @@ export const PropiedadDetails = () => {
 
           setPropiedad(data);
 
-          fetch(`http://localhost:9090/usuarioInfoContacto/${user}`, {
+          fetch(`http://localhost:9090/usuarioInfoContacto/${data.id}`, {
             method: "GET",
             headers: {
               Authorization: "Bearer " + token,
@@ -71,15 +71,6 @@ export const PropiedadDetails = () => {
               <Col xs={12} md={4} className="text-center">
               
                 <h5>{propiedad.tipo}</h5>
-                {propietario === user && (
-                  <Button
-                    variant="primary"
-                    onClick={handleEdit}
-                    style={{ backgroundColor: "#3f51b5" }}
-                  >
-                    Editar Propiedad
-                  </Button>
-                )}
               </Col>
               <Col xs={12} md={8}>
                 <h6>Información de la Propiedad</h6>

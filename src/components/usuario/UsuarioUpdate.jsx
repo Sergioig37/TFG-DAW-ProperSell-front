@@ -5,14 +5,15 @@ import { useAuth } from "../auth/AuthContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const UsuarioUpdate = () => {
-  const { username } = useParams();
+  const { id } = useParams();
   const [correo, setCorreo] = useState("");
   const [nombreReal, setNombreReal] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const token = useAuth().getToken();
   const passwrd = useAuth().getAuthPassword();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const { setToken } = useAuth();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -22,7 +23,7 @@ export const UsuarioUpdate = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/${username}`, {
+      fetch(`http://localhost:9090/usuario/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -30,7 +31,7 @@ export const UsuarioUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if(user!==username){
+          if(id!==idUser){
             navigate("/denegado")
           }
           
@@ -38,13 +39,14 @@ export const UsuarioUpdate = () => {
           setNombreReal(data.nombreReal);
           setNumeroTelefono(data.numeroTelefono?data.numeroTelefono:"");
           setPassword(passwrd);
+          setUsername(data.username);
           // Password shouldn't be set from server for security reasons
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
         });
     }
-  }, [username, token, navigate]);
+  }, [idUser, token, navigate]);
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = (event) => {
@@ -62,7 +64,7 @@ export const UsuarioUpdate = () => {
         password: password, // Ensure to hash password before sending to the server
       };
 
-      fetch(`http://localhost:9090/usuario/edit/${username}`, {
+      fetch(`http://localhost:9090/usuario/edit/${id}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -154,7 +156,7 @@ export const UsuarioUpdate = () => {
             </FormControl>
           </Grid>
           {
-            user===username?(
+            id===idUser?(
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <TextField

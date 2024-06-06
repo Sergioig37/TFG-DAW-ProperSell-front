@@ -21,13 +21,14 @@ export const Explorar = () => {
   const [precioMin, setPrecioMin] = useState("");
   const [precioMax, setPrecioMax] = useState("");
   const navigate = useNavigate();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const token = useAuth().getToken();
+
 
   useEffect(() => {
     // Carga las propiedades disponibles inicialmente
     if (token) {
-      fetch(`http://localhost:9090/propiedadExcluida/${user}`, {
+      fetch(`http://localhost:9090/propiedadExcluida/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -46,7 +47,7 @@ export const Explorar = () => {
           setPropiedades(data);
         });
     }
-  }, [token]);
+  }, [token, idUser]);
 
   const handleVer = (id) => {
     // Navega a la ruta de edición

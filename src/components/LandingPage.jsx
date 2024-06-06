@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Row, Col, Button, Card, Accordion } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { faqs, itemData } from "./data/Data";
@@ -8,9 +8,32 @@ import { useAuth } from "./auth/AuthContext";
 export const LandingPage = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
+  const username = useAuth().getUser();
+  const {setId} = useAuth();
   const handleHome = () => {
     navigate("/explore");
   };
+
+  useEffect(() => {
+
+    if(token){
+       fetch(`http://localhost:9090/usuarioNombre/${username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      },
+    })
+    .then((respuesta => {
+      return respuesta.json();
+    }))
+    .then((data=>{
+      console.log(data.id)
+      setId(data.id);
+    }));
+    }
+  }, [])
+  
 
   return (
     <>

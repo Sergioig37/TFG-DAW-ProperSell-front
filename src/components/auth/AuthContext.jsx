@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [authUser, setAuthUser] = useState(null);
   const [authRol, setAuthRol] = useState(null);
   const [password, setPassword] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const setToken = (token) => {
     setAuthToken(token);
@@ -16,12 +17,21 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("authToken", token);
   };
 
+  const setId = (id) =>{
+    setUserId(id);
+    localStorage.setItem("id", id);
+  }
+
   const setAuthPassword = (password) => {
     setPassword(password);
     localStorage.setItem("authPassword", password);
   }
   const getAuthPassword = () => {
     return password || localStorage.getItem("authPassword");
+  }
+
+  const getId = () =>{
+    return userId || localStorage.getItem("id");
   }
 
   const setRol = (rol) => {
@@ -47,6 +57,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("rol");
     localStorage.removeItem("user");
+    localStorage.removeItem("id");
   };
 
   const decodeToken = (token) => {
@@ -61,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ authToken, setToken, getToken, clearToken, 
-    getRol, getUser, setRol, setUser, decodeToken, setAuthPassword, getAuthPassword }}>
+    getRol, getUser, setRol, setUser, decodeToken, setAuthPassword, getAuthPassword, setId, getId }}>
       {children}
     </AuthContext.Provider>
   );

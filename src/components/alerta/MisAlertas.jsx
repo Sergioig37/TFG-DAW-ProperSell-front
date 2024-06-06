@@ -10,14 +10,14 @@ export const MisAlertas = () => {
   const [alertasDisponibles, setAlertasDisponibles] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const rol = useAuth().getRol();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/${user}/alertas`, {
+      fetch(`http://localhost:9090/usuario/${idUser}/alertas`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -28,7 +28,7 @@ export const MisAlertas = () => {
           setAlertasUsuario(data ? data : []);
         });
 
-      fetch(`http://localhost:9090/usuario/${user}/alertasDisponibles`, {
+      fetch(`http://localhost:9090/usuario/${idUser}/alertasDisponibles`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -39,10 +39,10 @@ export const MisAlertas = () => {
           setAlertasDisponibles(data ? data : []);
         });
     }
-  }, [token, user, navigate]);
+  }, [token, idUser, navigate]);
 
   const handleAddAlertas = (id) => {
-    fetch(`http://localhost:9090/usuario/${user}/${id}/true`, {
+    fetch(`http://localhost:9090/usuario/${idUser}/${id}/true`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -61,7 +61,7 @@ export const MisAlertas = () => {
   };
 
   const handleRemoveAlerta = (id) => {
-    fetch(`http://localhost:9090/usuario/${user}/${id}/false`, {
+    fetch(`http://localhost:9090/usuario/${idUser}/${id}/false`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

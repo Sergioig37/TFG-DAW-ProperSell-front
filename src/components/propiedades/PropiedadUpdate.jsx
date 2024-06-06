@@ -11,8 +11,7 @@ export const PropiedadUpdate = () => {
   const [precio, setPrecio] = useState("");
   const token = useAuth().getToken();
   const navigate = useNavigate();
-  const rol = useAuth().getRol();
-  const user = useAuth().getUser();
+  const idUser = useAuth().getId();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -35,7 +34,8 @@ export const PropiedadUpdate = () => {
           })
             .then((res) => res.json())
             .then((propiedadData) => {
-              if (propiedadData.username !== user) {
+              if (propiedadData.id !== idUser) {
+                
                 navigate("/denegado");
               } else {
                 setTipo(data.tipo);

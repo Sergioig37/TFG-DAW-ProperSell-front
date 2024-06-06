@@ -1,5 +1,13 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row, Col, Card, Alert } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+  Card,
+  Alert,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 
@@ -14,10 +22,17 @@ export const Register = () => {
   const [errors, setErrors] = useState({});
   const token = useAuth().getToken();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -30,13 +45,23 @@ export const Register = () => {
         },
         body: JSON.stringify(values),
         credentials: "include",
-      }).then((response) => {
-        if (response.ok && !token) {
-          navigate("/login");
-        } else {
-          navigate("/admin/usuarios-dashboard");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.ok) {
+            navigate("/login");
+          } else {
+            return response.text().then((text) => {
+              throw new Error(text);
+            });
+          }
+        })
+        .catch((error) => {
+          if (error.message.includes("correo")) {
+            setError(error.message);
+          } else {
+            setError(error.message);
+          }
+        });
     }
   };
 
@@ -46,7 +71,7 @@ export const Register = () => {
 
     if (!values.nombreReal.trim()) {
       formIsValid = false;
-      errors["nombreReal"] = "Ingrese su nombre real";
+      errors["nombreReal"] = "Ingrese su nombre completo";
     }
 
     if (!values.username.trim()) {
@@ -76,7 +101,7 @@ export const Register = () => {
         "El número de teléfono debe contener solo números";
     } else if (values.numeroTelefono.trim().length !== 9) {
       formIsValid = false;
-      errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
+      errors["numeroTelefono"] = "El número de teléfono debe tener 9 dígitos";
     }
 
     setErrors(errors);
@@ -89,7 +114,9 @@ export const Register = () => {
         <Col md={6}>
           <Card>
             <Card.Body>
-              <Card.Title className="text-center mb-4">Registro de Usuario</Card.Title>
+              <Card.Title className="text-center mb-4">
+                Registro de Usuario
+              </Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="nombreReal">
                   <Form.Label>Nombre real</Form.Label>
@@ -101,7 +128,9 @@ export const Register = () => {
                     isInvalid={!!errors.nombreReal}
                     required
                   />
-                  <Form.Control.Feedback type="invalid">{errors.nombreReal}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.nombreReal}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="username" className="mt-3">
                   <Form.Label>Nombre de usuario</Form.Label>
@@ -113,7 +142,14 @@ export const Register = () => {
                     isInvalid={!!errors.username}
                     required
                   />
-                  <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.username}
+                  </Form.Control.Feedback>
+                  {error && error.includes("usuario") && (
+                    <Alert variant="danger" className="mt-2">
+                      {error}
+                    </Alert>
+                  )}
                 </Form.Group>
                 <Form.Group controlId="password" className="mt-3">
                   <Form.Label>Contraseña</Form.Label>
@@ -125,7 +161,9 @@ export const Register = () => {
                     isInvalid={!!errors.password}
                     required
                   />
-                  <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.password}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="correo" className="mt-3">
                   <Form.Label>Correo Electrónico</Form.Label>
@@ -137,7 +175,14 @@ export const Register = () => {
                     isInvalid={!!errors.correo}
                     required
                   />
-                  <Form.Control.Feedback type="invalid">{errors.correo}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.correo}
+                  </Form.Control.Feedback>
+                  {error && error.includes("correo") && (
+                    <Alert variant="danger" className="mt-2">
+                      {error}
+                    </Alert>
+                  )}
                 </Form.Group>
                 <Form.Group controlId="numeroTelefono" className="mt-3">
                   <Form.Label>Número de teléfono</Form.Label>
@@ -149,7 +194,9 @@ export const Register = () => {
                     isInvalid={!!errors.numeroTelefono}
                     required
                   />
-                  <Form.Control.Feedback type="invalid">{errors.numeroTelefono}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    {errors.numeroTelefono}
+                  </Form.Control.Feedback>
                 </Form.Group>
                 <Button variant="primary" type="submit" className="mt-4" block>
                   Registrarse
@@ -159,7 +206,8 @@ export const Register = () => {
           </Card>
           <div className="text-center mt-3">
             <Alert variant="secondary">
-              ¿Ya tienes cuenta? <Alert.Link href="/login">Inicia sesión</Alert.Link>
+              ¿Ya tienes cuenta?{" "}
+              <Alert.Link href="/login">Inicia sesión</Alert.Link>
             </Alert>
           </div>
         </Col>
