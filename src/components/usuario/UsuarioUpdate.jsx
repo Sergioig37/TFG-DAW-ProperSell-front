@@ -8,7 +8,6 @@ export const UsuarioUpdate = () => {
   const { username } = useParams();
   const [correo, setCorreo] = useState("");
   const [nombreReal, setNombreReal] = useState("");
-  const [usernameEdit, setUsernameEdit] = useState("");
   const [password, setPassword] = useState("");
   const [numeroTelefono, setNumeroTelefono] = useState("");
   const token = useAuth().getToken();
@@ -34,10 +33,10 @@ export const UsuarioUpdate = () => {
           if(user!==username){
             navigate("/denegado")
           }
-          setUsernameEdit(data.username);
+          
           setCorreo(data.correo);
           setNombreReal(data.nombreReal);
-          setNumeroTelefono(data.numeroTelefono);
+          setNumeroTelefono(data.numeroTelefono?data.numeroTelefono:"");
           setPassword(passwrd);
           // Password shouldn't be set from server for security reasons
         })
@@ -56,7 +55,7 @@ export const UsuarioUpdate = () => {
     e.preventDefault();
     if (validateForm()) {
       const data = {
-        username: usernameEdit,
+        username: username,
         correo: correo,
         nombreReal: nombreReal,
         numeroTelefono: numeroTelefono,
@@ -94,11 +93,6 @@ export const UsuarioUpdate = () => {
       errors["nombreReal"] = "Ingrese su nombre real";
     }
 
-    if (!usernameEdit.trim()) {
-      formIsValid = false;
-      errors["usernameEdit"] = "Ingrese un nombre de usuario";
-    }
-
     if (!correo.trim()) {
       formIsValid = false;
       errors["correo"] = "Ingrese su correo electrónico";
@@ -113,7 +107,7 @@ export const UsuarioUpdate = () => {
     } else if (!/^\d+$/.test(numeroTelefono)) {
       formIsValid = false;
       errors["numeroTelefono"] = "El número de teléfono debe contener solo números";
-    } else if (numeroTelefono.trim().length !== 10) {
+    } else if (numeroTelefono.trim().length !== 9) {
       formIsValid = false;
       errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
     }
@@ -135,17 +129,6 @@ export const UsuarioUpdate = () => {
                 onChange={(e) => setNombreReal(e.target.value)}
               />
               <FormHelperText>{errors["nombreReal"]}</FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth error={errors["usernameEdit"]}>
-              <TextField
-                fullWidth
-                label="Nombre de Usuario"
-                value={usernameEdit}
-                onChange={(e) => setUsernameEdit(e.target.value)}
-              />
-              <FormHelperText>{errors["usernameEdit"]}</FormHelperText>
             </FormControl>
           </Grid>
           <Grid item xs={12}>

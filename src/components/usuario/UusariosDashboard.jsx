@@ -1,21 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Button,
-} from "@mui/material";
-import { Edit, Delete, Visibility } from "@mui/icons-material";
+import { Container, Table, Button } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 
 export const UsuariosDashboard = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -58,9 +45,7 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.username === username
-            ? { ...usuario, habilitado: false }
-            : usuario
+          usuario.username === username ? { ...usuario, habilitado: false } : usuario
         )
       );
     });
@@ -79,9 +64,7 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.username === username
-            ? { ...usuario, habilitado: true }
-            : usuario
+          usuario.username === username ? { ...usuario, habilitado: true } : usuario
         )
       );
     });
@@ -94,60 +77,54 @@ export const UsuariosDashboard = () => {
   return (
     <>
       <NavbarGeneral />
-      <Button
-        variant="contained"
-        color="primary"
-        sx={{ mt: 4 }}
-        href="/register"
-      >
-        Crear Usuario
-      </Button>
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right">Username</TableCell>
-              <TableCell align="right">Correo</TableCell>
-              <TableCell align="right">Nombre Real</TableCell>
-              <TableCell align="right">Habilitado</TableCell>
-              <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Deshabilitar/Habilitar</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      <Container className="mt-4">
+        <div className="d-flex justify-content-end mb-2">
+          <Button variant="primary" href="/register">
+            Crear Usuario
+          </Button>
+        </div>
+        <h5>Usuarios Dashboard</h5>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Correo</th>
+              <th>Nombre Real</th>
+              <th>Habilitado</th>
+              <th>Ver</th>
+              <th>Deshabilitar/Habilitar</th>
+            </tr>
+          </thead>
+          <tbody>
             {usuarios.map((usuario) => (
-              <TableRow key={usuario.id}>
-                <TableCell component="th" scope="row">
-                  {usuario.id}
-                </TableCell>
-                <TableCell align="right">{usuario.username}</TableCell>
-                <TableCell align="right">{usuario.correo}</TableCell>
-                <TableCell align="right">{usuario.nombreReal}</TableCell>
-                <TableCell align="right">
-                  {usuario.habilitado ? "Si" : "No"}
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleVer(usuario.username)}>
-                    <Visibility />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="right">
+              <tr key={usuario.id}>
+                <td>{usuario.id}</td>
+                <td>{usuario.username}</td>
+                <td>{usuario.correo}</td>
+                <td>{usuario.nombreReal}</td>
+                <td>{usuario.habilitado ? "Si" : "No"}</td>
+                <td>
+                  <Button variant="info" onClick={() => handleVer(usuario.username)}>
+                    Ver
+                  </Button>
+                </td>
+                <td>
                   {usuario.habilitado ? (
-                    <IconButton onClick={() => handleDarDeBaja(usuario.username)}>
-                      <CloseIcon />
-                    </IconButton>
+                    <Button variant="danger" onClick={() => handleDarDeBaja(usuario.username)}>
+                      Deshabilitar
+                    </Button>
                   ) : (
-                    <IconButton onClick={() => handleDarDeAlta(usuario.username)}>
-                      <CheckIcon />
-                    </IconButton>
+                    <Button variant="success" onClick={() => handleDarDeAlta(usuario.username)}>
+                      Habilitar
+                    </Button>
                   )}
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ))}
-          </TableBody>
+          </tbody>
         </Table>
-      </TableContainer>
+      </Container>
     </>
   );
 };

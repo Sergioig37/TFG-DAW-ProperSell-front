@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, NavItem } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import { MenuBoton } from "./MenuBoton";
@@ -25,17 +25,21 @@ export const NavbarGeneral = () => {
           <Nav className="me-auto">
             <Nav className="d-lg-none">
               {/* Show MenuBoton first when screen is small */}
-              {token && <MenuBoton />}
+              {token && (
+                <NavItem key="menuBotonTop" className="d-block d-lg-none">
+                  <MenuBoton />
+                </NavItem>
+              )}
             </Nav>
             {token && (
               <>
-                <Nav.Link onClick={() => handleNavigation("/explore")}>
-                  Explorar
-                </Nav.Link>
                 {rol === "ADMIN" ? (
                   <>
                     <Nav.Link onClick={() => handleNavigation("/")}>
                       Inicio
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNavigation("/explore")}>
+                      Explorar
                     </Nav.Link>
                     <Nav.Link onClick={() => handleNavigation("/admin")}>
                       Panel de Admin
@@ -49,14 +53,16 @@ export const NavbarGeneral = () => {
                     <Nav.Link onClick={() => handleNavigation("/")}>
                       Inicio
                     </Nav.Link>
-                    <Nav.Link onClick={() => handleNavigation("/mis-propiedades")}>
+                    <Nav.Link onClick={() => handleNavigation("/explore")}>
+                      Explorar
+                    </Nav.Link>
+                    <Nav.Link
+                      onClick={() => handleNavigation("/mis-propiedades")}
+                    >
                       Mis Propiedades
                     </Nav.Link>
                     <Nav.Link onClick={() => handleNavigation("/mis-alertas")}>
                       Mis Alertas
-                    </Nav.Link>
-                    <Nav.Link onClick={() => handleNavigation("/estadisticas")}>
-                      Estadísticas
                     </Nav.Link>
                   </>
                 )}
@@ -74,7 +80,9 @@ export const NavbarGeneral = () => {
                 </Nav.Link>
               </>
             ) : (
-              <MenuBoton />
+              <NavItem key="menuBotonBottom" className="d-lg-block d-none">
+                <MenuBoton />
+              </NavItem>
             )}
           </Nav>
         </Navbar.Collapse>

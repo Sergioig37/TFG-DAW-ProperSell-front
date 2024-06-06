@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Typography,
-  Paper,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  IconButton,
-} from "@mui/material";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
-import { Delete, Edit } from "@mui/icons-material";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { FaTrash, FaEdit, FaPlus, FaMinus } from "react-icons/fa";
 
 export const MisAlertas = () => {
   const [alertasUsuario, setAlertasUsuario] = useState([]);
@@ -35,7 +23,7 @@ export const MisAlertas = () => {
           Authorization: "Bearer " + token,
         },
       })
-        .then((res) => (res ? res.json() : {}))
+        .then((res) => res.json())
         .then((data) => {
           setAlertasUsuario(data ? data : []);
         });
@@ -46,7 +34,7 @@ export const MisAlertas = () => {
           Authorization: "Bearer " + token,
         },
       })
-        .then((res) => (res ? res.json() : {}))
+        .then((res) => res.json())
         .then((data) => {
           setAlertasDisponibles(data ? data : []);
         });
@@ -54,9 +42,7 @@ export const MisAlertas = () => {
   }, [token, user, navigate]);
 
   const handleAddAlertas = (id) => {
-    const add = true;
-
-    fetch(`http://localhost:9090/usuario/${user}/${id}/${add}`, {
+    fetch(`http://localhost:9090/usuario/${user}/${id}/true`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -75,10 +61,7 @@ export const MisAlertas = () => {
   };
 
   const handleRemoveAlerta = (id) => {
-    const add = false;
-
-
-    fetch(`http://localhost:9090/usuario/${user}/${id}/${add}`, {
+    fetch(`http://localhost:9090/usuario/${user}/${id}/false`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -97,128 +80,74 @@ export const MisAlertas = () => {
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="lg" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Mis Alertas
-        </Typography>
-
-        <Grid container spacing={4} sx={{ mt: 2 }}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              Tus Alertas
-            </Typography>
-            {alertasUsuario.length > 0 ? (
-              <Grid container spacing={2}>
-                {alertasUsuario.map((alerta) => (
-                  <Grid item key={alerta.id} xs={12}>
-                    <Card sx={{ display: "flex", flexDirection: "column" }}>
-                      <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
-                        <Typography variant="h6" gutterBottom>
-                          {alerta.nombre}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          gutterBottom
-                        >
-                          {alerta.descripcion}
-                        </Typography>
-                      </CardContent>
-                      <Button onClick={() => handleRemoveAlerta(alerta.id)}>
-                        <RemoveIcon />
-                      </Button>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            ) : (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="300px"
-                flexDirection="column"
-                sx={{
-                  backgroundColor: "#f5f5f5",
-                  borderRadius: 2,
-                  p: 4,
-                  textAlign: "center",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  mt: 2,
-                }}
-              >
-                <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
-                  No tienes alertas
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  sx={{ mb: 2 }}
-                >
-                  Intenta añadir algunas alertas.
-                </Typography>
-              </Box>
-            )}
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Typography variant="h5" gutterBottom>
-              Alertas Disponibles
-            </Typography>
+      <Container className="mt-4">
+        <h4 className="mb-4">Mis Alertas</h4>
+        <Row>
+          <Col md={6}>
+            <h5>Alertas Disponibles</h5>
             {alertasDisponibles.length > 0 ? (
-              <Grid container spacing={2}>
+              <Row className="g-4">
                 {alertasDisponibles.map((alerta) => (
-                  <Grid item key={alerta.id} xs={12}>
-                    <Card sx={{ display: "flex", flexDirection: "column" }}>
-                      <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
-                        <Typography variant="h6" gutterBottom>
-                          {alerta.nombre}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          gutterBottom
+                  <Col key={alerta.id} xs={12}>
+                    <Card>
+                      <Card.Body className="text-center">
+                        <Card.Title>{alerta.nombre}</Card.Title>
+                        <Card.Text>{alerta.descripcion}</Card.Text>
+                      </Card.Body>
+                      <Card.Footer className="text-center">
+                        <Button
+                          variant="outline-primary"
+                          onClick={() => handleAddAlertas(alerta.id)}
                         >
-                          {alerta.descripcion}
-                        </Typography>
-                        <Button onClick={() => handleAddAlertas(alerta.id)}>
-                          <AddIcon />
+                          <FaPlus /> Añadir
                         </Button>
-                      </CardContent>
+                      </Card.Footer>
                     </Card>
-                  </Grid>
+                  </Col>
                 ))}
-              </Grid>
+              </Row>
             ) : (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="300px"
-                flexDirection="column"
-                sx={{
-                  backgroundColor: "#f5f5f5",
-                  borderRadius: 2,
-                  p: 4,
-                  textAlign: "center",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  mt: 2,
-                }}
-              >
-                <Typography variant="h6" color="textSecondary" sx={{ mb: 2 }}>
-                  No hay alertas disponibles
-                </Typography>
-                <Typography
-                  variant="body1"
-                  color="textSecondary"
-                  sx={{ mb: 2 }}
-                >
-                  Intenta más tarde.
-                </Typography>
-              </Box>
+              <Card className="mt-4">
+                <Card.Body className="text-center">
+                  <h6>No hay alertas disponibles</h6>
+                  <p>Intenta más tarde.</p>
+                </Card.Body>
+              </Card>
             )}
-          </Grid>
-        </Grid>
+          </Col>
+          <Col md={6}>
+            <h5>Tus Alertas</h5>
+            {alertasUsuario.length > 0 ? (
+              <Row className="g-4">
+                {alertasUsuario.map((alerta) => (
+                  <Col key={alerta.id} xs={12}>
+                    <Card>
+                      <Card.Body className="text-center">
+                        <Card.Title>{alerta.nombre}</Card.Title>
+                        <Card.Text>{alerta.descripcion}</Card.Text>
+                      </Card.Body>
+                      <Card.Footer className="text-center">
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => handleRemoveAlerta(alerta.id)}
+                        >
+                          <FaMinus /> Eliminar
+                        </Button>
+                      </Card.Footer>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            ) : (
+              <Card className="mt-4">
+                <Card.Body className="text-center">
+                  <h6>No tienes alertas</h6>
+                  <p>Intenta añadir algunas alertas.</p>
+                </Card.Body>
+              </Card>
+            )}
+          </Col>
+        </Row>
       </Container>
     </>
   );

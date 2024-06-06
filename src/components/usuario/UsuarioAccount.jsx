@@ -1,33 +1,40 @@
 import React, { useState, useEffect } from "react";
-import { Container, Typography, Grid, Avatar, Button, Paper, Divider } from "@mui/material";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Card,
+  ListGroup,
+} from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const UsuarioAccount = () => {
-  const  username  = useAuth().getUser();
-  console.log(username)
+  const username = useAuth().getUser();
+  console.log(username);
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
-    if(!token){
+    if (!token) {
       navigate("/login");
-    }
-    else{
-      fetch(`http://localhost:9090/usuario/${username}`,{
+    } else {
+      fetch(`http://localhost:9090/usuario/${username}`, {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + token
-        }
+          Authorization: "Bearer " + token,
+        },
       })
-      .then((res) => res.json())
-      .then((data) => {
-        setUsuario(data);
-      });
+        .then((res) => res.json())
+        .then((data) => {
+          setUsuario(data);
+        });
     }
-    
   }, [username]);
 
   const handleEdit = () => {
@@ -37,42 +44,38 @@ export const UsuarioAccount = () => {
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="md" sx={{ marginTop: 8 }}>
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 2 }}>
-        <Grid container spacing={4}>
-          {/* Perfil del Usuario */}
-          <Grid item xs={12} md={4} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Avatar sx={{ width: 120, height: 120, mb: 2, bgcolor: "primary.main" }}>
-              {usuario.username ? usuario.username[0] : "C"}
-            </Avatar>
-            <Typography variant="h5" gutterBottom>
-              {usuario.username}
-            </Typography>
-            <Divider sx={{ width: '100%', my: 2 }} />
-            <Button variant="contained" color="primary" onClick={handleEdit}>
-              Editar Perfil
-            </Button>
-          </Grid>
-          
-          {/* Información del Perfil */}
-          <Grid item xs={12} md={8}>
-            <Typography variant="h6" gutterBottom>
-              Información de perfil
-            </Typography>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="body1" gutterBottom>
-              <strong>Nombre completo:</strong> {usuario.nombreReal}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <strong>Correo:</strong> {usuario.correo}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <strong>Número de teléfono:</strong> {usuario.numeroTelefono}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Container>
+      <Container className="mt-4">
+        <Card>
+          <Card.Body>
+            <Row>
+              <Col xs={12} md={4} className="text-center">
+                <div className="avatar-icon">
+                  <FontAwesomeIcon icon={faUser} size="7x" />
+                </div>
+                <h5>{usuario.username}</h5>
+                <Button variant="primary" onClick={handleEdit}>
+                  Editar Perfil
+                </Button>
+              </Col>
+              <Col xs={12} md={8}>
+                <h6>Información de perfil</h6>
+                <ListGroup>
+                  <ListGroup.Item>
+                    <strong>Nombre completo:</strong> {usuario.nombreReal}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Correo:</strong> {usuario.correo}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Número de teléfono:</strong>{" "}
+                    {usuario.numeroTelefono}
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
+      </Container>
     </>
   );
 };

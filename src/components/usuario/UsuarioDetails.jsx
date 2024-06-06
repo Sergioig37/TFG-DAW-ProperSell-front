@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from "react";
 import {
   Container,
-  Typography,
-  Grid,
-  Avatar,
+  Row,
+  Col,
   Button,
-  Paper,
-  Divider,
-} from "@mui/material";
+  Card,
+  ListGroup,
+} from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const UsuarioDetails = () => {
   const { username } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
-  const  user  = useAuth().getUser();
-  const  rol  = useAuth().getRol();
+  const user = useAuth().getUser();
+  const rol = useAuth().getRol();
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      if(rol!=="ADMIN"){
-        navigate("/denegado")
+      if (rol !== "ADMIN") {
+        navigate("/denegado");
       }
       fetch(`http://localhost:9090/usuario/${username}`, {
         method: "GET",
@@ -47,54 +48,35 @@ export const UsuarioDetails = () => {
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="md" sx={{ marginTop: 8 }}>
-        <Paper elevation={3} sx={{ p: 4 }}>
-          <Grid container spacing={3}>
-            <Grid
-              item
-              xs={12}
-              md={4}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ width: 120, height: 120, mb: 2 }}>
-                {usuario.username ? usuario.username[0] : "C"}
-              </Avatar>
-              <Typography variant="h5" gutterBottom>
-                {usuario.username}
-              </Typography>
-              {/* Aquí puedes agregar más detalles según la información del cliente */}
-              <Divider sx={{ my: 2 }} />
-              {user == usuario.username ? (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleEdit}
-                >
-                  Editar Perfil
-                </Button>
-              ) : (
-                <></>
-              )}
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Typography variant="h6" gutterBottom>
-                Información de perfil
-              </Typography>
-              {/* Puedes mostrar más detalles de contacto aquí */}
-              <Typography variant="body1" gutterBottom>
-                <strong>Nombre completo:</strong> {usuario.nombreReal}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                <strong>Correo:</strong> {usuario.correo}
-              </Typography>
-              <Divider sx={{ my: 2 }} />
-            </Grid>
-          </Grid>
-        </Paper>
+      <Container className="mt-4">
+        <Card>
+          <Card.Body>
+            <Row>
+              <Col xs={12} md={4} className="text-center">
+                <div className="avatar-icon">
+                  <FontAwesomeIcon icon={faUser} size="7x" />
+                </div>
+                <h5>{usuario.username}</h5>
+                {user === usuario.username && (
+                  <Button variant="primary" onClick={handleEdit}>
+                    Editar Perfil
+                  </Button>
+                )}
+              </Col>
+              <Col xs={12} md={8}>
+                <h6>Información de perfil</h6>
+                <ListGroup>
+                  <ListGroup.Item>
+                    <strong>Nombre completo:</strong> {usuario.nombreReal}
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <strong>Correo:</strong> {usuario.correo}
+                  </ListGroup.Item>
+                </ListGroup>
+              </Col>
+            </Row>
+          </Card.Body>
+        </Card>
       </Container>
     </>
   );

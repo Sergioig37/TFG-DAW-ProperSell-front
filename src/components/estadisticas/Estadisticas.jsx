@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
-import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Grid,
-  Divider,
-} from "@mui/material";
+import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
+import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const Estadisticas = () => {
   const [propiedadesMasCaras, setPropiedadesMasCaras] = useState(null);
   const [usuariosConXAlertas, setUsuariosConXAlertas] = useState(null);
-  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad]=useState(null);
+  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] = useState(null);
   const [alertasPopulares, setAlertasPopulares] = useState(null);
   const [usuariosBaneados, setUsuariosBaneados] = useState(null);
   const [alertasLargas, setAlertasLargas] = useState(null);
   const [numeroAlertas, setNumeroAlertas] = useState(0);
   const [precioPropiedad, setPrecioPropiedad] = useState(0);
   const [tamanoDescripcion, setTamanoDescripcion] = useState(0);
+  const token = useAuth().getToken();
+  const rol = useAuth().getRol();
+  const navigate = useNavigate();
 
   const handleVerPropiedadesMasCaras = () => {
     fetch(
@@ -48,6 +45,11 @@ export const Estadisticas = () => {
   };
 
   useEffect(() => {
+
+    if(!token || rol !== "ADMIN"){
+      navigate("/denegado");
+    }
+
     fetch("http://localhost:9090/estadisticas/usuario/variasPropiedades", {
       method: "GET",
     })
@@ -86,107 +88,119 @@ export const Estadisticas = () => {
   return (
     <>
       <NavbarGeneral />
-      <Container maxWidth="md" sx={{ mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          Estadísticas
-        </Typography>
-        <Box sx={{ mb: 2 }}>
-          <Typography variant="h5">
-            Número de Propiedades que cuestan más de:
-          </Typography>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Precio"
-                type="number"
-                value={precioPropiedad}
-                onChange={(e) => setPrecioPropiedad(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                variant="contained"
-                onClick={handleVerPropiedadesMasCaras}
-              >
-                Ver
-              </Button>
-            </Grid>
-          </Grid>
-          <Typography variant="body1">
-            Cantidad: {propiedadesMasCaras}
-          </Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ my: 2 }}>
-          <Typography variant="h5">Usuarios con Más de X Alertas:</Typography>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Número de Alertas"
-                type="number"
-                value={numeroAlertas}
-                onChange={(e) => setNumeroAlertas(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Button
-                variant="contained"
-                onClick={handleVerUsuariosConXAlertas}
-              >
-                Ver
-              </Button>
-            </Grid>
-          </Grid>
-          <Typography variant="body1">
-            Cantidad: {usuariosConXAlertas}
-          </Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ my: 2 }}>
-          <Typography variant="h5">
-            Usuarios con Más de Una Propiedad:
-          </Typography>
-          <Typography variant="body1">
-            Cantidad: {usuariosConMasDeUnaPropiedad}
-          </Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ my: 2 }}>
-          <Typography variant="h5">
-            Alertas con más de una suscripción:
-          </Typography>
-          <Typography variant="body1">Cantidad: {alertasPopulares}</Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ my: 2 }}>
-          <Typography variant="h5">Usuarios Baneados:</Typography>
-          <Typography variant="body1">Cantidad: {usuariosBaneados}</Typography>
-        </Box>
-        <Divider />
-        <Box sx={{ my: 2 }}>
-          <Typography variant="h5">
-            Alertas con más de X número de caracteres:
-          </Typography>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                label="Tamaño de Descripción"
-                type="number"
-                value={tamanoDescripcion}
-                onChange={(e) => setTamanoDescripcion(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <Button variant="contained" onClick={handleVerAlertasLargas}>
-                Ver
-              </Button>
-            </Grid>
-          </Grid>
-          <Typography variant="body1">Cantidad: {alertasLargas}</Typography>
-        </Box>
+      <Container className="mt-4">
+        <h4 className="mb-4">Estadísticas</h4>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Número de Propiedades que cuestan más de {precioPropiedad} euros:</h5>
+            <Form>
+              <Row className="align-items-center">
+                <Col xs={6}>
+                  <Form.Group controlId="precioPropiedad">
+                    <Form.Control
+                      type="number"
+                      placeholder="Precio"
+                      value={precioPropiedad}
+                      onChange={(e) => setPrecioPropiedad(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6}>
+                  <Button variant="primary" onClick={handleVerPropiedadesMasCaras}>
+                    Ver
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {propiedadesMasCaras}
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Usuarios con Más de {numeroAlertas} Alertas:</h5>
+            <Form>
+              <Row className="align-items-center">
+                <Col xs={6}>
+                  <Form.Group controlId="numeroAlertas">
+                    <Form.Control
+                      type="number"
+                      placeholder="Número de Alertas"
+                      value={numeroAlertas}
+                      onChange={(e) => setNumeroAlertas(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6}>
+                  <Button variant="primary" onClick={handleVerUsuariosConXAlertas}>
+                    Ver
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {usuariosConXAlertas}
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Usuarios con Más de Una Propiedad:</h5>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {usuariosConMasDeUnaPropiedad}
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Alertas con más de una suscripción:</h5>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {alertasPopulares}
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Usuarios Bloqueados:</h5>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {usuariosBaneados}
+            </div>
+          </Card.Body>
+        </Card>
+
+        <Card className="mb-4">
+          <Card.Body>
+            <h5>Alertas con más de {tamanoDescripcion} número de caracteres:</h5>
+            <Form>
+              <Row className="align-items-center">
+                <Col xs={6}>
+                  <Form.Group controlId="tamanoDescripcion">
+                    <Form.Control
+                      type="number"
+                      placeholder="Tamaño de Descripción"
+                      value={tamanoDescripcion}
+                      onChange={(e) => setTamanoDescripcion(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={6}>
+                  <Button variant="primary" onClick={handleVerAlertasLargas}>
+                    Ver
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+            <div className="mt-3">
+              <strong>Cantidad:</strong> {alertasLargas}
+            </div>
+          </Card.Body>
+        </Card>
       </Container>
     </>
   );

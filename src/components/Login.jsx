@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Card, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './auth/AuthContext';
@@ -7,6 +7,7 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { setToken, setAuthPassword } = useAuth();
+  const token = useAuth().getToken();
   const navigate = useNavigate();
 
   const handleSuccessfulLogin = () => {
@@ -40,6 +41,15 @@ export const Login = () => {
         console.error('There was a problem with the fetch operation:', error);
       });
   };
+
+  useEffect(() => {
+   
+    if(token){
+      navigate("/");
+    }
+
+  }, [])
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();

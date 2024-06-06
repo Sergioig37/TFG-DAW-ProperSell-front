@@ -1,28 +1,24 @@
 import React from "react";
-import { Button, Typography, Container } from "@mui/material";
+import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export const Unauthorized = () => {
   const navigate = useNavigate();
 
   const handleVolver = () => {
-    navigate("/explore");
+    navigate("/");
   };
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 8 }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        No estás autorizado para acceder a esta página
-      </Typography>
-      <Typography variant="body1" gutterBottom>
+    <Container className="text-center mt-5">
+      <h1>No estás autorizado para acceder a esta página</h1>
+      <p className="lead">
         Lo sentimos, no tienes permisos para ver esta página. Por favor, vuelve
         al inicio.
-      </Typography>
-      <Button variant="contained" onClick={handleVolver}>
+      </p>
+      <Button variant="primary" onClick={handleVolver}>
         Volver a inicio
       </Button>
     </Container>
   );
 };
-
-

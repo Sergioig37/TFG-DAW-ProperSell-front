@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, List, ListItem, ListItemText, Paper, Container, Typography } from "@mui/material";
+import { Navbar, Container, Row, Col, Button, ListGroup, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
@@ -8,7 +8,6 @@ export const AdminPanel = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
-
 
   const handleAlertaRoute = () => {
     navigate("/admin/alerta-dashboard");
@@ -23,63 +22,49 @@ export const AdminPanel = () => {
   };
 
   useEffect(() => {
-
-    if(!token){
+    if (!token) {
       navigate("/login");
-    }
-    else{
-      if(rol!="ADMIN"){
+    } else {
+      if (rol !== "ADMIN") {
         navigate("/denegado");
       }
     }
-  }, [])
-  
-  
+  }, [token, rol, navigate]);
+
   return (
     <>
-    <NavbarGeneral />
-    <Container maxWidth="md" className="container">
-      <Paper elevation={3} className="control-panel-paper">
-        <Typography variant="h5" gutterBottom className="control-panel-title">
-          Panel de Control
-        </Typography>
-        <List>
-          <ListItem className="list-item">
-            <ListItemText primary="Alertas" />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleAlertaRoute}
-              className="button-alertas"
-            >
-              Ver Dashboard
-            </Button>
-          </ListItem>
-          <ListItem className="list-item">
-            <ListItemText primary="Propiedades" />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handlePropiedades}
-              className="button-propiedades"
-            >
-              Ver Dashboard
-            </Button>
-          </ListItem>
-          <ListItem className="list-item">
-            <ListItemText primary="Usuarios" />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleUsuarios}
-              className="button-usuarios"
-            >
-              Ver Dashboard
-            </Button>
-          </ListItem>
-        </List>
-      </Paper>
-    </Container>
-  </>
+      <NavbarGeneral />
+      <Container className="mt-4">
+        <Row className="justify-content-md-center">
+          <Col md={8}>
+            <Card>
+              <Card.Header as="h5" className="text-center">
+                Panel de Control
+              </Card.Header>
+              <ListGroup variant="flush">
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  <span>Alertas</span>
+                  <Button variant="primary" onClick={handleAlertaRoute}>
+                    Ver Dashboard
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  <span>Propiedades</span>
+                  <Button variant="primary" onClick={handlePropiedades}>
+                    Ver Dashboard
+                  </Button>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between align-items-center">
+                  <span>Usuarios</span>
+                  <Button variant="primary" onClick={handleUsuarios}>
+                    Ver Dashboard
+                  </Button>
+                </ListGroup.Item>
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };

@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-} from "@mui/material";
-import { Edit, Delete, Visibility, Margin } from "@mui/icons-material";
+import { Button, Table, Container, Row, Col, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 
 export const AlertasDashboard = () => {
   const [alertas, setAlertas] = useState([]);
   const navigate = useNavigate();
-  const token = useAuth().getToken(); 
-  const rol = useAuth().getRol()
+  const token = useAuth().getToken();
+  const rol = useAuth().getRol();
+
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
-      if (rol != "ADMIN") {
+      if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
         fetch("http://localhost:9090/alerta", {
@@ -39,88 +29,90 @@ export const AlertasDashboard = () => {
           });
       }
     }
-  }, []);
+  }, [token, rol, navigate]);
 
   const handleEdit = (id) => {
-    // Navega a la ruta de edición del agente con el ID proporcionado
     navigate(`/alerta/edit/${id}`);
   };
 
   const handleDelete = (idAlerta) => {
-    // Implementa la lógica de eliminación aquí
-
-    var data = {
-      id: idAlerta,
-    };
-
-    fetch(`http://localhost:9090/alerta/del/${data.id}`, {
+    fetch(`http://localhost:9090/alerta/del/${idAlerta}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    });
-    window.location.reload();
-    
+    })
+      .then(() => {
+        // Actualizar el estado después de la eliminación
+        setAlertas(alertas.filter((alerta) => alerta.id !== idAlerta));
+      })
+      .catch((error) => {
+        console.error("Error al eliminar la alerta:", error);
+      });
   };
 
   const handleVer = (id) => {
-    // Navega a la ruta de perfil del agente con el ID específico
     navigate(`/alerta/${id}`);
   };
 
   return (
     <>
       <NavbarGeneral />
-      <Button
-        variant="contained"
-        color="primary"
-        href="/alerta/create"
-        sx={{ mt: 4 }}
-      >
-        Crear Alerta
-      </Button>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell align="right">Nombre</TableCell>
-              <TableCell align="right">Descripcion</TableCell>
-              <TableCell align="right">Ver</TableCell>
-              <TableCell align="right">Editar</TableCell>
-              <TableCell align="right">Borrar</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {alertas.map((alerta, index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row">
-                  {alerta.id}
-                </TableCell>
-                <TableCell align="right">{alerta.nombre}</TableCell>
-                <TableCell align="right">{alerta.descripcion}</TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleVer(alerta.id)}>
-                    <Visibility />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(alerta.id)}>
-                    <Edit />
-                  </IconButton>
-                </TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleDelete(alerta.id)}>
-                    <Delete />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Container className="mt-4">
+        <Row className="justify-content-end mb-3">
+          <Col md={2}>
+            <Button variant="primary" href="/alerta/create" className="w-100">
+              Crear Alerta
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Editar</th>
+                      <th>Borrar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {alertas.map((alerta) => (
+                      <tr key={alerta.id}>
+                        <td>{alerta.id}</td>
+                        <td>{alerta.nombre}</td>
+                        <td>{alerta.descripcion}</td>
+                        <td>
+                          <Button
+                            variant="primary"
+                            onClick={() => handleEdit(alerta.id)}
+                          >
+                            Editar
+                          </Button>
+                        </td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() => handleDelete(alerta.id)}
+                          >
+                            Borrar
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };

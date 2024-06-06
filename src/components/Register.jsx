@@ -74,7 +74,7 @@ export const Register = () => {
       formIsValid = false;
       errors["numeroTelefono"] =
         "El número de teléfono debe contener solo números";
-    } else if (values.numeroTelefono.trim().length !== 10) {
+    } else if (values.numeroTelefono.trim().length !== 9) {
       formIsValid = false;
       errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
     }
