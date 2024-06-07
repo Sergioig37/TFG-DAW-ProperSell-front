@@ -48,7 +48,7 @@ export const App = () => {
             <Route path="/denegado" element={<Unauthorized/>}/>
             <Route path="/account" element={<UsuarioAccount/>}/>
             <Route path="/usuario/:id" element={<UsuarioDetails/>}/>
-            <Route path="/usuario/edit/:id" element={<UsuarioUpdate/>}/>
+            <Route path="/usuario/edit" element={<UsuarioUpdate/>}/>
             <Route path="/account" element={<UsuarioAccount/>}/>
             <Route path="/mis-propiedades" element={<MisPropiedades/>}/>
             <Route path="/mis-alertas" element={<MisAlertas/>}/>

@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container, IconButton, InputAdornment, FormControl, FormHelperText } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Grid,
+  Container,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  FormHelperText,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export const UsuarioUpdate = () => {
-  const { id } = useParams();
   const [correo, setCorreo] = useState("");
   const [nombreReal, setNombreReal] = useState("");
   const [password, setPassword] = useState("");
@@ -31,13 +39,10 @@ export const UsuarioUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          if(id!==idUser){
-            navigate("/denegado")
-          }
-          
+      
           setCorreo(data.correo);
           setNombreReal(data.nombreReal);
-          setNumeroTelefono(data.numeroTelefono?data.numeroTelefono:"");
+          setNumeroTelefono(data.numeroTelefono ? data.numeroTelefono : "");
           setPassword(passwrd);
           setUsername(data.username);
           // Password shouldn't be set from server for security reasons
@@ -64,7 +69,7 @@ export const UsuarioUpdate = () => {
         password: password, // Ensure to hash password before sending to the server
       };
 
-      fetch(`http://localhost:9090/usuario/edit/${id}`, {
+      fetch(`http://localhost:9090/usuario/edit/${idUser}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -78,7 +83,7 @@ export const UsuarioUpdate = () => {
           if (res.token) {
             setToken(res.token);
           }
-          navigate(-1, {replace: true})
+          navigate(-1, { replace: true });
         })
         .catch((error) => {
           console.error("Error updating user data:", error);
@@ -108,7 +113,8 @@ export const UsuarioUpdate = () => {
       errors["numeroTelefono"] = "Ingrese su número de teléfono";
     } else if (!/^\d+$/.test(numeroTelefono)) {
       formIsValid = false;
-      errors["numeroTelefono"] = "El número de teléfono debe contener solo números";
+      errors["numeroTelefono"] =
+        "El número de teléfono debe contener solo números";
     } else if (numeroTelefono.trim().length !== 9) {
       formIsValid = false;
       errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
@@ -155,36 +161,32 @@ export const UsuarioUpdate = () => {
               <FormHelperText>{errors["correo"]}</FormHelperText>
             </FormControl>
           </Grid>
-          {
-            id===idUser?(
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <TextField
-                    fullWidth
-                    label="Password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-            ):(
-              <></>
-            )
-          }
+
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                label="Password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+          </Grid>
+
           <Grid item xs={12}>
             <Button type="submit" variant="contained" color="primary">
               Enviar

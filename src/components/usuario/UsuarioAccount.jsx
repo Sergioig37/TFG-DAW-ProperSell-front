@@ -32,7 +32,7 @@ export const UsuarioAccount = () => {
   }, [username]);
 
   const handleEdit = () => {
-    navigate(`/usuario/edit/${id}`);
+    navigate(`/usuario/edit`);
   };
 
   return (

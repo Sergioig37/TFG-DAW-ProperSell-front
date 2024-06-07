@@ -10,17 +10,14 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+
 
 export const PropiedadDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const idUser = useAuth().getId();
-  const [propietario, setPropietario] = useState("");
-  const [numeroTelefono, setNumeroTelefono] = useState("");
   const [propiedad, setPropiedad] = useState({});
+  const [propietario, setPropietario] = useState({});
 
   useEffect(() => {
     if (!token) {
@@ -41,25 +38,13 @@ export const PropiedadDetails = () => {
             },
           })
             .then((res) => res.json())
-            .then((data) => setPropietario(data.username));
+            .then((data) => setPropietario(data));
 
           setPropiedad(data);
-
-          fetch(`http://localhost:9090/usuarioInfoContacto/${data.id}`, {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => setNumeroTelefono(data.numeroTelefono));
         });
     }
   }, [id, token, navigate]);
 
-  const handleEdit = () => {
-    navigate(`/propiedad/edit/${id}`);
-  };
 
   return (
     <>
@@ -83,7 +68,7 @@ export const PropiedadDetails = () => {
                   </ListGroup.Item>
                   <ListGroup.Item>
                     <strong>Contactar al dueño:</strong>{" "}
-                    {numeroTelefono}
+                    {propietario.numeroTelefono}
                   </ListGroup.Item>
                 </ListGroup>
               </Col>

@@ -5,12 +5,12 @@ import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export const Estadisticas = () => {
-  const [propiedadesMasCaras, setPropiedadesMasCaras] = useState(null);
-  const [usuariosConXAlertas, setUsuariosConXAlertas] = useState(null);
-  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] = useState(null);
-  const [alertasPopulares, setAlertasPopulares] = useState(null);
-  const [usuariosBaneados, setUsuariosBaneados] = useState(null);
-  const [alertasLargas, setAlertasLargas] = useState(null);
+  const [propiedadesMasCaras, setPropiedadesMasCaras] = useState([]);
+  const [usuariosConXAlertas, setUsuariosConXAlertas] = useState([]);
+  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] = useState([]);
+  const [alertasPopulares, setAlertasPopulares] = useState([]);
+  const [usuariosBaneados, setUsuariosBaneados] = useState([]);
+  const [alertasLargas, setAlertasLargas] = useState([]);
   const [numeroAlertas, setNumeroAlertas] = useState(0);
   const [precioPropiedad, setPrecioPropiedad] = useState(0);
   const [tamanoDescripcion, setTamanoDescripcion] = useState(0);
@@ -27,7 +27,7 @@ export const Estadisticas = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        setPropiedadesMasCaras(data.length);
+        setPropiedadesMasCaras(data);
       });
   };
 
@@ -40,7 +40,7 @@ export const Estadisticas = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        setUsuariosConXAlertas(data.length);
+        setUsuariosConXAlertas(data);
       });
   };
 
@@ -54,7 +54,7 @@ export const Estadisticas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUsuariosConMasDeUnaPropiedad(data.length);
+        setUsuariosConMasDeUnaPropiedad(data);
       });
 
     fetch("http://localhost:9090/estadisticas/alertas/variosUsuarios", {
@@ -62,7 +62,7 @@ export const Estadisticas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAlertasPopulares(data.length);
+        setAlertasPopulares(data);
       });
 
     fetch("http://localhost:9090/estadisticas/usuarios/baneados", {
@@ -70,7 +70,7 @@ export const Estadisticas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setUsuariosBaneados(data.length);
+        setUsuariosBaneados(data);
       });
   }, []);
 
@@ -80,7 +80,7 @@ export const Estadisticas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAlertasLargas(data.length);
+        setAlertasLargas(data);
       });
   };
 
@@ -92,10 +92,10 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-info">Número de propiedades que cuestan más de {precioPropiedad} euros:</h5>
+            <h5 className="text-info">Propiedades que cuestan más de {precioPropiedad} euros:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={1}>
+                <Col xs={3}>
                   <Form.Group controlId="precioPropiedad">
                     <Form.Control
                       type="number"
@@ -107,7 +107,7 @@ export const Estadisticas = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col xs={6}>
+                <Col xs={2}>
                   <Button variant="info" onClick={handleVerPropiedadesMasCaras}>
                     Ver
                   </Button>
@@ -115,7 +115,24 @@ export const Estadisticas = () => {
               </Row>
             </Form>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {propiedadesMasCaras}
+              <p>Cantidad: {propiedadesMasCaras.length}</p>
+              {propiedadesMasCaras.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {propiedadesMasCaras.map((propiedad) => (
+                    <Col key={propiedad.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{propiedad.tipo}</Card.Title>
+                          <Card.Text>Localización: {propiedad.localizacion}</Card.Text>
+                          <Card.Text>Precio: €{propiedad.precio}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+              <></>
+              )}
             </div>
           </Card.Body>
         </Card>
@@ -125,7 +142,7 @@ export const Estadisticas = () => {
             <h5 className="text-success">Usuarios con más de {numeroAlertas} alertas:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={1}>
+                <Col xs={3}>
                   <Form.Group controlId="numeroAlertas">
                     <Form.Control
                       type="number"
@@ -137,7 +154,7 @@ export const Estadisticas = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col xs={6}>
+                <Col xs={2}>
                   <Button variant="success" onClick={handleVerUsuariosConXAlertas}>
                     Ver
                   </Button>
@@ -145,7 +162,23 @@ export const Estadisticas = () => {
               </Row>
             </Form>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {usuariosConXAlertas}
+            <p>Cantidad: {usuariosConXAlertas.length}</p>
+              {usuariosConXAlertas.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {usuariosConXAlertas.map((usuario) => (
+                    <Col key={usuario.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{usuario.username}</Card.Title>
+                          <Card.Text>Alertas: {usuario.alertas.length}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <></>
+              )}
             </div>
           </Card.Body>
         </Card>
@@ -154,16 +187,49 @@ export const Estadisticas = () => {
           <Card.Body>
             <h5 className="text-warning">Usuarios con más de una propiedad:</h5>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {usuariosConMasDeUnaPropiedad}
+            <p>Cantidad: {usuariosConMasDeUnaPropiedad.length}</p>
+              {usuariosConMasDeUnaPropiedad.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {usuariosConMasDeUnaPropiedad.map((usuario) => (
+                    <Col key={usuario.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{usuario.username}</Card.Title>
+                          <Card.Text>Propiedades: {usuario.propiedades.length}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <></>
+              )}
             </div>
           </Card.Body>
         </Card>
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
+            
             <h5 className="text-danger">Alertas con más de una suscripción:</h5>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {alertasPopulares}
+            <p>Cantidad: {alertasPopulares.length}</p>
+              {alertasPopulares.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {alertasPopulares.map((alerta) => (
+                    <Col key={alerta.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{alerta.nombre}</Card.Title>
+                          <Card.Text>Suscripciones: {alerta.numeroUsuarios}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <></>
+              )}
             </div>
           </Card.Body>
         </Card>
@@ -172,7 +238,22 @@ export const Estadisticas = () => {
           <Card.Body>
             <h5 className="text-secondary">Usuarios bloqueados:</h5>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {usuariosBaneados}
+            <p>Cantidad: {usuariosBaneados.length}</p>
+              {usuariosBaneados.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {usuariosBaneados.map((usuario) => (
+                    <Col key={usuario.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{usuario.username}</Card.Title>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <></>
+              )}
             </div>
           </Card.Body>
         </Card>
@@ -182,7 +263,7 @@ export const Estadisticas = () => {
             <h5 className="text-primary">Alertas con más de {tamanoDescripcion} número de caracteres:</h5>
             <Form>
               <Row className="align-items-center">
-                <Col xs={1}>
+                <Col xs={3}>
                   <Form.Group controlId="tamanoDescripcion">
                     <Form.Control
                       type="number"
@@ -194,7 +275,7 @@ export const Estadisticas = () => {
                     />
                   </Form.Group>
                 </Col>
-                <Col xs={6}>
+                <Col xs={2}>
                   <Button variant="primary" onClick={handleVerAlertasLargas}>
                     Ver
                   </Button>
@@ -202,7 +283,23 @@ export const Estadisticas = () => {
               </Row>
             </Form>
             <div className="mt-3">
-              <strong>Cantidad:</strong> {alertasLargas}
+            <p>Cantidad: {alertasLargas.length}</p>
+              {alertasLargas.length > 0 ? (
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+                  {alertasLargas.map((alerta) => (
+                    <Col key={alerta.id}>
+                      <Card className="h-100 shadow-sm">
+                        <Card.Body>
+                          <Card.Title>{alerta.nombre}</Card.Title>
+                          <Card.Text>Descripción: {alerta.descripcion}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              ) : (
+                <></>
+              )}
             </div>
           </Card.Body>
         </Card>
