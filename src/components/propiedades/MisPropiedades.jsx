@@ -40,6 +40,10 @@ export const MisPropiedades = () => {
   };
 
   const handleDelete = (idPropiedad) => {
+
+
+    setPropiedades(propiedades.filter((propiedad) => propiedad.id !== idPropiedad));
+
     fetch(`http://localhost:9090/propiedad/del/${idPropiedad}`, {
       method: "DELETE",
       headers: {
@@ -47,7 +51,7 @@ export const MisPropiedades = () => {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    }).then(() => window.location.reload());
+    })
   };
 
   return (
@@ -76,7 +80,7 @@ export const MisPropiedades = () => {
                   <Card.Body>
                     <Card.Title>{propiedad.tipo}</Card.Title>
                     <Card.Text>{propiedad.localizacion}</Card.Text>
-                    <Card.Text>${propiedad.precio}</Card.Text>
+                    <Card.Text>{propiedad.precio}€</Card.Text>
                   </Card.Body>
                   <Card.Footer className="d-flex justify-content-between">
                     <Button

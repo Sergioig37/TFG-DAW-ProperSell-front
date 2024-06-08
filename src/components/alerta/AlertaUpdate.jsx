@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container } from "@mui/material";
+import { Form, Button, Container, Alert, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
@@ -43,8 +43,13 @@ export const AlertaUpdate = () => {
       setErrors({ message: "Por favor, complete todos los campos." });
       return;
     }
+     
+    else if (nombre.length<4 || descripcion.length<4) {
+      setErrors({ message: "El nombre y la descripción no pueden tener menos de cuatro caracteres." });
+      return;
+    }
 
-    var data = {
+    const data = {
       id: idAlerta,
       nombre: nombre,
       descripcion: descripcion,
@@ -64,40 +69,52 @@ export const AlertaUpdate = () => {
 
   return (
     <>
-      <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
+      <Container className="mt-4" style={{ maxWidth: '600px' }}>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-3">
             {/* Error message */}
             {errors.message && (
-              <Grid item xs={12}>
-                <div style={{ color: "red" }}>{errors.message}</div>
-              </Grid>
+              <Col xs={12}>
+                <Alert variant="danger">{errors.message}</Alert>
+              </Col>
             )}
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Nombre"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                error={errors.nombre}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Descripción"
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
-                error={errors.descripcion}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formNombre">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  isInvalid={!!errors.nombre}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.nombre}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formDescripcion">
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese la descripción"
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  isInvalid={!!errors.descripcion}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.descripcion}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12}>
+              <Button type="submit" variant="primary">
                 Guardar
               </Button>
-            </Grid>
-          </Grid>
-        </form>
+            </Col>
+          </Row>
+        </Form>
       </Container>
     </>
   );

@@ -29,6 +29,11 @@ export const AlertaCreate = () => {
       setErrors({ message: "Por favor, complete todos los campos." });
       return;
     }
+     
+    else if (nombre.length<4 || descripcion.length<4) {
+      setErrors({ message: "El nombre y la descripción no pueden tener menos de cuatro caracteres." });
+      return;
+    }
 
     const data = {
       descripcion: descripcion,

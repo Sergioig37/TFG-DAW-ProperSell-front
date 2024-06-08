@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
@@ -55,17 +55,25 @@ export const PropiedadCreate = () => {
     let errors = {};
 
     if (!tipo.trim()) {
-      errors["tipo"] = "Ingrese el tipo de propiedad";
+      errors["tipo"] = "Ingrese el tipo de propiedad.";
+    } else if (tipo.length < 4) {
+      errors["tipo"] = "Tipo no puede tener menos de cuatro caracteres.";
+    } else if (/\d/.test(tipo)) {
+      errors["tipo"] = "El tipo no puede contener números.";
     }
+    
 
     if (!localizacion.trim()) {
-      errors["localizacion"] = "Ingrese la localización de la propiedad";
+      errors["localizacion"] = "Ingrese la localización de la propiedad.";
+    }
+    else if(localizacion.length<3){
+      errors["localizacion"] = "Localización no puede tener menos de tres caracteres.";      
     }
 
     if (!precio.trim()) {
-      errors["precio"] = "Ingrese el precio de la propiedad";
+      errors["precio"] = "Ingrese el precio de la propiedad.";
     } else if (!/^\d+$/.test(precio)) {
-      errors["precio"] = "El precio debe contener solo números";
+      errors["precio"] = "El precio debe contener solo números.";
     }
 
     setErrors(errors);
@@ -73,11 +81,19 @@ export const PropiedadCreate = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center mt-4">
+    <Container className="mt-4">
+      <Row className="justify-content-md-center">
         <Col xs={12} md={6}>
           <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="tipo">
+            {/* Error message */}
+            {Object.keys(errors).length > 0 && (
+              <Alert variant="danger">
+                {Object.values(errors).map((error, index) => (
+                  <div key={index}>{error}</div>
+                ))}
+              </Alert>
+            )}
+            <Form.Group controlId="tipo" className="mb-3">
               <Form.Label>Tipo</Form.Label>
               <Form.Control
                 type="text"
@@ -91,7 +107,7 @@ export const PropiedadCreate = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="localizacion">
+            <Form.Group controlId="localizacion" className="mb-3">
               <Form.Label>Localización</Form.Label>
               <Form.Control
                 type="text"
@@ -105,7 +121,7 @@ export const PropiedadCreate = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="precio">
+            <Form.Group controlId="precio" className="mb-3">
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="text"

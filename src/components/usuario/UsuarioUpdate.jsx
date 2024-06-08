@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
-  TextField,
+  Form,
   Button,
-  Grid,
   Container,
-  IconButton,
-  InputAdornment,
-  FormControl,
-  FormHelperText,
-} from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+  Row,
+  Col,
+  Alert,
+  InputGroup,
+} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export const UsuarioUpdate = () => {
   const [correo, setCorreo] = useState("");
@@ -39,13 +39,11 @@ export const UsuarioUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-      
           setCorreo(data.correo);
           setNombreReal(data.nombreReal);
           setNumeroTelefono(data.numeroTelefono ? data.numeroTelefono : "");
           setPassword(passwrd);
           setUsername(data.username);
-          // Password shouldn't be set from server for security reasons
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -66,7 +64,7 @@ export const UsuarioUpdate = () => {
         correo: correo,
         nombreReal: nombreReal,
         numeroTelefono: numeroTelefono,
-        password: password, // Ensure to hash password before sending to the server
+        password: password,
       };
 
       fetch(`http://localhost:9090/usuario/edit/${idUser}`, {
@@ -117,7 +115,7 @@ export const UsuarioUpdate = () => {
         "El número de teléfono debe contener solo números";
     } else if (numeroTelefono.trim().length !== 9) {
       formIsValid = false;
-      errors["numeroTelefono"] = "El número de teléfono debe tener 10 dígitos";
+      errors["numeroTelefono"] = "El número de teléfono debe tener 9 dígitos";
     }
 
     setErrors(errors);
@@ -125,75 +123,89 @@ export const UsuarioUpdate = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <FormControl fullWidth error={errors["nombreReal"]}>
-              <TextField
-                fullWidth
-                label="Nombre Real"
+    <Container className="mt-4">
+      <Row className="justify-content-md-center">
+        <Col xs={12} md={6}>
+          <h2 className="mb-4">Actualizar Usuario</h2>
+          <Form onSubmit={handleSubmit}>
+            {Object.keys(errors).length > 0 && (
+              <Alert variant="danger">
+                {Object.values(errors).map((error, index) => (
+                  <div key={index}>{error}</div>
+                ))}
+              </Alert>
+            )}
+            <Form.Group controlId="nombreReal" className="mb-3">
+              <Form.Label>Nombre Real</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese su nombre real"
                 value={nombreReal}
                 onChange={(e) => setNombreReal(e.target.value)}
+                isInvalid={!!errors["nombreReal"]}
               />
-              <FormHelperText>{errors["nombreReal"]}</FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth error={errors["numeroTelefono"]}>
-              <TextField
-                fullWidth
-                label="Número de teléfono"
+              <Form.Control.Feedback type="invalid">
+                {errors["nombreReal"]}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="numeroTelefono" className="mb-3">
+              <Form.Label>Número de Teléfono</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingrese su número de teléfono"
                 value={numeroTelefono}
                 onChange={(e) => setNumeroTelefono(e.target.value)}
+                isInvalid={!!errors["numeroTelefono"]}
               />
-              <FormHelperText>{errors["numeroTelefono"]}</FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth error={errors["correo"]}>
-              <TextField
-                fullWidth
-                label="Correo"
+              <Form.Control.Feedback type="invalid">
+                {errors["numeroTelefono"]}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group controlId="correo" className="mb-3">
+              <Form.Label>Correo</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Ingrese su correo electrónico"
                 value={correo}
                 onChange={(e) => setCorreo(e.target.value)}
+                isInvalid={!!errors["correo"]}
               />
-              <FormHelperText>{errors["correo"]}</FormHelperText>
-            </FormControl>
-          </Grid>
+              <Form.Control.Feedback type="invalid">
+                {errors["correo"]}
+              </Form.Control.Feedback>
+            </Form.Group>
 
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <TextField
-                fullWidth
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </FormControl>
-          </Grid>
+            <Form.Group controlId="password" className="mb-3">
+              <Form.Label>Contraseña</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Ingrese su contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  isInvalid={!!errors["password"]}
+                />
+                <Button
+                  variant="outline-secondary"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </Button>
+                <Form.Control.Feedback type="invalid">
+                  {errors["password"]}
+                </Form.Control.Feedback>
+              </InputGroup>
+            </Form.Group>
 
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
+            <Button variant="primary" type="submit">
               Enviar
             </Button>
-          </Grid>
-        </Grid>
-      </form>
+          </Form>
+        </Col>
+      </Row>
     </Container>
   );
 };

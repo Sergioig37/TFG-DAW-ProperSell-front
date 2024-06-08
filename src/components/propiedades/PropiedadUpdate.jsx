@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TextField, Button, Grid, Container, FormControl, FormHelperText } from "@mui/material";
+import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
@@ -35,7 +35,6 @@ export const PropiedadUpdate = () => {
             .then((res) => res.json())
             .then((propiedadData) => {
               if (propiedadData.id !== idUser) {
-                
                 navigate("/denegado");
               } else {
                 setTipo(data.tipo);
@@ -82,21 +81,24 @@ export const PropiedadUpdate = () => {
     let formIsValid = true;
 
     if (!tipo.trim()) {
-      formIsValid = false;
-      errors["tipo"] = "Ingrese el tipo de propiedad";
+      errors["tipo"] = "Ingrese el tipo de propiedad.";
+    } else if (tipo.length < 4) {
+      errors["tipo"] = "Tipo no puede tener menos de cuatro caracteres.";
+    } else if (/\d/.test(tipo)) {
+      errors["tipo"] = "El tipo no puede contener números.";
     }
 
     if (!localizacion.trim()) {
       formIsValid = false;
-      errors["localizacion"] = "Ingrese la localización de la propiedad";
+      errors["localizacion"] = "Ingrese la localización de la propiedad.";
     }
 
     if (!precio.trim()) {
       formIsValid = false;
-      errors["precio"] = "Ingrese el precio de la propiedad";
+      errors["precio"] = "Ingrese el precio de la propiedad.";
     } else if (!/^\d+$/.test(precio)) {
       formIsValid = false;
-      errors["precio"] = "El precio debe contener solo números";
+      errors["precio"] = "El precio debe contener solo números.";
     }
 
     setErrors(errors);
@@ -105,49 +107,71 @@ export const PropiedadUpdate = () => {
 
   return (
     <>
-      <Container maxWidth="sm" sx={{ mt: 4 }}>
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <FormControl fullWidth error={errors["tipo"]}>
-                <TextField
-                  fullWidth
-                  label="Tipo"
+      <Container className="mt-4" style={{ maxWidth: "600px" }}>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-3">
+            {/* Error message */}
+            {Object.keys(errors).length > 0 && (
+              <Col xs={12}>
+                <Alert variant="danger">
+                  {Object.values(errors).map((error, index) => (
+                    <div key={index}>{error}</div>
+                  ))}
+                </Alert>
+              </Col>
+            )}
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formTipo">
+                <Form.Label>Tipo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el tipo de propiedad"
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
+                  isInvalid={!!errors.tipo}
                 />
-                <FormHelperText>{errors["tipo"]}</FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth error={errors["localizacion"]}>
-                <TextField
-                  fullWidth
-                  label="Localización"
+                <Form.Control.Feedback type="invalid">
+                  {errors.tipo}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formLocalizacion">
+                <Form.Label>Localización</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese la localización de la propiedad"
                   value={localizacion}
                   onChange={(e) => setLocalizacion(e.target.value)}
+                  isInvalid={!!errors.localizacion}
                 />
-                <FormHelperText>{errors["localizacion"]}</FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth error={errors["precio"]}>
-                <TextField
-                  fullWidth
-                  label="Precio"
+                <Form.Control.Feedback type="invalid">
+                  {errors.localizacion}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formPrecio">
+                <Form.Label>Precio</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el precio de la propiedad"
                   value={precio}
                   onChange={(e) => setPrecio(e.target.value)}
+                  isInvalid={!!errors.precio}
                 />
-                <FormHelperText>{errors["precio"]}</FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
+                <Form.Control.Feedback type="invalid">
+                  {errors.precio}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12}>
+              <Button type="submit" variant="primary">
                 Guardar
               </Button>
-            </Grid>
-          </Grid>
-        </form>
+            </Col>
+          </Row>
+        </Form>
       </Container>
     </>
   );
