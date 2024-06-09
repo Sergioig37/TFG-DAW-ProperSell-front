@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Button, Card, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, Button, Card, ListGroup, Modal } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ export const UsuarioAccount = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const {clearToken} = useAuth();
 
   useEffect(() => {
     if (!token) {
@@ -35,6 +37,20 @@ export const UsuarioAccount = () => {
     navigate(`/usuario/edit`);
   };
 
+  const handleDeleteAccount = () => {
+    // Aquí puedes hacer la lógica para borrar la cuenta
+    fetch(`http://localhost:9090/usuario/del/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }).then(() => {
+      // Aquí puedes manejar lo que sucede después de borrar la cuenta
+      clearToken();
+      navigate("/");
+    });
+  };
+
   return (
     <>
       <NavbarGeneral />
@@ -50,6 +66,13 @@ export const UsuarioAccount = () => {
                 <Button variant="outline-primary" onClick={handleEdit} className="mt-3">
                   <FontAwesomeIcon icon={faEdit} className="me-2" />
                   Editar Perfil
+                </Button>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => setShowConfirmModal(true)}
+                  className="mt-3"
+                >
+                  Borrar Cuenta
                 </Button>
               </Col>
               <Col xs={12} md={8}>
@@ -73,6 +96,23 @@ export const UsuarioAccount = () => {
           </Card.Body>
         </Card>
       </Container>
+
+      <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Borrado de Cuenta</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro que deseas borrar tu cuenta? Esta acción no se puede deshacer.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="danger" onClick={handleDeleteAccount}>
+            Borrar Cuenta
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
