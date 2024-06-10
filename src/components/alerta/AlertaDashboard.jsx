@@ -25,7 +25,7 @@ export const AlertasDashboard = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            setAlertas(data);
+            setAlertas(data ? data : []);
           });
       }
     }
@@ -53,9 +53,6 @@ export const AlertasDashboard = () => {
       });
   };
 
-  const handleVer = (id) => {
-    navigate(`/alerta/${id}`);
-  };
 
   return (
     <>

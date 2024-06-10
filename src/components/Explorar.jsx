@@ -97,21 +97,7 @@ export const Explorar = () => {
 
         <Form onSubmit={handleSearch} className="mb-4">
           <Row className="g-3">
-            <Col xs={12} sm={6} md={3}>
-              <FormGroup>
-                <InputGroup>
-                  <InputGroup.Text className={styles["input-group-text"]}>
-                    <FaSearch />
-                  </InputGroup.Text>
-                  <FormControl
-                    type="text"
-                    placeholder="Localización"
-                    value={localizacion}
-                    onChange={(e) => setLocalizacion(e.target.value)}
-                  />
-                </InputGroup>
-              </FormGroup>
-            </Col>
+            
             <Col xs={12} sm={6} md={3}>
               <FormGroup>
                 <InputGroup>

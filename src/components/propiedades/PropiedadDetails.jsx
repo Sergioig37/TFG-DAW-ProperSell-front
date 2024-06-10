@@ -30,7 +30,7 @@ export const PropiedadDetails = () => {
         },
       })
         .then((res) => {
-          if (res.status === 404) {
+          if (!res.ok) {
             navigate("/"); // Navigate back if property not found
           } else {
             return res.json();

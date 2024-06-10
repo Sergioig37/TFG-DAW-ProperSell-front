@@ -50,13 +50,8 @@ export const Login = () => {
         handleSuccessfulLogin();
       })
       .catch((error) => {
-        if (error.message.includes("Contraseña")) {
-          // Manejar error de autenticación
-          setError(error.message);
-        } else if (error.message.includes("Usuario")) {
-          // Otros tipos de errores
-          setError(error.message);
-        }
+        // Otros tipos de errores
+        setError(error.message);
       });
   };
 
@@ -77,6 +72,14 @@ export const Login = () => {
         <Col md={6}>
           <Card>
             <Card.Body>
+              {error ? (
+                <Alert variant="danger" className="mt-2">
+                  {error}
+                </Alert>
+              ) : (
+                <></>
+              )}
+
               <Card.Title className="text-center mb-4">
                 Iniciar sesión
               </Card.Title>
@@ -92,11 +95,6 @@ export const Login = () => {
                     autoFocus
                   />
                 </Form.Group>
-                {error && error.includes("Usuario") && (
-                    <Alert variant="danger" className="mt-2">
-                      {error}
-                    </Alert>
-                  )}
 
                 <Form.Group controlId="password" className="mt-3">
                   <Form.Label>Contraseña</Form.Label>
@@ -108,11 +106,7 @@ export const Login = () => {
                     required
                   />
                 </Form.Group>
-                {error && error.includes("Contraseña") && (
-                    <Alert variant="danger" className="mt-2">
-                      {error}
-                    </Alert>
-                  )}
+
                 <Button variant="primary" type="submit" className="mt-4" block>
                   Iniciar Sesión
                 </Button>
