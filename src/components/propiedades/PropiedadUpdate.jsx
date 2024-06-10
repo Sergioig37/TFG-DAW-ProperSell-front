@@ -12,6 +12,7 @@ export const PropiedadUpdate = () => {
   const token = useAuth().getToken();
   const navigate = useNavigate();
   const idUser = useAuth().getId();
+  const user = useAuth().getUser();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -58,7 +59,7 @@ export const PropiedadUpdate = () => {
         precio: precio,
       };
 
-      fetch(`http://localhost:9090/propiedad/edit/${data.id}`, {
+      fetch(`http://localhost:9090/propiedad/edit/${data.id}/${user}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",

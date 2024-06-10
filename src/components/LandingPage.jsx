@@ -17,7 +17,7 @@ export const LandingPage = () => {
   useEffect(() => {
 
     if(token){
-       fetch(`http://localhost:9090/usuarioNombre/${username}`, {
+       fetch(`http://localhost:9090/usuario/usuarioNombre/${username}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

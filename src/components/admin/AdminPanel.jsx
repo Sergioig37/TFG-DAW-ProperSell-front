@@ -22,6 +22,9 @@ export const AdminPanel = () => {
   };
 
   useEffect(() => {
+
+  
+
     if (!token) {
       navigate("/login");
     } else {

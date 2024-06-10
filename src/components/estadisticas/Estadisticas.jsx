@@ -23,11 +23,16 @@ export const Estadisticas = () => {
       `http://localhost:9090/estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
       {
         method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
       }
     )
-      .then((res) => res.json())
+      .then((res) => res?res.json():[])
       .then((data) => {
-        setPropiedadesMasCaras(data);
+        setPropiedadesMasCaras(data?data:[]);
       });
   };
 
@@ -36,11 +41,16 @@ export const Estadisticas = () => {
       `http://localhost:9090/estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
       {
         method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
       }
     )
-      .then((res) => res.json())
+      .then((res) =>res?res.json():[])
       .then((data) => {
-        setUsuariosConXAlertas(data);
+        setUsuariosConXAlertas(data?data:[]);
       });
   };
 
@@ -51,36 +61,56 @@ export const Estadisticas = () => {
 
     fetch("http://localhost:9090/estadisticas/usuario/variasPropiedades", {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => res?res.json():[])
       .then((data) => {
-        setUsuariosConMasDeUnaPropiedad(data);
+        setUsuariosConMasDeUnaPropiedad(data?data:[]);
       });
 
     fetch("http://localhost:9090/estadisticas/alertas/variosUsuarios", {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => res?res.json():[])
       .then((data) => {
-        setAlertasPopulares(data);
+        setAlertasPopulares(data?data:[]);
       });
 
     fetch("http://localhost:9090/estadisticas/usuarios/baneados", {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => res?res.json():[])
       .then((data) => {
-        setUsuariosBaneados(data);
+        setUsuariosBaneados(data?data:[]);
       });
   }, []);
 
   const handleVerAlertasLargas = () => {
     fetch(`http://localhost:9090/estadisticas/alertas/${tamanoDescripcion}`, {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => res?res.json():[])
       .then((data) => {
-        setAlertasLargas(data);
+        setAlertasLargas(data?data:[]);
       });
   };
 
@@ -260,7 +290,7 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-primary">Alertas con más de {tamanoDescripcion} número de caracteres:</h5>
+            <h5 className="text-primary">Alertas con descripción de más de {tamanoDescripcion} de caracteres:</h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={3}>
@@ -292,6 +322,7 @@ export const Estadisticas = () => {
                         <Card.Body>
                           <Card.Title>{alerta.nombre}</Card.Title>
                           <Card.Text>Descripción: {alerta.descripcion}</Card.Text>
+                          <Card.Text>Tamaño: {alerta.descripcion.length}</Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>

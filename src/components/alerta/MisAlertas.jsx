@@ -41,8 +41,10 @@ export const MisAlertas = () => {
     }
   }, [token, idUser, navigate]);
 
-  const handleAddAlertas = (id) => {
-    fetch(`http://localhost:9090/usuario/${idUser}/${id}/true`, {
+
+  const handleAlertas = (id, enabled) => {
+    if(enabled===true){
+      fetch(`http://localhost:9090/usuario/${idUser}/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -58,10 +60,9 @@ export const MisAlertas = () => {
     setAlertasDisponibles(
       alertasDisponibles.filter((alerta) => alerta.id !== id)
     );
-  };
-
-  const handleRemoveAlerta = (id) => {
-    fetch(`http://localhost:9090/usuario/${idUser}/${id}/false`, {
+    }
+    else {
+       fetch(`http://localhost:9090/usuario/${idUser}/${id}/false`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -75,7 +76,11 @@ export const MisAlertas = () => {
     setAlertasUsuario(alertasUsuario.filter((alerta) => alerta.id !== id));
 
     setAlertasDisponibles([...alertasDisponibles, alertaQuitada]);
-  };
+    }
+     
+  }
+
+  
 
   return (
     <>
@@ -97,7 +102,7 @@ export const MisAlertas = () => {
                       <Card.Footer className="text-center">
                         <Button
                           variant="outline-primary"
-                          onClick={() => handleAddAlertas(alerta.id)}
+                          onClick={() => handleAlertas(alerta.id, true)}
                         >
                           <FaPlus /> Añadir
                         </Button>
@@ -129,7 +134,7 @@ export const MisAlertas = () => {
                       <Card.Footer className="text-center">
                         <Button
                           variant="outline-danger"
-                          onClick={() => handleRemoveAlerta(alerta.id)}
+                          onClick={() => handleAlertas(alerta.id, false)}
                         >
                           <FaMinus /> Eliminar
                         </Button>

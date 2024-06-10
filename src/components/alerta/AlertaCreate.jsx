@@ -12,6 +12,8 @@ export const AlertaCreate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+  
+
     if (!token) {
       navigate("/login");
     } else {
@@ -53,7 +55,7 @@ export const AlertaCreate = () => {
       if (!response.ok) {
         throw new Error('Error al enviar la alerta.');
       }
-      return response.json();
+
     })
     .then(() => {
       navigate(-1);

@@ -13,6 +13,7 @@ export const UsuarioAccount = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
+  const user = useAuth().getUser();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const {clearToken} = useAuth();
 
@@ -39,7 +40,7 @@ export const UsuarioAccount = () => {
 
   const handleDeleteAccount = () => {
     // Aquí puedes hacer la lógica para borrar la cuenta
-    fetch(`http://localhost:9090/usuario/del/${id}`, {
+    fetch(`http://localhost:9090/usuario/del/${id}/${user}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

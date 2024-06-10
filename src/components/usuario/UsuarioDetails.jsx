@@ -26,19 +26,32 @@ export const UsuarioDetails = () => {
     } else {
       if (rol !== "ADMIN") {
         navigate("/denegado");
+      } else {
+        fetch(`http://localhost:9090/usuario/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((res) => {
+            if (res.status === 404) {
+              navigate("/");
+            } else {
+              return res.json();
+            }
+          })
+          .then((data) => {
+            if (data) {
+              setUsuario(data);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching user:", error);
+          });
       }
-      fetch(`http://localhost:9090/usuario/${id}`, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUsuario(data);
-        });
     }
-  }, [id]);
+  }, [id, navigate, token, rol]);
+  
 
 
   return (

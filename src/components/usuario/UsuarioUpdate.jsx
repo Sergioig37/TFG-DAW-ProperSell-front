@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { NavbarGeneral } from "../NavbarGeneral";
 
 export const UsuarioUpdate = () => {
   const [correo, setCorreo] = useState("");
@@ -22,6 +23,7 @@ export const UsuarioUpdate = () => {
   const token = useAuth().getToken();
   const passwrd = useAuth().getAuthPassword();
   const idUser = useAuth().getId();
+  const user= useAuth().getUser();
   const { setToken } = useAuth();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
@@ -66,8 +68,8 @@ export const UsuarioUpdate = () => {
         numeroTelefono: numeroTelefono,
         password: password,
       };
-
-      fetch(`http://localhost:9090/usuario/edit/${idUser}`, {
+      console.log(user);
+      fetch(`http://localhost:9090/usuario/edit/${idUser}/${user}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -123,6 +125,8 @@ export const UsuarioUpdate = () => {
   };
 
   return (
+    <>
+    <NavbarGeneral/>
     <Container className="mt-4">
       <Row className="justify-content-md-center">
         <Col xs={12} md={6}>
@@ -207,5 +211,6 @@ export const UsuarioUpdate = () => {
         </Col>
       </Row>
     </Container>
+    </>
   );
 };

@@ -31,80 +31,29 @@ export const PropiedadesDashboard = () => {
     }
   }, []);
 
-  const handleDelete = (idPropiedad) => {
-    var data = {
-      id: idPropiedad,
-    };
-
-    fetch(`http://localhost:9090/propiedad/del/${data.id}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then(() => {
-        setPropiedades(propiedades.filter((propiedad) => propiedad.id !== idPropiedad));
-      })
-      .catch((error) => {
-        console.error("Error al eliminar la propiedad:", error);
-      });
-  };
-
   const handleVer = (id) => {
     navigate(`/propiedad/${id}`);
   };
 
-  const handleDarDeBaja = (idPropiedad) => {
-    var data = {
-      id: idPropiedad,
-    };
 
-    fetch(`http://localhost:9090/propiedad/disable/${data.id}`, {
-      method: "GET",
+  const handleHabilitado = (id, enabled) => {
+   
+
+    fetch(`http://localhost:9090/propiedad/enabled/${id}/${enabled}`, {
+      method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
       },
-    })
-      .then(() => {
-        setPropiedades(
-          propiedades.map((propiedad) =>
-            propiedad.id === idPropiedad ? { ...propiedad, habilitado: false } : propiedad
-          )
-        );
-      })
-      .catch((error) => {
-        console.error("Error al deshabilitar la propiedad:", error);
-      });
-  };
-
-  const handleDarDeAlta = (idPropiedad) => {
-    var data = {
-      id: idPropiedad,
-    };
-
-    fetch(`http://localhost:9090/propiedad/enable/${data.id}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then(() => {
-        setPropiedades(
-          propiedades.map((propiedad) =>
-            propiedad.id === idPropiedad ? { ...propiedad, habilitado: true } : propiedad
-          )
-        );
-      })
-      .catch((error) => {
-        console.error("Error al habilitar la propiedad:", error);
-      });
-  };
+    }).then(() => {
+      setPropiedades((prevPropiedades) =>
+        prevPropiedades.map((propiedad) =>
+          propiedad.id === id ? { ...propiedad, habilitado: enabled===true?true:false } : propiedad
+        )
+      );
+    });
+  }
 
   return (
     <>
@@ -140,11 +89,11 @@ export const PropiedadesDashboard = () => {
                     <td>{propiedad.habilitado ? "Si" : "No"}</td>
                     <td>
                       {propiedad.habilitado ? (
-                        <Button variant="danger" onClick={() => handleDarDeBaja(propiedad.id)}>
+                        <Button variant="danger" onClick={() => handleHabilitado(propiedad.id, false)}>
                           Deshabilitar
                         </Button>
                       ) : (
-                        <Button variant="success" onClick={() => handleDarDeAlta(propiedad.id)}>
+                        <Button variant="success" onClick={() => handleHabilitado(propiedad.id, true)}>
                           Habilitar
                         </Button>
                       )}

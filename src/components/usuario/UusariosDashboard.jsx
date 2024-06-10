@@ -18,7 +18,7 @@ export const UsuariosDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(`http://localhost:9090/usuarioExcluido/${idUser}`, {
+        fetch(`http://localhost:9090/usuario/usuarioExcluido/${idUser}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -32,8 +32,8 @@ export const UsuariosDashboard = () => {
     }
   }, [token, rol, idUser, navigate]);
 
-  const handleDarDeBaja = (id) => {
-    const enabled = false;
+  const handleHabilitado = (id, enabled) => {
+   
 
     fetch(`http://localhost:9090/usuario/enabled/${id}/${enabled}`, {
       method: "PUT",
@@ -45,31 +45,13 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.id === id ? { ...usuario, habilitado: false } : usuario
+          usuario.id === id ? { ...usuario, habilitado: enabled===true?true:false } : usuario
         )
       );
     });
   };
 
-  const handleDarDeAlta = (id) => {
-    const enabled = true;
-
-    fetch(`http://localhost:9090/usuario/enabled/${id}/${enabled}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    }).then(() => {
-      setUsuarios((prevUsuarios) =>
-        prevUsuarios.map((usuario) =>
-          usuario.id === id ? { ...usuario, habilitado: true } : usuario
-        )
-      );
-    });
-  };
-
+  
   const handleVer = (id) => {
     navigate(`/usuario/${id}`);
   };
@@ -106,11 +88,11 @@ export const UsuariosDashboard = () => {
                 </td>
                 <td>
                   {usuario.habilitado ? (
-                    <Button variant="danger" onClick={() => handleDarDeBaja(usuario.id)}>
+                    <Button variant="danger" onClick={() => handleHabilitado(usuario.id, false)}>
                       Deshabilitar
                     </Button>
                   ) : (
-                    <Button variant="success" onClick={() => handleDarDeAlta(usuario.id)}>
+                    <Button variant="success" onClick={() => handleHabilitado(usuario.id, true)}>
                       Habilitar
                     </Button>
                   )}

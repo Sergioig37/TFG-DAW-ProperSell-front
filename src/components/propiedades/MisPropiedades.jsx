@@ -17,6 +17,7 @@ export const MisPropiedades = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const idUser = useAuth().getId();
+  const user = useAuth().getUser();
 
   useEffect(() => {
     if (!token) {
@@ -41,10 +42,9 @@ export const MisPropiedades = () => {
 
   const handleDelete = (idPropiedad) => {
 
-
     setPropiedades(propiedades.filter((propiedad) => propiedad.id !== idPropiedad));
 
-    fetch(`http://localhost:9090/propiedad/del/${idPropiedad}`, {
+    fetch(`http://localhost:9090/propiedad/del/${idPropiedad}/${user}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

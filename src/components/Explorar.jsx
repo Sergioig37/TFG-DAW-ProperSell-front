@@ -24,10 +24,11 @@ export const Explorar = () => {
   const navigate = useNavigate();
   const idUser = useAuth().getId();
   const token = useAuth().getToken();
+  const rol = useAuth().getRol();
 
   useEffect(() => {
-    if (token) {
-      fetch(`http://localhost:9090/propiedadExcluida/${idUser}`, {
+    if (token && rol!=="ADMIN") {
+      fetch(`http://localhost:9090/propiedad/propiedadExcluida/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -38,7 +39,7 @@ export const Explorar = () => {
           setPropiedades(data);
         });
     } else {
-      fetch(`http://localhost:9090/propiedad`, {
+      fetch(`http://localhost:9090/propiedad/habilitadas`, {
         method: "GET",
       })
         .then((res) => res.json())

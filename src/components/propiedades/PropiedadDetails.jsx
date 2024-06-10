@@ -29,21 +29,32 @@ export const PropiedadDetails = () => {
           Authorization: "Bearer " + token,
         },
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 404) {
+            navigate("/"); // Navigate back if property not found
+          } else {
+            return res.json();
+          }
+        })
         .then((data) => {
-          fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          })
-            .then((res) => res.json())
-            .then((data) => setPropietario(data));
-
-          setPropiedad(data);
+          if (data) {
+            setPropiedad(data);
+            fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
+              method: "GET",
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            })
+              .then((res) => res.json())
+              .then((data) => setPropietario(data));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching property:", error);
         });
     }
   }, [id, token, navigate]);
+  
 
 
   return (
