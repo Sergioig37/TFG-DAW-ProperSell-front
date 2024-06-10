@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Table, Button } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const UsuariosDashboard = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -18,7 +19,7 @@ export const UsuariosDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(`http://localhost:9090/usuario/usuarioExcluido/${idUser}`, {
+        fetch(env.LOCALHOST_URL + `usuario/usuarioExcluido/${idUser}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -35,7 +36,7 @@ export const UsuariosDashboard = () => {
   const handleHabilitado = (id, enabled) => {
    
 
-    fetch(`http://localhost:9090/usuario/enabled/${id}/${enabled}`, {
+    fetch(env.LOCALHOST_URL + `usuario/enabled/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

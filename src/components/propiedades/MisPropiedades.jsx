@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
+import env from "../../../env";
 
 export const MisPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -23,7 +24,7 @@ export const MisPropiedades = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/propiedades/${idUser}`, {
+      fetch(env.LOCALHOST_URL + `usuario/propiedades/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -44,7 +45,7 @@ export const MisPropiedades = () => {
 
     setPropiedades(propiedades.filter((propiedad) => propiedad.id !== idPropiedad));
 
-    fetch(`http://localhost:9090/propiedad/del/${idPropiedad}/${user}`, {
+    fetch(env.LOCALHOST_URL + `propiedad/del/${idPropiedad}/${user}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

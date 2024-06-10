@@ -12,6 +12,7 @@ import { useAuth } from "../auth/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import env from "../../../env";
 
 export const UsuarioDetails = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ export const UsuarioDetails = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(`http://localhost:9090/usuario/${id}`, {
+        fetch(env.LOCALHOST_URL + `usuario/${id}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,

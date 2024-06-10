@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { FaTrash, FaEdit, FaPlus, FaMinus } from "react-icons/fa";
+import env from "../../../env";
 
 export const MisAlertas = () => {
   const [alertasUsuario, setAlertasUsuario] = useState([]);
@@ -17,7 +18,7 @@ export const MisAlertas = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/${idUser}/alertas`, {
+      fetch(env.LOCALHOST_URL + `usuario/${idUser}/alertas`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -28,7 +29,7 @@ export const MisAlertas = () => {
           setAlertasUsuario(data ? data : []);
         });
 
-      fetch(`http://localhost:9090/usuario/${idUser}/alertasDisponibles`, {
+      fetch(env.LOCALHOST_URL + `usuario/${idUser}/alertasDisponibles`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -44,7 +45,7 @@ export const MisAlertas = () => {
 
   const handleAlertas = (id, enabled) => {
     if(enabled===true){
-      fetch(`http://localhost:9090/usuario/${idUser}/${id}/${enabled}`, {
+      fetch( env.LOCALHOST_URL +`usuario/${idUser}/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

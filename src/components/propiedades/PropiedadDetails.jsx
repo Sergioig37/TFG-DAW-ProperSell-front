@@ -10,6 +10,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 
 export const PropiedadDetails = () => {
@@ -23,7 +24,7 @@ export const PropiedadDetails = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/propiedad/${id}`, {
+      fetch(env.LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -39,7 +40,7 @@ export const PropiedadDetails = () => {
         .then((data) => {
           if (data) {
             setPropiedad(data);
-            fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
+            fetch(env.LOCALHOST_URL + `propiedad/propietario/${id}`, {
               method: "GET",
               headers: {
                 Authorization: "Bearer " + token,

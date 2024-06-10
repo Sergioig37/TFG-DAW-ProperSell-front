@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
+import env from "../../env";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -24,7 +25,7 @@ export const Login = () => {
   };
 
   const handleLogin = () => {
-    fetch("http://localhost:9090/auth/login", {
+    fetch(env.LOCALHOST_URL + "auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,14 +35,11 @@ export const Login = () => {
         password: password,
       }),
       credentials: "include",
-    })
-      .then((response) => {
+    }).then(async (response) => {
         if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
+          const text = await response.text();
+          throw new Error(text);
         }
-
         return response.json();
       })
       .then((data) => {

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Table, Container, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const PropiedadesDashboard = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -17,7 +18,7 @@ export const PropiedadesDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch("http://localhost:9090/propiedad", {
+        fetch(env.LOCALHOST_URL + "propiedad", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -39,7 +40,7 @@ export const PropiedadesDashboard = () => {
   const handleHabilitado = (id, enabled) => {
    
 
-    fetch(`http://localhost:9090/propiedad/enabled/${id}/${enabled}`, {
+    fetch(env.LOCALHOST_URL + `propiedad/enabled/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

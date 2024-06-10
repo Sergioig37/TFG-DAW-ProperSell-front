@@ -3,6 +3,7 @@ import { Dropdown, ButtonGroup, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import env from "../../env";
 
 export const MenuBoton = () => {
   const navigate = useNavigate();

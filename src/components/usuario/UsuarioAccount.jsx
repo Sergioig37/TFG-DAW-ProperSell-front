@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faPhone, faEdit } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/usuarioAccount.module.css";
+import env from "../../../env";
 
 export const UsuarioAccount = () => {
   const username = useAuth().getUser();
@@ -21,7 +22,7 @@ export const UsuarioAccount = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/usuario/${id}`, {
+      fetch(env.LOCALHOST_URL + `usuario/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -40,7 +41,7 @@ export const UsuarioAccount = () => {
 
   const handleDeleteAccount = () => {
     // Aquí puedes hacer la lógica para borrar la cuenta
-    fetch(`http://localhost:9090/usuario/del/${id}/${user}`, {
+    fetch(env.LOCALHOST_URL + `usuario/del/${id}/${user}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

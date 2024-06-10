@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const PropiedadCreate = () => {
   const [tipo, setTipo] = useState("");
@@ -19,7 +20,7 @@ export const PropiedadCreate = () => {
     } else if (rol === "ADMIN") {
       navigate("/denegado");
     }
-  }, []);
+  }, [token, rol, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,24 +31,24 @@ export const PropiedadCreate = () => {
         localizacion: localizacion,
         precio: precio,
         propietario: idUser,
-        habilitado: true
+        habilitado: true,
       };
 
-      fetch('http://localhost:9090/propiedad/save', {
+      fetch(env.LOCALHOST_URL + 'propiedad/save', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: "Bearer " + token
+          Authorization: "Bearer " + token,
         },
         body: JSON.stringify(data),
       })
-      .then(() => {
-        navigate(-1);
-      })
-      .catch((error) => {
-        console.error("Error al enviar los datos:", error);
-      });
+        .then(() => {
+          navigate(-1);
+        })
+        .catch((error) => {
+          console.error("Error al enviar los datos:", error);
+        });
     }
   };
 
@@ -61,13 +62,11 @@ export const PropiedadCreate = () => {
     } else if (/\d/.test(tipo)) {
       errors["tipo"] = "El tipo no puede contener números.";
     }
-    
 
     if (!localizacion.trim()) {
       errors["localizacion"] = "Ingrese la localización de la propiedad.";
-    }
-    else if(localizacion.length<3){
-      errors["localizacion"] = "Localización no puede tener menos de tres caracteres.";      
+    } else if (localizacion.length < 3) {
+      errors["localizacion"] = "Localización no puede tener menos de tres caracteres.";
     }
 
     if (!precio.trim()) {
@@ -107,7 +106,7 @@ export const PropiedadCreate = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="localizacion" className="mb-3">
+            <Form.Group controlId="localizacion" className="mb3">
               <Form.Label>Localización</Form.Label>
               <Form.Control
                 type="text"
@@ -135,8 +134,11 @@ export const PropiedadCreate = () => {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Enviar
+            <Button variant="primary" type="submit" className="me-2">
+              Guardar
+            </Button>
+            <Button variant="secondary" onClick={() => navigate(-1)}>
+              Volver
             </Button>
           </Form>
         </Col>

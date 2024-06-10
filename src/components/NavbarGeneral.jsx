@@ -3,6 +3,7 @@ import { Navbar, Nav, Container, NavItem } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
 import { MenuBoton } from "./MenuBoton";
+import env from "../../env";
 
 export const NavbarGeneral = () => {
   const navigate = useNavigate();

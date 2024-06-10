@@ -4,36 +4,34 @@ import { useNavigate } from "react-router-dom";
 import { faqs, itemData } from "./data/Data";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
+import env from "../../env";
 
 export const LandingPage = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const username = useAuth().getUser();
-  const {setId} = useAuth();
+  const { setId } = useAuth();
+
   const handleHome = () => {
     navigate("/explore");
   };
 
   useEffect(() => {
-
-    if(token){
-       fetch(`http://localhost:9090/usuario/usuarioNombre/${username}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      },
-    })
-    .then((respuesta => {
-      return respuesta.json();
-    }))
-    .then((data=>{
-      console.log(data.id)
-      setId(data.id);
-    }));
+    if (token) {
+      fetch(env.LOCALHOST_URL + `usuario/usuarioNombre/${username}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      })
+        .then((respuesta) => respuesta.json())
+        .then((data) => {
+          console.log(data.id);
+          setId(data.id);
+        });
     }
-  }, [])
-  
+  }, [token, username, setId]);
 
   return (
     <>
@@ -101,7 +99,7 @@ export const LandingPage = () => {
             <h5 className="text-center">Preguntas Frecuentes</h5>
             <Accordion>
               {faqs.map((faq, index) => (
-                <Accordion.Item eventKey={index} key={faq.question}>
+                <Accordion.Item eventKey={index.toString()} key={faq.question}>
                   <Accordion.Header>{faq.question}</Accordion.Header>
                   <Accordion.Body>{faq.answer}</Accordion.Body>
                 </Accordion.Item>
@@ -111,7 +109,7 @@ export const LandingPage = () => {
         </Row>
       </Container>
 
-      <style jsx>{`
+      <style>{`
         .image-container {
           width: 300px;
           height: 300px;

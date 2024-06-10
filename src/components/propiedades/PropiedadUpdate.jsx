@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const PropiedadUpdate = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export const PropiedadUpdate = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(`http://localhost:9090/propiedad/${id}`, {
+      fetch(env.LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -27,7 +28,7 @@ export const PropiedadUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          fetch(`http://localhost:9090/propiedad/propietario/${id}`, {
+          fetch(env.LOCALHOST_URL + `propiedad/propietario/${id}`, {
             method: "GET",
             headers: {
               Authorization: "Bearer " + token,
@@ -46,7 +47,7 @@ export const PropiedadUpdate = () => {
             });
         });
     }
-  }, [id]);
+  }, [id, token, navigate, idUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +60,7 @@ export const PropiedadUpdate = () => {
         precio: precio,
       };
 
-      fetch(`http://localhost:9090/propiedad/edit/${data.id}/${user}`, {
+      fetch(env.LOCALHOST_URL + `propiedad/edit/${data.id}/${user}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -167,8 +168,11 @@ export const PropiedadUpdate = () => {
               </Form.Group>
             </Col>
             <Col xs={12}>
-              <Button type="submit" variant="primary">
+              <Button type="submit" variant="primary" className="me-2">
                 Guardar
+              </Button>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                Volver
               </Button>
             </Col>
           </Row>

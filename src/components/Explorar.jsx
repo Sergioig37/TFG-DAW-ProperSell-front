@@ -15,6 +15,7 @@ import { useAuth } from "./auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import styles from "./styles/explorar.module.css";
+import env from "../../env";
 
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -28,7 +29,7 @@ export const Explorar = () => {
 
   useEffect(() => {
     if (token && rol!=="ADMIN") {
-      fetch(`http://localhost:9090/propiedad/propiedadExcluida/${idUser}`, {
+      fetch(env.LOCALHOST_URL + `propiedad/propiedadExcluida/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -39,7 +40,7 @@ export const Explorar = () => {
           setPropiedades(data);
         });
     } else {
-      fetch(`http://localhost:9090/propiedad/habilitadas`, {
+      fetch(env.LOCALHOST_URL + `propiedad/habilitadas`, {
         method: "GET",
       })
         .then((res) => res.json())

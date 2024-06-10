@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Table, Container, Row, Col, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const AlertasDashboard = () => {
   const [alertas, setAlertas] = useState([]);
@@ -17,7 +18,7 @@ export const AlertasDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch("http://localhost:9090/alerta", {
+        fetch(env.LOCALHOST_URL+ "alerta", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -36,7 +37,7 @@ export const AlertasDashboard = () => {
   };
 
   const handleDelete = (idAlerta) => {
-    fetch(`http://localhost:9090/alerta/del/${idAlerta}`, {
+    fetch(env.LOCALHOST_URL+`alerta/del/${idAlerta}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FormControl, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import env from "../../../env";
 
 export const AlertaCreate = () => {
   const [descripcion, setDescripcion] = useState("");
@@ -12,8 +13,6 @@ export const AlertaCreate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  
-
     if (!token) {
       navigate("/login");
     } else {
@@ -21,7 +20,7 @@ export const AlertaCreate = () => {
         navigate("/denegado");
       }
     }
-  }, []);
+  }, [token, rol, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,9 +29,7 @@ export const AlertaCreate = () => {
     if (!nombre.trim() || !descripcion.trim()) {
       setErrors({ message: "Por favor, complete todos los campos." });
       return;
-    }
-     
-    else if (nombre.length<4 || descripcion.length<4) {
+    } else if (nombre.length < 4 || descripcion.length < 4) {
       setErrors({ message: "El nombre y la descripción no pueden tener menos de cuatro caracteres." });
       return;
     }
@@ -42,7 +39,7 @@ export const AlertaCreate = () => {
       nombre: nombre
     };
 
-    fetch(`http://localhost:9090/alerta/save`, {
+    fetch(env.LOCALHOST_URL + `alerta/save`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -51,19 +48,18 @@ export const AlertaCreate = () => {
       },
       body: JSON.stringify(data),
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error al enviar la alerta.');
-      }
-
-    })
-    .then(() => {
-      navigate(-1);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      setErrors({ message: "Error al enviar la alerta. Por favor, inténtelo de nuevo más tarde." });
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al enviar la alerta.');
+        }
+      })
+      .then(() => {
+        navigate(-1);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        setErrors({ message: "Error al enviar la alerta. Por favor, inténtelo de nuevo más tarde." });
+      });
   };
 
   return (
@@ -95,8 +91,11 @@ export const AlertaCreate = () => {
             <FormControl.Feedback type="invalid">
               {errors.descripcion}
             </FormControl.Feedback>
-            <Button type="submit" variant="primary" className="mb-3">
-              Enviar
+            <Button type="submit" variant="primary" className="me-2">
+              Guardar
+            </Button>
+            <Button variant="secondary" onClick={() => navigate(-1)}>
+              Volver
             </Button>
           </form>
         </Col>

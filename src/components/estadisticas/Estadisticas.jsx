@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import env from "../../../env";
 
 export const Estadisticas = () => {
   const [propiedadesMasCaras, setPropiedadesMasCaras] = useState([]);
@@ -20,7 +21,7 @@ export const Estadisticas = () => {
 
   const handleVerPropiedadesMasCaras = () => {
     fetch(
-      `http://localhost:9090/estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
+      env.LOCALHOST_URL + `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
       {
         method: "GET",
         headers: {
@@ -38,7 +39,7 @@ export const Estadisticas = () => {
 
   const handleVerUsuariosConXAlertas = () => {
     fetch(
-      `http://localhost:9090/estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
+      env.LOCALHOST_URL +`estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
       {
         method: "GET",
         headers: {
@@ -59,7 +60,7 @@ export const Estadisticas = () => {
       navigate("/denegado");
     }
 
-    fetch("http://localhost:9090/estadisticas/usuario/variasPropiedades", {
+    fetch(env.LOCALHOST_URL + "estadisticas/usuario/variasPropiedades", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -72,7 +73,7 @@ export const Estadisticas = () => {
         setUsuariosConMasDeUnaPropiedad(data?data:[]);
       });
 
-    fetch("http://localhost:9090/estadisticas/alertas/variosUsuarios", {
+    fetch(env.LOCALHOST_URL +"estadisticas/alertas/variosUsuarios", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -85,7 +86,7 @@ export const Estadisticas = () => {
         setAlertasPopulares(data?data:[]);
       });
 
-    fetch("http://localhost:9090/estadisticas/usuarios/baneados", {
+    fetch(env.LOCALHOST_URL +"estadisticas/usuarios/baneados", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -100,7 +101,7 @@ export const Estadisticas = () => {
   }, []);
 
   const handleVerAlertasLargas = () => {
-    fetch(`http://localhost:9090/estadisticas/alertas/${tamanoDescripcion}`, {
+    fetch(env.LOCALHOST_URL + `estadisticas/alertas/${tamanoDescripcion}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
