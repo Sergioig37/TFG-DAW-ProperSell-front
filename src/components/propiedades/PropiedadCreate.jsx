@@ -34,7 +34,7 @@ export const PropiedadCreate = () => {
         habilitado: true,
       };
 
-      fetch(env.LOCALHOST_URL + 'propiedad/save', {
+      fetch(import.meta.env.VITE_LOCALHOST_URLL + 'propiedad/save', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

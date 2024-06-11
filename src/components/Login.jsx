@@ -25,7 +25,7 @@ export const Login = () => {
   };
 
   const handleLogin = () => {
-    fetch(env.LOCALHOST_URL + "auth/login", {
+    fetch(import.meta.env.VITE_LOCALHOST_URL+ "auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

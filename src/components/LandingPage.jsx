@@ -19,7 +19,7 @@ export const LandingPage = () => {
 
   useEffect(() => {
     if (token) {
-      fetch(env.LOCALHOST_URL + `usuario/usuarioNombre/${username}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/usuarioNombre/${username}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

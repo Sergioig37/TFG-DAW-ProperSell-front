@@ -24,7 +24,7 @@ export const MisPropiedades = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(env.LOCALHOST_URL + `usuario/propiedades/${idUser}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/propiedades/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -45,7 +45,7 @@ export const MisPropiedades = () => {
 
     setPropiedades(propiedades.filter((propiedad) => propiedad.id !== idPropiedad));
 
-    fetch(env.LOCALHOST_URL + `propiedad/del/${idPropiedad}/${user}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/del/${idPropiedad}/${user}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

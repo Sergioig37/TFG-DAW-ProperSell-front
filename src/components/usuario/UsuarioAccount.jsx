@@ -22,7 +22,7 @@ export const UsuarioAccount = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(env.LOCALHOST_URL + `usuario/${id}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -41,7 +41,7 @@ export const UsuarioAccount = () => {
 
   const handleDeleteAccount = () => {
     // Aquí puedes hacer la lógica para borrar la cuenta
-    fetch(env.LOCALHOST_URL + `usuario/del/${id}/${user}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/del/${id}/${user}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + token,

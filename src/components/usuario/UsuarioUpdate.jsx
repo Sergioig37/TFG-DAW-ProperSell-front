@@ -34,7 +34,7 @@ export const UsuarioUpdate = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(env.LOCALHOST_URL + `usuario/${idUser}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -70,7 +70,7 @@ export const UsuarioUpdate = () => {
         password: password,
       };
       console.log(user);
-      fetch(env.LOCALHOST_URL + `usuario/edit/${idUser}/${user}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/edit/${idUser}/${user}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",

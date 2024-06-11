@@ -19,7 +19,7 @@ export const AlertaUpdate = () => {
       navigate("/login");
     } else {
       if (rol === "ADMIN") {
-        fetch(env.LOCALHOST_URL+ `alerta/${id}`, {
+        fetch(import.meta.env.VITE_LOCALHOST_URL+ `alerta/${id}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -56,7 +56,7 @@ export const AlertaUpdate = () => {
       descripcion: descripcion,
     };
 
-    fetch(env.LOCALHOST_URL+`alerta/edit/${data.id}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL+`alerta/edit/${data.id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

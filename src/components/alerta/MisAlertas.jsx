@@ -18,7 +18,7 @@ export const MisAlertas = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(env.LOCALHOST_URL + `usuario/${idUser}/alertas`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertas`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -29,7 +29,7 @@ export const MisAlertas = () => {
           setAlertasUsuario(data ? data : []);
         });
 
-      fetch(env.LOCALHOST_URL + `usuario/${idUser}/alertasDisponibles`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertasDisponibles`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -45,7 +45,7 @@ export const MisAlertas = () => {
 
   const handleAlertas = (id, enabled) => {
     if(enabled===true){
-      fetch( env.LOCALHOST_URL +`usuario/${idUser}/${id}/${enabled}`, {
+      fetch( import.meta.env.VITE_LOCALHOST_URL +`usuario/${idUser}/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -63,7 +63,7 @@ export const MisAlertas = () => {
     );
     }
     else {
-       fetch(`http://localhost:9090/usuario/${idUser}/${id}/false`, {
+       fetch(import.meta.env.VITE_LOCALHOST_URL+`usuario/${idUser}/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

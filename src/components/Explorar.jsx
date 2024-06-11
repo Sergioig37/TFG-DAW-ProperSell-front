@@ -29,7 +29,7 @@ export const Explorar = () => {
 
   useEffect(() => {
     if (token && rol!=="ADMIN") {
-      fetch(env.LOCALHOST_URL + `propiedad/propiedadExcluida/${idUser}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/propiedadExcluida/${idUser}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -40,7 +40,7 @@ export const Explorar = () => {
           setPropiedades(data);
         });
     } else {
-      fetch(env.LOCALHOST_URL + `propiedad/habilitadas`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/habilitadas`, {
         method: "GET",
       })
         .then((res) => res.json())

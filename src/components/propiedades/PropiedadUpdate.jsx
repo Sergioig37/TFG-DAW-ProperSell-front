@@ -20,7 +20,7 @@ export const PropiedadUpdate = () => {
     if (!token) {
       navigate("/login");
     } else {
-      fetch(env.LOCALHOST_URL + `propiedad/${id}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -28,7 +28,7 @@ export const PropiedadUpdate = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          fetch(env.LOCALHOST_URL + `propiedad/propietario/${id}`, {
+          fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/propietario/${id}`, {
             method: "GET",
             headers: {
               Authorization: "Bearer " + token,
@@ -60,7 +60,7 @@ export const PropiedadUpdate = () => {
         precio: precio,
       };
 
-      fetch(env.LOCALHOST_URL + `propiedad/edit/${data.id}/${user}`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/edit/${data.id}/${user}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",

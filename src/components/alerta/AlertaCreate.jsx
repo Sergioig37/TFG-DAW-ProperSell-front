@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FormControl, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import env from "../../../env";
+
 
 export const AlertaCreate = () => {
   const [descripcion, setDescripcion] = useState("");
@@ -39,7 +39,7 @@ export const AlertaCreate = () => {
       nombre: nombre
     };
 
-    fetch(env.LOCALHOST_URL + `alerta/save`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `alerta/save`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

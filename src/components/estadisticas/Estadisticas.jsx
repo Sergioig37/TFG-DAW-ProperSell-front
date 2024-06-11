@@ -22,7 +22,7 @@ export const Estadisticas = () => {
 
   const handleVerPropiedadesMasCaras = () => {
     fetch(
-      env.LOCALHOST_URL + `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
+      import.meta.env.VITE_LOCALHOST_URL + `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
       {
         method: "GET",
         headers: {
@@ -40,7 +40,7 @@ export const Estadisticas = () => {
 
   const handleVerUsuariosConXAlertas = () => {
     fetch(
-      env.LOCALHOST_URL +`estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
+      import.meta.env.VITE_LOCALHOST_URL +`estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
       {
         method: "GET",
         headers: {
@@ -61,7 +61,7 @@ export const Estadisticas = () => {
       navigate("/denegado");
     }
 
-    fetch(env.LOCALHOST_URL + "estadisticas/usuario/variasPropiedades", {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + "estadisticas/usuario/variasPropiedades", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -74,7 +74,7 @@ export const Estadisticas = () => {
         setUsuariosConMasDeUnaPropiedad(data?data:[]);
       });
 
-    fetch(env.LOCALHOST_URL +"estadisticas/alertas/variosUsuarios", {
+    fetch(import.meta.env.VITE_LOCALHOST_URL +"estadisticas/alertas/variosUsuarios", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -87,7 +87,7 @@ export const Estadisticas = () => {
         setAlertasPopulares(data?data:[]);
       });
 
-    fetch(env.LOCALHOST_URL +"estadisticas/usuarios/baneados", {
+    fetch(import.meta.env.VITE_LOCALHOST_URL +"estadisticas/usuarios/baneados", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -102,7 +102,7 @@ export const Estadisticas = () => {
   }, []);
 
   const handleVerAlertasLargas = () => {
-    fetch(env.LOCALHOST_URL + `estadisticas/alertas/${tamanoDescripcion}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `estadisticas/alertas/${tamanoDescripcion}`, {
       method: "GET",
       headers: {
         Accept: "application/json",

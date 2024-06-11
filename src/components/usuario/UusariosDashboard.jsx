@@ -19,7 +19,7 @@ export const UsuariosDashboard = () => {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(env.LOCALHOST_URL + `usuario/usuarioExcluido/${idUser}`, {
+        fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/usuarioExcluido/${idUser}`, {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -36,7 +36,7 @@ export const UsuariosDashboard = () => {
   const handleHabilitado = (id, enabled) => {
    
 
-    fetch(env.LOCALHOST_URL + `usuario/enabled/${id}/${enabled}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/enabled/${id}/${enabled}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",

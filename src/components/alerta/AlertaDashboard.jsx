@@ -3,22 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { Button, Table, Container, Row, Col, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import env from "../../../env";
+import.meta.env.VITE_LOCALHOST_URL
 
 export const AlertasDashboard = () => {
   const [alertas, setAlertas] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
+  
+
 
   useEffect(() => {
+   
     if (!token) {
       navigate("/login");
     } else {
       if (rol !== "ADMIN") {
         navigate("/denegado");
       } else {
-        fetch(env.LOCALHOST_URL+ "alerta", {
+        fetch(import.meta.env.VITE_LOCALHOST_URL + "alerta", {
           method: "GET",
           headers: {
             Authorization: "Bearer " + token,
@@ -37,7 +40,7 @@ export const AlertasDashboard = () => {
   };
 
   const handleDelete = (idAlerta) => {
-    fetch(env.LOCALHOST_URL+`alerta/del/${idAlerta}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL+`alerta/del/${idAlerta}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",

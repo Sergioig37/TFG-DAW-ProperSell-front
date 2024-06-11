@@ -38,7 +38,7 @@ export const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {
-      fetch(env.LOCALHOST_URL + "auth/register", {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + "auth/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
