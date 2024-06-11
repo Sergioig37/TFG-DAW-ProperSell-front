@@ -60,7 +60,7 @@ export const UsuarioAccount = () => {
         <Card className={`shadow-lg border-0 ${styles.card}`}>
           <Card.Body className={styles["card-body"]}>
             <Row>
-              <Col xs={12} md={4} className="text-center">
+              <Col xs={12} md={4} className="text-center d-flex flex-column">
                 <div className={`mb-3 ${styles["avatar-icon"]}`}>
                   <FontAwesomeIcon icon={faUser} size="7x" />
                 </div>
@@ -110,11 +110,12 @@ export const UsuarioAccount = () => {
           <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>
             Cancelar
           </Button>
-          <Button variant="danger" onClick={handleDeleteAccount}>
+          <Button variant="danger"  onClick={handleDeleteAccount}>
             Borrar Cuenta
           </Button>
         </Modal.Footer>
       </Modal>
+      
     </>
   );
 };

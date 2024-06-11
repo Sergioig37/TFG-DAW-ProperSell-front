@@ -32,7 +32,7 @@ export const PropiedadDetails = () => {
       })
         .then((res) => {
           if (!res.ok) {
-            navigate("/"); // Navigate back if property not found
+            navigate("/*"); // Navigate back if property not found
           } else {
             return res.json();
           }
@@ -83,11 +83,15 @@ export const PropiedadDetails = () => {
                     {propietario.numeroTelefono}
                   </ListGroup.Item>
                 </ListGroup>
+                <Button variant="primary" onClick={() => navigate(-1)}>
+                  Volver
+                </Button>
               </Col>
             </Row>
           </Card.Body>
         </Card>
       </Container>
+      
     </>
   );
 };

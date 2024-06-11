@@ -187,6 +187,7 @@ export const Explorar = () => {
           </div>
         )}
       </Container>
+      
     </>
   );
 };

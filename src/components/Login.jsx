@@ -48,7 +48,6 @@ export const Login = () => {
         handleSuccessfulLogin();
       })
       .catch((error) => {
-        // Otros tipos de errores
         setError(error.message);
       });
   };

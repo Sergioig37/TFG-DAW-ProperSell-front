@@ -63,6 +63,7 @@ export const AlertaCreate = () => {
   };
 
   return (
+    <>
     <Container fluid className="mt-4">
       <Row className="justify-content-center">
         <Col md={6}>
@@ -101,5 +102,7 @@ export const AlertaCreate = () => {
         </Col>
       </Row>
     </Container>
+    
+    </>
   );
 };

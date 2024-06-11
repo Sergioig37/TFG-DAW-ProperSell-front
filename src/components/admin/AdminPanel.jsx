@@ -68,6 +68,7 @@ export const AdminPanel = () => {
           </Col>
         </Row>
       </Container>
+      
     </>
   );
 };

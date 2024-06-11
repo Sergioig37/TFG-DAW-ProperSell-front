@@ -155,6 +155,7 @@ export const MisAlertas = () => {
           </Col>
         </Row>
       </Container>
+      
     </>
   );
 };

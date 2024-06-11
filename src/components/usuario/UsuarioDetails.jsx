@@ -35,8 +35,8 @@ export const UsuarioDetails = () => {
           },
         })
           .then((res) => {
-            if (res.status === 404) {
-              navigate("/");
+            if (!res.ok) {
+              navigate("/*");
             } else {
               return res.json();
             }
@@ -53,7 +53,6 @@ export const UsuarioDetails = () => {
     }
   }, [id, navigate, token, rol]);
   
-
 
   return (
     <>
@@ -78,6 +77,9 @@ export const UsuarioDetails = () => {
                     <strong>Correo:</strong> {usuario.correo}
                   </ListGroup.Item>
                 </ListGroup>
+                <Button variant="primary" onClick={() => navigate(-1)}>
+                  Volver
+                </Button>
               </Col>
             </Row>
           </Card.Body>

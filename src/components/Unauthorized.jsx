@@ -10,6 +10,8 @@ export const Unauthorized = () => {
   };
 
   return (
+    <>
+   
     <Container className="text-center mt-5">
       <h1>No estás autorizado para acceder a esta página</h1>
       <p className="lead">
@@ -20,5 +22,7 @@ export const Unauthorized = () => {
         Volver a inicio
       </Button>
     </Container>
+    
+     </>
   );
 };

@@ -1,37 +1,35 @@
-import * as React from "react";
-import { Dropdown, ButtonGroup, Button, Image } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "./auth/AuthContext";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
-import env from "../../env";
+import React from 'react';
+import { Dropdown, Button, Image } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './auth/AuthContext';
+import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 
 export const MenuBoton = () => {
   const navigate = useNavigate();
-  const user = useAuth().getUser();
-  const id = useAuth().getId();
-  const rol = useAuth().getRol();
-  const { clearToken } = useAuth();
+  const { getUser, getRol, clearToken } = useAuth();
+  const user = getUser();
+  const rol = getRol();
 
   const handleLogout = () => {
     clearToken();
-    navigate("/");
+    navigate('/');
   };
 
   const handleVerPerfil = () => {
-    navigate("/account");
+    navigate('/account');
   };
 
   return (
-    <div className="d-flex align-items-center">
-      <span className="me-2 text-white">
-        {user} ({rol})
-      </span>
-      <Dropdown as={ButtonGroup}>
-        <Button variant="outline-light" className="d-flex align-items-center">
+    <div className="menu-boton d-flex align-items-center">
+      <div className="user-info me-3 text-white">
+        <div className="user-name">{user}</div>
+        <div className="user-role">{rol}</div>
+      </div>
+      <Dropdown align="end">
+        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
           <FaUserCircle size={24} />
-        </Button>
-        <Dropdown.Toggle split variant="outline-light" id="dropdown-split-basic" />
-        <Dropdown.Menu align="end">
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
           <Dropdown.Item onClick={handleVerPerfil}>
             <FaUserCircle className="me-2" />
             Mi cuenta
@@ -45,3 +43,5 @@ export const MenuBoton = () => {
     </div>
   );
 };
+
+

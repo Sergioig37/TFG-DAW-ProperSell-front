@@ -80,6 +80,7 @@ export const PropiedadCreate = () => {
   };
 
   return (
+    <>
     <Container className="mt-4">
       <Row className="justify-content-md-center">
         <Col xs={12} md={6}>
@@ -144,5 +145,7 @@ export const PropiedadCreate = () => {
         </Col>
       </Row>
     </Container>
+    
+    </>
   );
 };

@@ -117,6 +117,7 @@ export const MisPropiedades = () => {
           </Card>
         )}
       </Container>
+      
     </>
   );
 };

@@ -4,6 +4,7 @@ import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import env from "../../../env";
+import { Footer } from "../Footer";
 
 export const Estadisticas = () => {
   const [propiedadesMasCaras, setPropiedadesMasCaras] = useState([]);
@@ -115,12 +116,23 @@ export const Estadisticas = () => {
       });
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
     <>
       <NavbarGeneral />
       <Container className="mt-4">
+        <Row className="mb-4">
+          <Col>
+            <Button variant="primary" onClick={handlePrint}>
+              Imprimir
+            </Button>
+          </Col>
+          </Row>
         <h4 className="mb-4 text-primary">Estadísticas</h4>
-
+    
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
             <h5 className="text-info">Propiedades que cuestan más de {precioPropiedad} euros:</h5>
@@ -162,7 +174,7 @@ export const Estadisticas = () => {
                   ))}
                 </Row>
               ) : (
-              <></>
+                <></>
               )}
             </div>
           </Card.Body>
@@ -193,7 +205,7 @@ export const Estadisticas = () => {
               </Row>
             </Form>
             <div className="mt-3">
-            <p>Cantidad: {usuariosConXAlertas.length}</p>
+              <p>Cantidad: {usuariosConXAlertas.length}</p>
               {usuariosConXAlertas.length > 0 ? (
                 <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                   {usuariosConXAlertas.map((usuario) => (
@@ -218,7 +230,7 @@ export const Estadisticas = () => {
           <Card.Body>
             <h5 className="text-warning">Usuarios con más de una propiedad:</h5>
             <div className="mt-3">
-            <p>Cantidad: {usuariosConMasDeUnaPropiedad.length}</p>
+              <p>Cantidad: {usuariosConMasDeUnaPropiedad.length}</p>
               {usuariosConMasDeUnaPropiedad.length > 0 ? (
                 <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                   {usuariosConMasDeUnaPropiedad.map((usuario) => (
@@ -241,10 +253,9 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            
             <h5 className="text-danger">Alertas con más de una suscripción:</h5>
             <div className="mt-3">
-            <p>Cantidad: {alertasPopulares.length}</p>
+              <p>Cantidad: {alertasPopulares.length}</p>
               {alertasPopulares.length > 0 ? (
                 <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                   {alertasPopulares.map((alerta) => (
@@ -269,7 +280,7 @@ export const Estadisticas = () => {
           <Card.Body>
             <h5 className="text-secondary">Usuarios bloqueados:</h5>
             <div className="mt-3">
-            <p>Cantidad: {usuariosBaneados.length}</p>
+              <p>Cantidad: {usuariosBaneados.length}</p>
               {usuariosBaneados.length > 0 ? (
                 <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                   {usuariosBaneados.map((usuario) => (
@@ -314,7 +325,7 @@ export const Estadisticas = () => {
               </Row>
             </Form>
             <div className="mt-3">
-            <p>Cantidad: {alertasLargas.length}</p>
+              <p>Cantidad: {alertasLargas.length}</p>
               {alertasLargas.length > 0 ? (
                 <Row xs={1} sm={2} md={3} lg={4} className="g-4">
                   {alertasLargas.map((alerta) => (
@@ -336,6 +347,7 @@ export const Estadisticas = () => {
           </Card.Body>
         </Card>
       </Container>
+      <Footer />
     </>
   );
 };
