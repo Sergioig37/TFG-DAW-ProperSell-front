@@ -46,7 +46,7 @@ export const UsuariosDashboard = () => {
     }).then(() => {
       setUsuarios((prevUsuarios) =>
         prevUsuarios.map((usuario) =>
-          usuario.id === id ? { ...usuario, habilitado: enabled===true?true:false } : usuario
+          usuario.id === id ? { ...usuario, habilitado: enabled } : usuario
         )
       );
     });

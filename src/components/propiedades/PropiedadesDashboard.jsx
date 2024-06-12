@@ -39,6 +39,7 @@ export const PropiedadesDashboard = () => {
 
   const handleHabilitado = (id, enabled) => {
    
+    console.log(enabled)
 
     fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/enabled/${id}/${enabled}`, {
       method: "PUT",
@@ -50,7 +51,7 @@ export const PropiedadesDashboard = () => {
     }).then(() => {
       setPropiedades((prevPropiedades) =>
         prevPropiedades.map((propiedad) =>
-          propiedad.id === id ? { ...propiedad, habilitado: enabled===true?true:false } : propiedad
+          propiedad.id === id ? { ...propiedad, habilitado: enabled } : propiedad
         )
       );
     });
