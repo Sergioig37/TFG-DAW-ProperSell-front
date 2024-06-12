@@ -9,7 +9,8 @@ import { Footer } from "../Footer";
 export const Estadisticas = () => {
   const [propiedadesMasCaras, setPropiedadesMasCaras] = useState([]);
   const [usuariosConXAlertas, setUsuariosConXAlertas] = useState([]);
-  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] = useState([]);
+  const [usuariosConMasDeUnaPropiedad, setUsuariosConMasDeUnaPropiedad] =
+    useState([]);
   const [alertasPopulares, setAlertasPopulares] = useState([]);
   const [usuariosBaneados, setUsuariosBaneados] = useState([]);
   const [alertasLargas, setAlertasLargas] = useState([]);
@@ -22,7 +23,8 @@ export const Estadisticas = () => {
 
   const handleVerPropiedadesMasCaras = () => {
     fetch(
-      import.meta.env.VITE_LOCALHOST_URL + `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
       {
         method: "GET",
         headers: {
@@ -32,15 +34,16 @@ export const Estadisticas = () => {
         },
       }
     )
-      .then((res) => res?res.json():[])
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setPropiedadesMasCaras(data?data:[]);
+        setPropiedadesMasCaras(data ? data : []);
       });
   };
 
   const handleVerUsuariosConXAlertas = () => {
     fetch(
-      import.meta.env.VITE_LOCALHOST_URL +`estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
       {
         method: "GET",
         headers: {
@@ -50,9 +53,9 @@ export const Estadisticas = () => {
         },
       }
     )
-      .then((res) =>res?res.json():[])
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setUsuariosConXAlertas(data?data:[]);
+        setUsuariosConXAlertas(data ? data : []);
       });
   };
 
@@ -61,63 +64,171 @@ export const Estadisticas = () => {
       navigate("/denegado");
     }
 
-    fetch(import.meta.env.VITE_LOCALHOST_URL + "estadisticas/usuario/variasPropiedades", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res?res.json():[])
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        "estadisticas/usuario/variasPropiedades",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setUsuariosConMasDeUnaPropiedad(data?data:[]);
+        setUsuariosConMasDeUnaPropiedad(data ? data : []);
       });
 
-    fetch(import.meta.env.VITE_LOCALHOST_URL +"estadisticas/alertas/variosUsuarios", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res?res.json():[])
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        "estadisticas/alertas/variosUsuarios",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setAlertasPopulares(data?data:[]);
+        setAlertasPopulares(data ? data : []);
       });
 
-    fetch(import.meta.env.VITE_LOCALHOST_URL +"estadisticas/usuarios/baneados", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res?res.json():[])
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL + "estadisticas/usuarios/baneados",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setUsuariosBaneados(data?data:[]);
+        setUsuariosBaneados(data ? data : []);
       });
+
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/propiedadMasCarasDe/${precioPropiedad}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
+      .then((data) => {
+        setPropiedadesMasCaras(data ? data : []);
+      });
+
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/alertas/${tamanoDescripcion}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
+      .then((data) => {
+        setAlertasLargas(data ? data : []);
+      });
+
+      fetch(
+        import.meta.env.VITE_LOCALHOST_URL +
+          `estadisticas/usuarioConMasDe/${numeroAlertas}/alertas`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
+        .then((res) => (res ? res.json() : []))
+        .then((data) => {
+          setUsuariosConXAlertas(data ? data : []);
+        });
   }, []);
 
   const handleVerAlertasLargas = () => {
-    fetch(import.meta.env.VITE_LOCALHOST_URL + `estadisticas/alertas/${tamanoDescripcion}`, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => res?res.json():[])
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/alertas/${tamanoDescripcion}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((res) => (res ? res.json() : []))
       .then((data) => {
-        setAlertasLargas(data?data:[]);
+        setAlertasLargas(data ? data : []);
       });
+
+    
   };
 
   const handlePrint = () => {
-    window.print();
+    let contents = new ArrayBuffer();
+
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        `estadisticas/generarPdf/${numeroAlertas}/${precioPropiedad}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    )
+      .then((respuesta) => respuesta.json())
+      .then((data) => {
+        contents = data.contents;
+        let byteContents = base64ToArrayBuffer(contents);
+        console.log(byteContents);
+        let file = new Blob([byteContents], { type: "application/pdf" });
+
+        var anchor = document.createElement("a");
+        anchor.download = "Estadisticas.pdf";
+        var fileUrl = URL.createObjectURL(file);
+        anchor.href = fileUrl;
+        anchor.click();
+        window.open(fileUrl);
+        URL.revokeObjectURL(fileUrl);
+        
+      });
+  };
+
+  const base64ToArrayBuffer = (cadena) => {
+    const binaryString = atob(cadena);
+    console.log(binaryString);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
   };
 
   return (
@@ -127,15 +238,17 @@ export const Estadisticas = () => {
         <Row className="mb-4">
           <Col>
             <Button variant="primary" onClick={handlePrint}>
-              Imprimir
+              Imprimir estadisticas
             </Button>
           </Col>
-          </Row>
+        </Row>
         <h4 className="mb-4 text-primary">Estadísticas</h4>
-    
+
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-info">Propiedades que cuestan más de {precioPropiedad} euros:</h5>
+            <h5 className="text-info">
+              Propiedades que cuestan más de {precioPropiedad} euros:
+            </h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={3}>
@@ -166,7 +279,9 @@ export const Estadisticas = () => {
                       <Card className="h-100 shadow-sm">
                         <Card.Body>
                           <Card.Title>{propiedad.tipo}</Card.Title>
-                          <Card.Text>Localización: {propiedad.localizacion}</Card.Text>
+                          <Card.Text>
+                            Localización: {propiedad.localizacion}
+                          </Card.Text>
                           <Card.Text>Precio: €{propiedad.precio}</Card.Text>
                         </Card.Body>
                       </Card>
@@ -182,7 +297,9 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-success">Usuarios con más de {numeroAlertas} alertas:</h5>
+            <h5 className="text-success">
+              Usuarios con más de {numeroAlertas} alertas:
+            </h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={3}>
@@ -198,7 +315,10 @@ export const Estadisticas = () => {
                   </Form.Group>
                 </Col>
                 <Col xs={2}>
-                  <Button variant="success" onClick={handleVerUsuariosConXAlertas}>
+                  <Button
+                    variant="success"
+                    onClick={handleVerUsuariosConXAlertas}
+                  >
                     Ver
                   </Button>
                 </Col>
@@ -213,7 +333,9 @@ export const Estadisticas = () => {
                       <Card className="h-100 shadow-sm">
                         <Card.Body>
                           <Card.Title>{usuario.username}</Card.Title>
-                          <Card.Text>Alertas: {usuario.alertas.length}</Card.Text>
+                          <Card.Text>
+                            Alertas: {usuario.numeroAlertas}
+                          </Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -238,7 +360,9 @@ export const Estadisticas = () => {
                       <Card className="h-100 shadow-sm">
                         <Card.Body>
                           <Card.Title>{usuario.username}</Card.Title>
-                          <Card.Text>Propiedades: {usuario.propiedades.length}</Card.Text>
+                          <Card.Text>
+                            Propiedades: {usuario.propiedades.length}
+                          </Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -263,7 +387,9 @@ export const Estadisticas = () => {
                       <Card className="h-100 shadow-sm">
                         <Card.Body>
                           <Card.Title>{alerta.nombre}</Card.Title>
-                          <Card.Text>Suscripciones: {alerta.numeroUsuarios}</Card.Text>
+                          <Card.Text>
+                            Suscripciones: {alerta.numeroUsuarios}
+                          </Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
@@ -302,7 +428,10 @@ export const Estadisticas = () => {
 
         <Card className="mb-4 shadow-sm bg-light">
           <Card.Body>
-            <h5 className="text-primary">Alertas con descripción de más de {tamanoDescripcion} de caracteres:</h5>
+            <h5 className="text-primary">
+              Alertas con descripción de más de {tamanoDescripcion} de
+              caracteres:
+            </h5>
             <Form>
               <Row className="align-items-center">
                 <Col xs={3}>
@@ -333,8 +462,12 @@ export const Estadisticas = () => {
                       <Card className="h-100 shadow-sm">
                         <Card.Body>
                           <Card.Title>{alerta.nombre}</Card.Title>
-                          <Card.Text>Descripción: {alerta.descripcion}</Card.Text>
-                          <Card.Text>Tamaño: {alerta.descripcion.length}</Card.Text>
+                          <Card.Text>
+                            Descripción: {alerta.descripcion}
+                          </Card.Text>
+                          <Card.Text>
+                            Tamaño: {alerta.descripcion.length}
+                          </Card.Text>
                         </Card.Body>
                       </Card>
                     </Col>
