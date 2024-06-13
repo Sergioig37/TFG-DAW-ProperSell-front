@@ -1,9 +1,29 @@
-# React + Vite
+# Instrucciones para desplegar el frontend del proyecto
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Requisitos previos:
 
-Currently, two official plugins are available:
+### Nodejs y NPM (node pacakge manager):
+#### Node 20.11.0:
+#### NPM 10.2.
+[Instalación](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instrucciones:
+### Clonar el proyecto:
+```
+$ git clone https://github.com/Sergioig37/ProperSell-front
+```
+
+### Arrancar las base de datos: [Ver repositorio](https://github.com/Sergioig37/Docker)
+### Arrancar el back: [Ver repositorio](https://github.com/Sergioig37/ProperSell-back)
+
+### Abrir un editor de código:
+#### Abrir un cmd y ejecutar:
+```
+$ npm install
+```
+### Arrancar el proyecto
+```
+$ npm run dev
+```
+
 

@@ -187,61 +187,12 @@ export const Estadisticas = () => {
     
   };
 
-  const handlePrint = () => {
-    let contents = new ArrayBuffer();
 
-    fetch(
-      import.meta.env.VITE_LOCALHOST_URL +
-        `estadisticas/generarPdf/${numeroAlertas}/${precioPropiedad}`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    )
-      .then((respuesta) => respuesta.json())
-      .then((data) => {
-        contents = data.contents;
-        let byteContents = base64ToArrayBuffer(contents);
-        console.log(byteContents);
-        let file = new Blob([byteContents], { type: "application/pdf" });
-
-        var anchor = document.createElement("a");
-        anchor.download = "Estadisticas.pdf";
-        var fileUrl = URL.createObjectURL(file);
-        anchor.href = fileUrl;
-        anchor.click();
-        window.open(fileUrl);
-        URL.revokeObjectURL(fileUrl);
-        
-      });
-  };
-
-  const base64ToArrayBuffer = (cadena) => {
-    const binaryString = atob(cadena);
-    console.log(binaryString);
-    const len = binaryString.length;
-    const bytes = new Uint8Array(len);
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return bytes.buffer;
-  };
 
   return (
     <>
       <NavbarGeneral />
       <Container className="mt-4">
-        <Row className="mb-4">
-          <Col>
-            <Button variant="primary" onClick={handlePrint}>
-              Imprimir estadisticas
-            </Button>
-          </Col>
-        </Row>
         <h4 className="mb-4 text-primary">Estadísticas</h4>
 
         <Card className="mb-4 shadow-sm bg-light">
@@ -361,7 +312,7 @@ export const Estadisticas = () => {
                         <Card.Body>
                           <Card.Title>{usuario.username}</Card.Title>
                           <Card.Text>
-                            Propiedades: {usuario.propiedades.length}
+                            Propiedades: {usuario.numeroPropiedades}
                           </Card.Text>
                         </Card.Body>
                       </Card>
