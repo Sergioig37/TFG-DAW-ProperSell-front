@@ -25,7 +25,7 @@ export const UsuarioUpdate = () => {
   const passwrd = useAuth().getAuthPassword();
   const idUser = useAuth().getId();
   const user = useAuth().getUser();
-  const { setToken } = useAuth();
+  const { setToken, setAuthPassword } = useAuth();
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
@@ -82,6 +82,7 @@ export const UsuarioUpdate = () => {
         .then((response) => response.json())
         .then((res) => {
           if (res.token) {
+            setAuthPassword(data.password);
             setToken(res.token);
           }
           navigate(-1, { replace: true });
