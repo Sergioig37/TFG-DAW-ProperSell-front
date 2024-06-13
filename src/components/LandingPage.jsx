@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { faqs, itemData } from "./data/Data";
 import { NavbarGeneral } from "./NavbarGeneral";
 import { useAuth } from "./auth/AuthContext";
-import env from "../../env";
 import { Footer } from "./Footer";
 
 export const LandingPage = () => {

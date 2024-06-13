@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { FaTrash, FaEdit, FaPlus, FaMinus } from "react-icons/fa";
-import env from "../../../env";
+
 
 export const MisAlertas = () => {
   const [alertasUsuario, setAlertasUsuario] = useState([]);

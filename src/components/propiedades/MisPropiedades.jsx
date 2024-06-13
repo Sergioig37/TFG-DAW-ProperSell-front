@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { FaTrash, FaEdit, FaPlus } from "react-icons/fa";
-import env from "../../../env";
+
 
 export const MisPropiedades = () => {
   const [propiedades, setPropiedades] = useState([]);

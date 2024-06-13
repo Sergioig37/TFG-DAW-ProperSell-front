@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import env from "../../../env";
+
 
 export const PropiedadCreate = () => {
   const [tipo, setTipo] = useState("");

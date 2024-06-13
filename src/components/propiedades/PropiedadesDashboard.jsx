@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Table, Container, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import env from "../../../env";
 
 export const PropiedadesDashboard = () => {
   const [propiedades, setPropiedades] = useState([]);

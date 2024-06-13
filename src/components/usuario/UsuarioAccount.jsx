@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faEnvelope, faPhone, faEdit } from "@fortawesome/free-solid-svg-icons";
 import styles from "../styles/usuarioAccount.module.css";
-import env from "../../../env";
+
 
 export const UsuarioAccount = () => {
   const username = useAuth().getUser();

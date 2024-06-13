@@ -3,7 +3,6 @@ import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
-import env from "../../../env";
 import { Footer } from "../Footer";
 
 export const Estadisticas = () => {

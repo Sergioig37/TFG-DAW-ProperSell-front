@@ -13,7 +13,7 @@ import { PropiedadUpdate } from './components/propiedades/PropiedadUpdate';
 import { PropiedadCreate } from './components/propiedades/PropiedadCreate';
 import { Explorar } from './components/Explorar';
 import { Unauthorized } from './components/Unauthorized';
-import { UsuariosDashboard } from './components/usuario/UusariosDashboard';
+import { UsuariosDashboard } from './components/usuario/UsuariosDashboard';
 import { UsuarioAccount } from './components/usuario/UsuarioAccount';
 import { UsuarioDetails } from './components/usuario/UsuarioDetails';
 import { UsuarioUpdate } from './components/usuario/UsuarioUpdate';

@@ -15,7 +15,7 @@ import { useAuth } from "./auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import styles from "./styles/explorar.module.css";
-import env from "../../env";
+
 
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);

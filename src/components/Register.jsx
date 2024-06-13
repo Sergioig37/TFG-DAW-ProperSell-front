@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./auth/AuthContext";
-import env from "../../env";
 
 export const Register = () => {
   const [values, setValues] = useState({

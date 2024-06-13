@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Container, Alert, Row, Col } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import env from "../../../env";
+
 
 export const AlertaUpdate = () => {
   const { id } = useParams();
