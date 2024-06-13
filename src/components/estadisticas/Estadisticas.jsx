@@ -361,7 +361,7 @@ export const Estadisticas = () => {
                         <Card.Body>
                           <Card.Title>{usuario.username}</Card.Title>
                           <Card.Text>
-                            Propiedades: {usuario.propiedades.length}
+                            Propiedades: {usuario.numeroPropiedades}
                           </Card.Text>
                         </Card.Body>
                       </Card>
