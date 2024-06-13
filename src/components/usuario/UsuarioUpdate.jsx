@@ -13,7 +13,7 @@ import { useAuth } from "../auth/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { NavbarGeneral } from "../NavbarGeneral";
-import env from "../../../env";
+
 
 export const UsuarioUpdate = () => {
   const [correo, setCorreo] = useState("");
