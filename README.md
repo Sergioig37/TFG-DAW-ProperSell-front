@@ -16,7 +16,7 @@ $ git clone https://github.com/Sergioig37/ProperSell-front
 ### Arrancar las base de datos: [Ver repositorio](https://github.com/Sergioig37/Docker)
 ### Arrancar el back: [Ver repositorio](https://github.com/Sergioig37/ProperSell-back)
 
-### Abrir un editor de código:
+### Abrir el proyecto con un editor de código:
 #### Abrir un cmd y ejecutar:
 ```
 $ npm install
