@@ -2,10 +2,36 @@
 
 ## Requisitos previos:
 
-### Nodejs y NPM (node pacakge manager):
-#### Node 20.11.0:
-#### NPM 10.2.
-[Instalación](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+- Nodejs 18.12.0 o superior
+
+### Instalar Nodejs con nvm (recomendable):
+
+- Nvm 1.12.0: [Descarga](https://github.com/coreybutler/nvm-windows#readme)
+    ![img.png](img.png)
+
+#### Instalar npm y Nodejs (Con nvm):
+
+#### Node 18.12.0 o superior:
+
+- Listar todas las versiones de node (En caso de querer usar otra distinta):
+```
+$ nvm ls-remote
+```
+
+- Instalar la versión deseada:
+```
+  $ nvm install 18.12.0
+  ```
+
+- Cambiar la versión de node:
+```
+  $ nvm use 18.12.0
+  ```
+
+### Instalar nodejs desde el instalador oficial:
+
+- Descargar Nodejs [aquí](https://nodejs.org/en/download/package-manager)
 
 ## Instrucciones:
 ### Clonar el proyecto:
@@ -17,7 +43,7 @@ $ git clone https://github.com/Sergioig37/ProperSell-front
 ### Arrancar el back: [Ver repositorio](https://github.com/Sergioig37/ProperSell-back)
 
 ### Abrir el proyecto con un editor de código:
-#### Abrir un cmd y ejecutar:
+#### Abrir un cmd e instalar dependencias:
 ```
 $ npm install
 ```
@@ -25,6 +51,3 @@ $ npm install
 ```
 $ npm run dev
 ```
-
-
-git
