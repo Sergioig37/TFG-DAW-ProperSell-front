@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { NavbarGeneral } from "../NavbarGeneral";
 
-
 export const UsuarioUpdate = () => {
   const [correo, setCorreo] = useState("");
   const [nombreReal, setNombreReal] = useState("");
@@ -29,6 +28,7 @@ export const UsuarioUpdate = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!token) {
@@ -40,7 +40,13 @@ export const UsuarioUpdate = () => {
           Authorization: "Bearer " + token,
         },
       })
-        .then((res) => res.json())
+        .then(async (response) => {
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text);
+          }
+          return response.json();
+        })
         .then((data) => {
           setCorreo(data.correo);
           setNombreReal(data.nombreReal);
@@ -49,6 +55,7 @@ export const UsuarioUpdate = () => {
           setUsername(data.username);
         })
         .catch((error) => {
+          setError(error.message);
           console.error("Error fetching user data:", error);
         });
     }
@@ -63,23 +70,32 @@ export const UsuarioUpdate = () => {
     e.preventDefault();
     if (validateForm()) {
       const data = {
+        id: idUser,
         username: username,
         correo: correo,
         nombreReal: nombreReal,
         numeroTelefono: numeroTelefono,
         password: password,
       };
-      console.log(user);
-      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/edit/${idUser}/${user}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify(data),
-      })
-        .then((response) => response.json())
+      fetch(
+        import.meta.env.VITE_LOCALHOST_URL + `usuario/edit/${idUser}/${user}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(data),
+        }
+      )
+        .then(async (response) => {
+          if (!response.ok) {
+            const text = await response.text();
+            throw new Error(text);
+          }
+          return response.json();
+        })
         .then((res) => {
           if (res.token) {
             setAuthPassword(data.password);
@@ -88,7 +104,8 @@ export const UsuarioUpdate = () => {
           navigate(-1, { replace: true });
         })
         .catch((error) => {
-          console.error("Error updating user data:", error);
+          setError(error.message);
+          console.error("Error fetching user data:", error);
         });
     }
   };
@@ -96,6 +113,11 @@ export const UsuarioUpdate = () => {
   const validateForm = () => {
     let errors = {};
     let formIsValid = true;
+
+    if (!username.trim()) {
+      formIsValid = false;
+      errors["username"] = "Ingrese un nombre de usuario";
+    }
 
     if (!nombreReal.trim()) {
       formIsValid = false;
@@ -141,6 +163,28 @@ export const UsuarioUpdate = () => {
                   ))}
                 </Alert>
               )}
+              {error ? (
+                <Alert variant="danger" className="mt-2">
+                  {error}
+                </Alert>
+              ) : (
+                <></>
+              )}
+
+              <Form.Group controlId="username" className="mb-3">
+                <Form.Label>Nombre de usuario</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese su nombre de usuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  isInvalid={!!errors["username"]}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors["username"]}
+                </Form.Control.Feedback>
+              </Form.Group>
+
               <Form.Group controlId="nombreReal" className="mb-3">
                 <Form.Label>Nombre Real</Form.Label>
                 <Form.Control
