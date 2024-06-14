@@ -2,52 +2,51 @@
 
 ## Requisitos previos:
 
-
-- Nodejs 18.12.0 o superior
+- Nodejs 18.12.0 o superior.
 
 ### Instalar Nodejs con nvm (recomendable):
 
-- Nvm 1.12.0: [Descarga](https://github.com/coreybutler/nvm-windows#readme)
-    ![img.png](img.png)
+[Nvm 1.12.0](https://github.com/coreybutler/nvm-windows#readme)
 
-#### Instalar npm y Nodejs (Con nvm):
-
-#### Node 18.12.0 o superior:
+![img.png](imgs/instalacion_nvm.png)
 
 - Listar todas las versiones de node (En caso de querer usar otra distinta):
+
 ```
 $ nvm ls-remote
 ```
 
 - Instalar la versión deseada:
+
 ```
-  $ nvm install 18.12.0
+$ nvm install 18.12.0
   ```
 
 - Cambiar la versión de node:
+
 ```
-  $ nvm use 18.12.0
+$ nvm use 18.12.0
   ```
 
-### Instalar nodejs desde el instalador oficial:
+### Instalar nodejs desde el instalador oficial (alternativa):
 
-- Descargar Nodejs [aquí](https://nodejs.org/en/download/package-manager)
+- Descargar [Nodejs](https://nodejs.org/en/download/package-manager)
 
 ## Instrucciones:
-### Clonar el proyecto:
+
+1. Clonar el proyecto:
+
 ```
 $ git clone https://github.com/Sergioig37/ProperSell-front
 ```
 
-### Arrancar las base de datos: [Ver repositorio](https://github.com/Sergioig37/Docker)
-### Arrancar el back: [Ver repositorio](https://github.com/Sergioig37/ProperSell-back)
-
-### Abrir el proyecto con un editor de código:
-#### Abrir un cmd e instalar dependencias:
+2. Arrancar la base de datos: [epositorio](https://github.com/Sergioig37/Docker)
+3. Arrancar el back: [repositorio](https://github.com/Sergioig37/ProperSell-back)
+4. Abrir un cmd e instalar dependencias:
 ```
 $ npm install
 ```
-### Arrancar el proyecto
+5. Arrancar el proyecto
 ```
 $ npm run dev
 ```
