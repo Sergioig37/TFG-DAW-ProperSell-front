@@ -50,3 +50,4 @@ $ npm install
 ```
 $ npm run dev
 ```
+6. Entrar a la [página](http://localhost:5173/)
