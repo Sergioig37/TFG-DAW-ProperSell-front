@@ -101,7 +101,7 @@ export const PropiedadCreate = () => {
               </Alert>
             )}
             <Form.Group controlId="tipo" className="mb-3">
-              <Form.Label>Tipo</Form.Label>
+              <Form.Label>Tipo (Mínimo 4 caracteres)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el tipo de propiedad"
@@ -115,7 +115,7 @@ export const PropiedadCreate = () => {
             </Form.Group>
 
             <Form.Group controlId="localizacion" className="mb3">
-              <Form.Label>Localización</Form.Label>
+              <Form.Label>Localización (Mínimo 3 caracteres)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese la localización de la propiedad"

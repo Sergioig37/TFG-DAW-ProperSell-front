@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FormControl, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { FormControl, Button, Container, Row, Col, Alert, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
@@ -64,44 +64,57 @@ export const AlertaCreate = () => {
 
   return (
     <>
-    <Container fluid className="mt-4">
-      <Row className="justify-content-center">
-        <Col md={6}>
-          <form onSubmit={handleSubmit}>
+    <Container className="mt-4" style={{ maxWidth: '600px' }}>
+        <Form onSubmit={handleSubmit}>
+          <Row className="mb-3">
             {/* Error message */}
-            {errors.message && <Alert variant="danger">{errors.message}</Alert>}
-            <FormControl
-              className="mb-3"
-              placeholder="Nombre de la alerta (Mínmio 4 caracteres)"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              isInvalid={errors.nombre}
-            />
-            <FormControl.Feedback type="invalid">
-              {errors.nombre}
-            </FormControl.Feedback>
-            <FormControl
-              as="textarea"
-              rows={3}
-              className="mb-3"
-              placeholder="Descripción de la alerta (Mínmio 4 caracteres)"
-              value={descripcion}
-              onChange={(e) => setDescripcion(e.target.value)}
-              isInvalid={errors.descripcion}
-            />
-            <FormControl.Feedback type="invalid">
-              {errors.descripcion}
-            </FormControl.Feedback>
-            <Button type="submit" variant="primary" className="me-2">
-              Guardar
-            </Button>
-            <Button variant="secondary" onClick={() => navigate(-1)}>
-              Volver
-            </Button>
-          </form>
-        </Col>
-      </Row>
-    </Container>
+            {errors.message && (
+              <Col xs={12}>
+                <Alert variant="danger">{errors.message}</Alert>
+              </Col>
+            )}
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formNombre">
+                <Form.Label>Nombre (Mínmio 4 caracteres)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el nombre"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  isInvalid={!!errors.nombre}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.nombre}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12} className="mb-3">
+              <Form.Group controlId="formDescripcion">
+                <Form.Label>Descripción (Mínimo 4 caracteres)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese la descripción"
+                  value={descripcion}
+                  onChange={(e) => setDescripcion(e.target.value)}
+                  isInvalid={!!errors.descripcion}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.descripcion}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs={12} className="d-flex justify-content-between">
+              <Button type="submit" variant="primary">
+                Guardar
+              </Button>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                Volver
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
+      
     
     </>
   );
