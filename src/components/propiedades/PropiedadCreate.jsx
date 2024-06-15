@@ -73,6 +73,13 @@ export const PropiedadCreate = () => {
       errors["precio"] = "Ingrese el precio de la propiedad.";
     } else if (!/^\d+$/.test(precio)) {
       errors["precio"] = "El precio debe contener solo números.";
+    } else if (parseInt(precio) < 1000) {
+      
+      errors["precio"] = "El precio no puede ser menos de 1000 euros";
+    }
+    else if(parseInt(precio) > 300000){
+      
+      errors["precio"] = "El precio no puede ser más de 300000 euros";
     }
 
     setErrors(errors);
@@ -125,7 +132,7 @@ export const PropiedadCreate = () => {
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingrese el precio de la propiedad"
+                placeholder="Ingrese el precio de la propiedad (Min: 1000, Max: 300000)"
                 value={precio}
                 onChange={(e) => setPrecio(e.target.value)}
                 isInvalid={!!errors["precio"]}

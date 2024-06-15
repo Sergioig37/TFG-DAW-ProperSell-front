@@ -83,7 +83,7 @@ export const PropiedadDetails = () => {
                     {propietario.numeroTelefono}
                   </ListGroup.Item>
                 </ListGroup>
-                <Button variant="primary" onClick={() => navigate(-1)}>
+                <Button variant="primary" onClick={() => navigate(-1)} className="mt-3">
                   Volver
                 </Button>
               </Col>

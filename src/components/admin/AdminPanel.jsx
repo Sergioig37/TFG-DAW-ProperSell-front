@@ -48,19 +48,19 @@ export const AdminPanel = () => {
                 <ListGroup.Item className="d-flex justify-content-between align-items-center">
                   <span>Alertas</span>
                   <Button variant="primary" onClick={handleAlertaRoute}>
-                    Ver Dashboard
+                    Ver panel
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item className="d-flex justify-content-between align-items-center">
                   <span>Propiedades</span>
                   <Button variant="primary" onClick={handlePropiedades}>
-                    Ver Dashboard
+                    Ver panel
                   </Button>
                 </ListGroup.Item>
                 <ListGroup.Item className="d-flex justify-content-between align-items-center">
                   <span>Usuarios</span>
                   <Button variant="primary" onClick={handleUsuarios}>
-                    Ver Dashboard
+                    Ver panel
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

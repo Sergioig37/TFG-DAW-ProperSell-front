@@ -72,7 +72,7 @@ export const AlertaCreate = () => {
             {errors.message && <Alert variant="danger">{errors.message}</Alert>}
             <FormControl
               className="mb-3"
-              placeholder="Nombre de la alerta"
+              placeholder="Nombre de la alerta (Mínmio 4 caracteres)"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               isInvalid={errors.nombre}
@@ -84,7 +84,7 @@ export const AlertaCreate = () => {
               as="textarea"
               rows={3}
               className="mb-3"
-              placeholder="Descripción de la alerta"
+              placeholder="Descripción de la alerta (Mínmio 4 caracteres)"
               value={descripcion}
               onChange={(e) => setDescripcion(e.target.value)}
               isInvalid={errors.descripcion}

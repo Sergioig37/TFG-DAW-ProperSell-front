@@ -101,6 +101,13 @@ export const PropiedadUpdate = () => {
     } else if (!/^\d+$/.test(precio)) {
       formIsValid = false;
       errors["precio"] = "El precio debe contener solo números.";
+    }else if (parseInt(precio) < 1000) {
+      formIsValid = false;
+      errors["precio"] = "El precio no puede ser menos de 1000 euros";
+    }
+    else if(parseInt(precio) > 300000){
+      formIsValid = false;
+      errors["precio"] = "El precio no puede ser más de 300000 euros";
     }
 
     setErrors(errors);

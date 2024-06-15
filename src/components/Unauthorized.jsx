@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { NavbarGeneral } from "./NavbarGeneral";
 
 export const Unauthorized = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const Unauthorized = () => {
 
   return (
     <>
-   
+   <NavbarGeneral/>
     <Container className="text-center mt-5">
       <h1>No estás autorizado para acceder a esta página</h1>
       <p className="lead">

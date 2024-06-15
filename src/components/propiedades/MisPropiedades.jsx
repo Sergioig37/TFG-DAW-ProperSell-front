@@ -19,11 +19,16 @@ export const MisPropiedades = () => {
   const token = useAuth().getToken();
   const idUser = useAuth().getId();
   const user = useAuth().getUser();
+  const rol = useAuth().getRol(); 
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
+      if(rol!=="USER"){
+        navigate("/denegado");
+      }
+
       fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/propiedades/${idUser}`, {
         method: "GET",
         headers: {

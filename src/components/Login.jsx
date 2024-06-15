@@ -107,6 +107,14 @@ export const Login = () => {
                 <Button variant="primary" type="submit" className="mt-4" block>
                   Iniciar Sesión
                 </Button>
+                <Button
+                  variant="secondary"
+                  className="mt-4"
+                  onClick={() => navigate("/")}
+                  block
+                >
+                  Volver a inicio
+                </Button>
               </Form>
             </Card.Body>
           </Card>

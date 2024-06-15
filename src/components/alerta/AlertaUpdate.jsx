@@ -87,7 +87,7 @@ export const AlertaUpdate = () => {
             )}
             <Col xs={12} className="mb-3">
               <Form.Group controlId="formNombre">
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label>Nombre (Mínmio 4 caracteres)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ingrese el nombre"
@@ -102,7 +102,7 @@ export const AlertaUpdate = () => {
             </Col>
             <Col xs={12} className="mb-3">
               <Form.Group controlId="formDescripcion">
-                <Form.Label>Descripción</Form.Label>
+                <Form.Label>Descripción (Mínimo 4 caracteres)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ingrese la descripción"

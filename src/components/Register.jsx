@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Button,
@@ -48,6 +48,7 @@ export const Register = () => {
       })
         .then((response) => {
           if (response.ok) {
+            alert("Registro correcto");
             navigate("/login");
           } else {
             return response.text().then((text) => {
@@ -200,6 +201,14 @@ export const Register = () => {
                 </Form.Group>
                 <Button variant="primary" type="submit" className="mt-4" block>
                   Registrarse
+                </Button>
+                <Button
+                  variant="secondary"
+                  className="mt-4"
+                  onClick={() => navigate("/")}
+                  block
+                >
+                  Volver a inicio
                 </Button>
               </Form>
             </Card.Body>

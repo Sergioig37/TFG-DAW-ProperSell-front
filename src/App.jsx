@@ -30,6 +30,7 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/explore" element={<Explorar />} />
+        
         <Route path="/alerta/edit/:id" element={<AlertaUpdate />} />
         <Route path="/alerta/create" element={<AlertaCreate />} />
         <Route path="/cliente/:id/propiedad/create" element={<PropiedadCreate />} />

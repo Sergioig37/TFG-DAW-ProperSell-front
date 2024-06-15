@@ -18,6 +18,9 @@ export const MisAlertas = () => {
     if (!token) {
       navigate("/login");
     } else {
+      if(rol!=="USER"){
+        navigate("/denegado");
+      }
       fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertas`, {
         method: "GET",
         headers: {

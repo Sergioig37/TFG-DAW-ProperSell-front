@@ -16,10 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import styles from "./styles/explorar.module.css";
 
-
 export const Explorar = () => {
   const [propiedades, setPropiedades] = useState([]);
-  const [localizacion, setLocalizacion] = useState("");
+  const [propiedadesMostrar, setPropiedadesMostrar] = useState([]);
   const [precioMin, setPrecioMin] = useState("");
   const [precioMax, setPrecioMax] = useState("");
   const navigate = useNavigate();
@@ -28,16 +27,21 @@ export const Explorar = () => {
   const rol = useAuth().getRol();
 
   useEffect(() => {
-    if (token && rol!=="ADMIN") {
-      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/propiedadExcluida/${idUser}`, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
+    if (token && rol !== "ADMIN") {
+      fetch(
+        import.meta.env.VITE_LOCALHOST_URL +
+          `propiedad/propiedadExcluida/${idUser}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setPropiedades(data);
+          setPropiedadesMostrar(data); // Inicializa propiedadesMostrar con todas las propiedades
         });
     } else {
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/habilitadas`, {
@@ -46,6 +50,7 @@ export const Explorar = () => {
         .then((res) => res.json())
         .then((data) => {
           setPropiedades(data);
+          setPropiedadesMostrar(data); // Inicializa propiedadesMostrar con todas las propiedades
         });
     }
   }, [token, idUser]);
@@ -58,30 +63,44 @@ export const Explorar = () => {
     }
   };
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const filteredPropiedades = propiedades.filter((propiedad) => {
-      if (localizacion && propiedad.localizacion !== localizacion) {
-        return false;
-      }
-      if (precioMin && propiedad.precio < precioMin) {
-        return false;
-      }
-      if (precioMax && propiedad.precio > precioMax) {
-        return false;
-      }
-      return true;
-    });
+  const filtrarPropiedades = () => {
+    let filteredPropiedades = propiedades;
 
-    if (localizacion === "" && precioMax === "" && precioMin === "") {
-      window.location.reload();
+    // Filtrar por precio mínimo si está definido
+    if (precioMin !== "") {
+      filteredPropiedades = filteredPropiedades.filter(
+        (propiedad) => propiedad.precio >= precioMin
+      );
     }
 
-    setPropiedades(filteredPropiedades);
+    // Filtrar por precio máximo si está definido
+    if (precioMax !== "") {
+      filteredPropiedades = filteredPropiedades.filter(
+        (propiedad) => propiedad.precio <= precioMax
+      );
+    }
+
+    // Actualizar propiedadesMostrar con el resultado del filtro
+    setPropiedadesMostrar(filteredPropiedades);
+
+    // Actualizar precioMin y precioMax si los valores son diferentes de los actuales
+    if (precioMin !== "") {
+      setPrecioMin(precioMin);
+    }
+    if (precioMax !== "") {
+      setPrecioMax(precioMax);
+    }
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    filtrarPropiedades();
   };
 
   const handleBorrarFiltros = () => {
-    window.location.reload();
+    setPrecioMin("");
+    setPrecioMax("");
+    setPropiedadesMostrar(propiedades);
   };
 
   return (
@@ -93,12 +112,13 @@ export const Explorar = () => {
         {token ? (
           <></>
         ) : (
-          <h5 className={`mb-4 ${styles.h5}`}>Inicia sesión para ver más detalles</h5>
+          <h5 className={`mb-4 ${styles.h5}`}>
+            Inicia sesión para ver más detalles
+          </h5>
         )}
 
         <Form onSubmit={handleSearch} className="mb-4">
           <Row className="g-3">
-            
             <Col xs={12} sm={6} md={3}>
               <FormGroup>
                 <InputGroup>
@@ -148,9 +168,9 @@ export const Explorar = () => {
           </Row>
         </Form>
 
-        {propiedades.length >= 1 ? (
+        {propiedadesMostrar.length >= 1 ? (
           <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-            {propiedades.map((propiedad) => (
+            {propiedadesMostrar.map((propiedad) => (
               <Col key={propiedad.id}>
                 <Card className={`h-100 shadow-sm ${styles.card}`}>
                   <Card.Body className={styles["card-body"]}>
@@ -160,11 +180,10 @@ export const Explorar = () => {
                     <Card.Text className={styles["card-text-muted"]}>
                       {propiedad.localizacion}
                     </Card.Text>
-                    {token && (
-                      <Card.Text className={styles["card-text-primary"]}>
-                        €{propiedad.precio}
-                      </Card.Text>
-                    )}
+                    <Card.Text className={styles["card-text-primary"]}>
+                      €{propiedad.precio}
+                    </Card.Text>
+
                     {token && (
                       <Button
                         onClick={() => handleVer(propiedad.id)}
@@ -187,8 +206,6 @@ export const Explorar = () => {
           </div>
         )}
       </Container>
-      
     </>
   );
 };
-
