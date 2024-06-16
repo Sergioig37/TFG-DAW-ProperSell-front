@@ -186,7 +186,7 @@ export const UsuarioUpdate = () => {
               </Form.Group>
 
               <Form.Group controlId="nombreReal" className="mb-3">
-                <Form.Label>Nombre Real</Form.Label>
+                <Form.Label>Nombre Completo</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ingrese su nombre real"

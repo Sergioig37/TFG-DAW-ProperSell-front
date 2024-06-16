@@ -120,7 +120,7 @@ export const Register = () => {
               </Card.Title>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="nombreReal">
-                  <Form.Label>Nombre real</Form.Label>
+                  <Form.Label>Nombre completo</Form.Label>
                   <Form.Control
                     type="text"
                     name="nombreReal"

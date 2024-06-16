@@ -20,7 +20,7 @@ export const AlertasDashboard = () => {
     } else {
       if (rol !== "ADMIN") {
         navigate("/denegado");
-      } else {
+      } 
         fetch(import.meta.env.VITE_LOCALHOST_URL + "alerta", {
           method: "GET",
           headers: {
@@ -31,7 +31,6 @@ export const AlertasDashboard = () => {
           .then((data) => {
             setAlertas(data ? data : []);
           });
-      }
     }
   }, [token, rol, navigate]);
 

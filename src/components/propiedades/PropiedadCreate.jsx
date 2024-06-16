@@ -129,7 +129,7 @@ export const PropiedadCreate = () => {
             </Form.Group>
 
             <Form.Group controlId="precio" className="mb-3">
-              <Form.Label>Precio</Form.Label>
+              <Form.Label>Precio (Min: 1000, Max:300000)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese el precio de la propiedad (Min: 1000, Max: 300000)"

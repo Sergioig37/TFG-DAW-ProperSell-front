@@ -14,12 +14,16 @@ export const PropiedadUpdate = () => {
   const navigate = useNavigate();
   const idUser = useAuth().getId();
   const user = useAuth().getUser();
+  const rol = useAuth().getRol();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (!token) {
       navigate("/login");
     } else {
+      if(rol!=="USER"){
+        navigate("/denegado");
+      }
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
@@ -95,17 +99,19 @@ export const PropiedadUpdate = () => {
       errors["localizacion"] = "Ingrese la localización de la propiedad.";
     }
 
+    console.log(typeof(precio));
+    let precioNumber = precio;
     if (!precio.trim()) {
       formIsValid = false;
       errors["precio"] = "Ingrese el precio de la propiedad.";
     } else if (!/^\d+$/.test(precio)) {
       formIsValid = false;
       errors["precio"] = "El precio debe contener solo números.";
-    }else if (parseInt(precio) < 1000) {
+    }else if (parseInt(precioNumber) < 1000) {
       formIsValid = false;
       errors["precio"] = "El precio no puede ser menos de 1000 euros";
     }
-    else if(parseInt(precio) > 300000){
+    else if(parseInt(precioNumber) > 300000){
       formIsValid = false;
       errors["precio"] = "El precio no puede ser más de 300000 euros";
     }
@@ -161,7 +167,7 @@ export const PropiedadUpdate = () => {
             </Col>
             <Col xs={12} className="mb-3">
               <Form.Group controlId="formPrecio">
-                <Form.Label>Precio</Form.Label>
+                <Form.Label>Precio (Min: 1000, Max:300000)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Ingrese el precio de la propiedad"

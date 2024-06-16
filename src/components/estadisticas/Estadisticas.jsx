@@ -59,10 +59,13 @@ export const Estadisticas = () => {
   };
 
   useEffect(() => {
-    if (!token || rol !== "ADMIN") {
-      navigate("/denegado");
+    if (!token ) {
+      navigate("/login");
     }
-
+    else{
+      if(rol!=="ADMIN"){
+        navigate("/denegado");
+      }
     fetch(
       import.meta.env.VITE_LOCALHOST_URL +
         "estadisticas/usuario/variasPropiedades",
@@ -162,7 +165,8 @@ export const Estadisticas = () => {
         .then((res) => (res ? res.json() : []))
         .then((data) => {
           setUsuariosConXAlertas(data ? data : []);
-        });
+        }); 
+      }
   }, []);
 
   const handleVerAlertasLargas = () => {
