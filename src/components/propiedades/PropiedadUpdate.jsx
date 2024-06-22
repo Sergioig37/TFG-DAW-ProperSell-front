@@ -138,13 +138,18 @@ export const PropiedadUpdate = () => {
             <Col xs={12} className="mb-3">
               <Form.Group controlId="formTipo">
                 <Form.Label>Tipo</Form.Label>
-                <Form.Control
-                  type="text"
+                <Form.Select
+                  type="select"
                   placeholder="Ingrese el tipo de propiedad"
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
-                  isInvalid={!!errors.tipo}
-                />
+                  isInvalid={!!errors["tipo"]}
+                >
+                  <option>Elegir tipo de vivienda</option>
+                  <option value="Piso">Piso</option>
+                  <option value="Apartamento">Apartamento</option>
+                  <option value="Casa">Casa</option>
+                </Form.Select>
                 <Form.Control.Feedback type="invalid">
                   {errors.tipo}
                 </Form.Control.Feedback>

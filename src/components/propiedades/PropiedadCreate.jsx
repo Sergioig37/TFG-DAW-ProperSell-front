@@ -3,7 +3,6 @@ import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
-
 export const PropiedadCreate = () => {
   const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
@@ -34,11 +33,11 @@ export const PropiedadCreate = () => {
         habilitado: true,
       };
 
-      fetch(import.meta.env.VITE_LOCALHOST_URL + 'propiedad/save', {
-        method: 'POST',
+      fetch(import.meta.env.VITE_LOCALHOST_URL + "propiedad/save", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
           Authorization: "Bearer " + token,
         },
         body: JSON.stringify(data),
@@ -66,7 +65,8 @@ export const PropiedadCreate = () => {
     if (!localizacion.trim()) {
       errors["localizacion"] = "Ingrese la localización de la propiedad.";
     } else if (localizacion.length < 3) {
-      errors["localizacion"] = "Localización no puede tener menos de tres caracteres.";
+      errors["localizacion"] =
+        "Localización no puede tener menos de tres caracteres.";
     }
 
     if (!precio.trim()) {
@@ -74,11 +74,8 @@ export const PropiedadCreate = () => {
     } else if (!/^\d+$/.test(precio)) {
       errors["precio"] = "El precio debe contener solo números.";
     } else if (parseInt(precio) < 1000) {
-      
       errors["precio"] = "El precio no puede ser menos de 1000 euros";
-    }
-    else if(parseInt(precio) > 300000){
-      
+    } else if (parseInt(precio) > 300000) {
       errors["precio"] = "El precio no puede ser más de 300000 euros";
     }
 
@@ -88,71 +85,75 @@ export const PropiedadCreate = () => {
 
   return (
     <>
-    <Container className="mt-4">
-      <Row className="justify-content-md-center">
-        <Col xs={12} md={6}>
-          <Form onSubmit={handleSubmit}>
-            {/* Error message */}
-            {Object.keys(errors).length > 0 && (
-              <Alert variant="danger">
-                {Object.values(errors).map((error, index) => (
-                  <div key={index}>{error}</div>
-                ))}
-              </Alert>
-            )}
-            <Form.Group controlId="tipo" className="mb-3">
-              <Form.Label>Tipo (Mínimo 4 caracteres)</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el tipo de propiedad"
-                value={tipo}
-                onChange={(e) => setTipo(e.target.value)}
-                isInvalid={!!errors["tipo"]}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors["tipo"]}
-              </Form.Control.Feedback>
-            </Form.Group>
+      <Container className="mt-4">
+        <Row className="justify-content-md-center">
+          <Col xs={12} md={6}>
+            <Form onSubmit={handleSubmit}>
+              {/* Error message */}
+              {Object.keys(errors).length > 0 && (
+                <Alert variant="danger">
+                  {Object.values(errors).map((error, index) => (
+                    <div key={index}>{error}</div>
+                  ))}
+                </Alert>
+              )}
+              <Form.Group controlId="tipo" className="mb-3">
+                <Form.Label>Tipo </Form.Label>
+                <Form.Select
+                  type="select"
+                  placeholder="Ingrese el tipo de propiedad"
+                  value={tipo}
+                  onChange={(e) => setTipo(e.target.value)}
+                  isInvalid={!!errors["tipo"]}
+                >
+                  <option>Elegir tipo de vivienda</option>
+                  <option value="Piso">Piso</option>
+                  <option value="Apartamento">Apartamento</option>
+                  <option value="Casa">Casa</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {errors["tipo"]}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Form.Group controlId="localizacion" className="mb3">
-              <Form.Label>Localización (Mínimo 3 caracteres)</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la localización de la propiedad"
-                value={localizacion}
-                onChange={(e) => setLocalizacion(e.target.value)}
-                isInvalid={!!errors["localizacion"]}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors["localizacion"]}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Form.Group controlId="localizacion" className="mb3">
+                <Form.Label>Localización (Mínimo 3 caracteres)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese la localización de la propiedad"
+                  value={localizacion}
+                  onChange={(e) => setLocalizacion(e.target.value)}
+                  isInvalid={!!errors["localizacion"]}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors["localizacion"]}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Form.Group controlId="precio" className="mb-3">
-              <Form.Label>Precio (Min: 1000, Max:300000)</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el precio de la propiedad (Min: 1000, Max: 300000)"
-                value={precio}
-                onChange={(e) => setPrecio(e.target.value)}
-                isInvalid={!!errors["precio"]}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors["precio"]}
-              </Form.Control.Feedback>
-            </Form.Group>
+              <Form.Group controlId="precio" className="mb-3">
+                <Form.Label>Precio (Min: 1000, Max:300000)</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingrese el precio de la propiedad (Min: 1000, Max: 300000)"
+                  value={precio}
+                  onChange={(e) => setPrecio(e.target.value)}
+                  isInvalid={!!errors["precio"]}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors["precio"]}
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Button variant="primary" type="submit" className="me-2">
-              Guardar
-            </Button>
-            <Button variant="secondary" onClick={() => navigate(-1)}>
-              Volver
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-    
+              <Button variant="primary" type="submit" className="me-2">
+                Guardar
+              </Button>
+              <Button variant="secondary" onClick={() => navigate(-1)}>
+                Volver
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
