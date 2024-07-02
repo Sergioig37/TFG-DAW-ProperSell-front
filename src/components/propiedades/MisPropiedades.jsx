@@ -19,7 +19,7 @@ export const MisPropiedades = () => {
   const token = useAuth().getToken();
   const idUser = useAuth().getId();
   const user = useAuth().getUser();
-  const rol = useAuth().getRol(); 
+
 
   useEffect(() => {
   

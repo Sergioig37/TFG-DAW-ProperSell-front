@@ -11,7 +11,6 @@ export const AlertaUpdate = () => {
   const [descripcion, setDescripcion] = useState("");
   const [errors, setErrors] = useState({}); // State to manage errors
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const AlertaUpdate = () => {
             setDescripcion(data.descripcion);
             setIdAlerta(data.id);
           });
-  }, [id, token, rol, navigate]);
+  }, [id, token, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

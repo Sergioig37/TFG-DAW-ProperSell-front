@@ -24,10 +24,10 @@ export const Explorar = () => {
   const navigate = useNavigate();
   const idUser = useAuth().getId();
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
+  
 
   useEffect(() => {
-    if (token && rol !== "ADMIN") {
+   
       fetch(
         import.meta.env.VITE_LOCALHOST_URL +
           `propiedad/propiedadExcluida/${idUser}`,
@@ -43,7 +43,7 @@ export const Explorar = () => {
           setPropiedades(data);
           setPropiedadesMostrar(data); // Inicializa propiedadesMostrar con todas las propiedades
         });
-    } else {
+ 
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/habilitadas`, {
         method: "GET",
       })
@@ -52,7 +52,7 @@ export const Explorar = () => {
           setPropiedades(data);
           setPropiedadesMostrar(data); // Inicializa propiedadesMostrar con todas las propiedades
         });
-    }
+ 
   }, [token, idUser]);
 
   const handleVer = (id) => {

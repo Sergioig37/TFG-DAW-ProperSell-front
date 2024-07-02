@@ -19,7 +19,6 @@ export const UsuarioDetails = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const [usuario, setUsuario] = useState({});
-  const rol = useAuth().getRol();
 
   useEffect(() => {
         fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${id}`, {
@@ -43,7 +42,7 @@ export const UsuarioDetails = () => {
           .catch((error) => {
             console.error("Error fetching user:", error);
           });
-  }, [id, navigate, token, rol]);
+  }, [id, navigate, token]);
   
 
   return (

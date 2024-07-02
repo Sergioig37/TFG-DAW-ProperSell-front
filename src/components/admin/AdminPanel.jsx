@@ -7,7 +7,7 @@ import { useAuth } from "../auth/AuthContext";
 export const AdminPanel = () => {
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
+ 
 
   const handleAlertaRoute = () => {
     navigate("/admin/alerta-dashboard");

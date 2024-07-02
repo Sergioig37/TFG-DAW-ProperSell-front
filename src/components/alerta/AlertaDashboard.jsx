@@ -9,7 +9,6 @@ export const AlertasDashboard = () => {
   const [alertas, setAlertas] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
 
   useEffect(() => {
     fetch(import.meta.env.VITE_LOCALHOST_URL + "alerta", {
@@ -22,7 +21,7 @@ export const AlertasDashboard = () => {
       .then((data) => {
         setAlertas(data ? data : []);
       });
-  }, [token, rol, navigate]);
+  }, [token, navigate]);
 
   const handleEdit = (id) => {
     navigate(`/alerta/edit/${id}`);

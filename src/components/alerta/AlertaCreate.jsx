@@ -9,7 +9,7 @@ export const AlertaCreate = () => {
   const [nombre, setNombre] = useState("");
   const [errors, setErrors] = useState({}); // State to manage errors
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
+
   const navigate = useNavigate();
 
 

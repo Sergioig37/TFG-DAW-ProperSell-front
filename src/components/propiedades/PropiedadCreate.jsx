@@ -10,7 +10,6 @@ export const PropiedadCreate = () => {
   const [errors, setErrors] = useState({});
   const token = useAuth().getToken();
   const idUser = useAuth().getId();
-  const rol = useAuth().getRol();
   const navigate = useNavigate();
 
 

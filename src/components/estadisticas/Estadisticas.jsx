@@ -17,8 +17,6 @@ export const Estadisticas = () => {
   const [precioPropiedad, setPrecioPropiedad] = useState(0);
   const [tamanoDescripcion, setTamanoDescripcion] = useState(0);
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
-  const navigate = useNavigate();
 
   const handleVerPropiedadesMasCaras = () => {
     fetch(

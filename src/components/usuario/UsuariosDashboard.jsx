@@ -9,7 +9,6 @@ export const UsuariosDashboard = () => {
   const [usuarios, setUsuarios] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
-  const rol = useAuth().getRol();
   const idUser = useAuth().getId();
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export const UsuariosDashboard = () => {
             setUsuarios(data);
           });
       
-  }, [token, rol, idUser, navigate]);
+  }, [token, idUser, navigate]);
 
   const handleHabilitado = (id, enabled) => {
    
