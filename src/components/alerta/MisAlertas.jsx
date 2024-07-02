@@ -5,86 +5,87 @@ import { useAuth } from "../auth/AuthContext";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { FaTrash, FaEdit, FaPlus, FaMinus } from "react-icons/fa";
 
-
 export const MisAlertas = () => {
   const [alertasUsuario, setAlertasUsuario] = useState([]);
   const [alertasDisponibles, setAlertasDisponibles] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const idUser = useAuth().getId();
-  const rol = useAuth().getRol();
+  
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if(rol!=="USER"){
-        navigate("/denegado");
-      }
-      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertas`, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setAlertasUsuario(data ? data : []);
-        });
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertas`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAlertasUsuario(data ? data : []);
+      });
 
-      fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}/alertasDisponibles`, {
+    fetch(
+      import.meta.env.VITE_LOCALHOST_URL +
+        `usuario/${idUser}/alertasDisponibles`,
+      {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
         },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setAlertasDisponibles(data ? data : []);
-        });
-    }
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setAlertasDisponibles(data ? data : []);
+      });
   }, [token, idUser, navigate]);
 
-
   const handleAlertas = (id, enabled) => {
-    if(enabled===true){
-      fetch( import.meta.env.VITE_LOCALHOST_URL +`usuario/${idUser}/${id}/${enabled}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    if (enabled === true) {
+      fetch(
+        import.meta.env.VITE_LOCALHOST_URL +
+          `usuario/${idUser}/${id}/${enabled}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
-    const alertaAñadida = alertasDisponibles.find((alerta) => alerta.id === id);
+      const alertaAñadida = alertasDisponibles.find(
+        (alerta) => alerta.id === id
+      );
 
-    setAlertasUsuario([...alertasUsuario, alertaAñadida]);
+      setAlertasUsuario([...alertasUsuario, alertaAñadida]);
 
-    setAlertasDisponibles(
-      alertasDisponibles.filter((alerta) => alerta.id !== id)
-    );
+      setAlertasDisponibles(
+        alertasDisponibles.filter((alerta) => alerta.id !== id)
+      );
+    } else {
+      fetch(
+        import.meta.env.VITE_LOCALHOST_URL +
+          `usuario/${idUser}/${id}/${enabled}`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      const alertaQuitada = alertasUsuario.find((alerta) => alerta.id === id);
+
+      setAlertasUsuario(alertasUsuario.filter((alerta) => alerta.id !== id));
+
+      setAlertasDisponibles([...alertasDisponibles, alertaQuitada]);
     }
-    else {
-       fetch(import.meta.env.VITE_LOCALHOST_URL+`usuario/${idUser}/${id}/${enabled}`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
-
-    const alertaQuitada = alertasUsuario.find((alerta) => alerta.id === id);
-
-    setAlertasUsuario(alertasUsuario.filter((alerta) => alerta.id !== id));
-
-    setAlertasDisponibles([...alertasDisponibles, alertaQuitada]);
-    }
-     
-  }
-
-  
+  };
 
   return (
     <>
@@ -158,7 +159,6 @@ export const MisAlertas = () => {
           </Col>
         </Row>
       </Container>
-      
     </>
   );
 };

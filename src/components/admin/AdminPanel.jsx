@@ -21,18 +21,7 @@ export const AdminPanel = () => {
     navigate("/admin/usuarios-dashboard");
   };
 
-  useEffect(() => {
 
-  
-
-    if (!token) {
-      navigate("/login");
-    } else {
-      if (rol !== "ADMIN") {
-        navigate("/denegado");
-      }
-    }
-  }, [token, rol, navigate]);
 
   return (
     <>

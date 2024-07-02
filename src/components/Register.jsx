@@ -28,12 +28,6 @@ export const Register = () => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     if (validateForm()) {

@@ -21,9 +21,7 @@ export const PropiedadDetails = () => {
   const [propietario, setPropietario] = useState({});
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
+  
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
@@ -53,7 +51,7 @@ export const PropiedadDetails = () => {
         .catch((error) => {
           console.error("Error fetching property:", error);
         });
-    }
+    
   }, [id, token, navigate]);
   
 

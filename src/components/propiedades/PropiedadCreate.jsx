@@ -13,13 +13,7 @@ export const PropiedadCreate = () => {
   const rol = useAuth().getRol();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else if (rol === "ADMIN") {
-      navigate("/denegado");
-    }
-  }, [token, rol, navigate]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

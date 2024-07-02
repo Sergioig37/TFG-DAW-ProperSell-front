@@ -52,11 +52,6 @@ export const Login = () => {
       });
   };
 
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

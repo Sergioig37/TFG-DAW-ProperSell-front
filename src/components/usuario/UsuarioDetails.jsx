@@ -22,12 +22,6 @@ export const UsuarioDetails = () => {
   const rol = useAuth().getRol();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if (rol !== "ADMIN") {
-        navigate("/denegado");
-      } else {
         fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${id}`, {
           method: "GET",
           headers: {
@@ -49,8 +43,6 @@ export const UsuarioDetails = () => {
           .catch((error) => {
             console.error("Error fetching user:", error);
           });
-      }
-    }
   }, [id, navigate, token, rol]);
   
 

@@ -19,9 +19,7 @@ export const UsuarioAccount = () => {
   const {clearToken} = useAuth();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
+    
       fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${id}`, {
         method: "GET",
         headers: {
@@ -32,7 +30,7 @@ export const UsuarioAccount = () => {
         .then((data) => {
           setUsuario(data);
         });
-    }
+    
   }, [username]);
 
   const handleEdit = () => {

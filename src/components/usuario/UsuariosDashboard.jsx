@@ -13,12 +13,7 @@ export const UsuariosDashboard = () => {
   const idUser = useAuth().getId();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if (rol !== "ADMIN") {
-        navigate("/denegado");
-      } else {
+    
         fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/usuarioExcluido/${idUser}`, {
           method: "GET",
           headers: {
@@ -29,8 +24,7 @@ export const UsuariosDashboard = () => {
           .then((data) => {
             setUsuarios(data);
           });
-      }
-    }
+      
   }, [token, rol, idUser, navigate]);
 
   const handleHabilitado = (id, enabled) => {

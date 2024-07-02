@@ -14,16 +14,11 @@ export const PropiedadUpdate = () => {
   const navigate = useNavigate();
   const idUser = useAuth().getId();
   const user = useAuth().getUser();
-  const rol = useAuth().getRol();
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if(rol!=="USER"){
-        navigate("/denegado");
-      }
+
+      
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/${id}`, {
         method: "GET",
         headers: {
@@ -50,7 +45,7 @@ export const PropiedadUpdate = () => {
               }
             });
         });
-    }
+    
   }, [id, token, navigate, idUser]);
 
   const handleSubmit = (e) => {

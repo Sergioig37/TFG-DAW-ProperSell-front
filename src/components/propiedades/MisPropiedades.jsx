@@ -22,12 +22,7 @@ export const MisPropiedades = () => {
   const rol = useAuth().getRol(); 
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if(rol!=="USER"){
-        navigate("/denegado");
-      }
+  
 
       fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/propiedades/${idUser}`, {
         method: "GET",
@@ -39,7 +34,7 @@ export const MisPropiedades = () => {
         .then((data) => {
           setPropiedades(data ? data : []);
         });
-    }
+    
   }, [token, idUser, navigate]);
 
   const handleEdit = (id) => {

@@ -3,35 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { Button, Table, Container, Row, Col, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
 import { useAuth } from "../auth/AuthContext";
-import.meta.env.VITE_LOCALHOST_URL
+import.meta.env.VITE_LOCALHOST_URL;
 
 export const AlertasDashboard = () => {
   const [alertas, setAlertas] = useState([]);
   const navigate = useNavigate();
   const token = useAuth().getToken();
   const rol = useAuth().getRol();
-  
-
 
   useEffect(() => {
-   
-    if (!token) {
-      navigate("/login");
-    } else {
-      if (rol !== "ADMIN") {
-        navigate("/denegado");
-      } 
-        fetch(import.meta.env.VITE_LOCALHOST_URL + "alerta", {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            setAlertas(data ? data : []);
-          });
-    }
+    fetch(import.meta.env.VITE_LOCALHOST_URL + "alerta", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAlertas(data ? data : []);
+      });
   }, [token, rol, navigate]);
 
   const handleEdit = (id) => {
@@ -39,7 +29,7 @@ export const AlertasDashboard = () => {
   };
 
   const handleDelete = (idAlerta) => {
-    fetch(import.meta.env.VITE_LOCALHOST_URL+`alerta/del/${idAlerta}`, {
+    fetch(import.meta.env.VITE_LOCALHOST_URL + `alerta/del/${idAlerta}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -55,7 +45,6 @@ export const AlertasDashboard = () => {
         console.error("Error al eliminar la alerta:", error);
       });
   };
-
 
   return (
     <>
@@ -113,7 +102,6 @@ export const AlertasDashboard = () => {
           </Col>
         </Row>
       </Container>
-      
     </>
   );
 };

@@ -31,9 +31,7 @@ export const UsuarioUpdate = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
+
       fetch(import.meta.env.VITE_LOCALHOST_URL + `usuario/${idUser}`, {
         method: "GET",
         headers: {
@@ -58,7 +56,6 @@ export const UsuarioUpdate = () => {
           setError(error.message);
           console.error("Error fetching user data:", error);
         });
-    }
   }, [idUser, token, navigate]);
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);

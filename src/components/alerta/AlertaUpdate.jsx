@@ -15,10 +15,6 @@ export const AlertaUpdate = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      if (rol === "ADMIN") {
         fetch(import.meta.env.VITE_LOCALHOST_URL+ `alerta/${id}`, {
           method: "GET",
           headers: {
@@ -31,10 +27,6 @@ export const AlertaUpdate = () => {
             setDescripcion(data.descripcion);
             setIdAlerta(data.id);
           });
-      } else {
-        navigate("/denegado");
-      }
-    }
   }, [id, token, rol, navigate]);
 
   const handleSubmit = (e) => {
