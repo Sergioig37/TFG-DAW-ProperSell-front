@@ -82,6 +82,7 @@ export const MisPropiedades = () => {
                     <Card.Title>{propiedad.tipo}</Card.Title>
                     <Card.Text>{propiedad.localizacion}</Card.Text>
                     <Card.Text>{propiedad.precio}€</Card.Text>
+                    <Card.Text>{propiedad.superficie}m²</Card.Text>
                   </Card.Body>
                   <Card.Footer className="d-flex justify-content-between">
                     <Button
@@ -93,7 +94,7 @@ export const MisPropiedades = () => {
                     <Button
                       variant="outline-danger"
                       onClick={() => handleDelete(propiedad.id)}
-                    >
+                    > 
                       <FaTrash />
                     </Button>
                   </Card.Footer>

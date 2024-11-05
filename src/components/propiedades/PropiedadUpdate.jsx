@@ -10,6 +10,7 @@ export const PropiedadUpdate = () => {
   const [tipo, setTipo] = useState("");
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
+  const [superficie, setSuperficie] = useState("");
   const token = useAuth().getToken();
   const navigate = useNavigate();
   const idUser = useAuth().getId();
@@ -42,6 +43,7 @@ export const PropiedadUpdate = () => {
                 setLocalizacion(data.localizacion);
                 setPrecio(data.precio);
                 setIdPropiedad(data.id);
+                setSuperficie(superficie);
               }
             });
         });
@@ -57,6 +59,7 @@ export const PropiedadUpdate = () => {
         tipo: tipo,
         localizacion: localizacion,
         precio: precio,
+        superficie: superficie,
       };
 
       fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/edit/${data.id}/${user}`, {

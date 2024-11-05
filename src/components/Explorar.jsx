@@ -44,7 +44,7 @@ export const Explorar = () => {
           setPropiedadesMostrar(data); // Inicializa propiedadesMostrar con todas las propiedades
         });
  
-      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/habilitadas`, {
+      fetch(import.meta.env.VITE_LOCALHOST_URL + `propiedad/habilitadas/1/10`, {
         method: "GET",
       })
         .then((res) => res.json())

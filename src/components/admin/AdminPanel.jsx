@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar, Container, Row, Col, Button, ListGroup, Card } from "react-bootstrap";
+import { Container, Row, Col, Button, ListGroup, Card } from "react-bootstrap";
 import { NavbarGeneral } from "../NavbarGeneral";
-import { useAuth } from "../auth/AuthContext";
+
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
-  const token = useAuth().getToken();
+  
  
 
   const handleAlertaRoute = () => {

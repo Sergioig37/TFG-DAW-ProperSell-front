@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export const PropiedadCreate = () => {
-  const [tipo, setTipo] = useState("");
+  const [tipo, setTipo] = useState("Piso");
   const [localizacion, setLocalizacion] = useState("");
   const [precio, setPrecio] = useState("");
   const [errors, setErrors] = useState({});
@@ -91,15 +91,13 @@ export const PropiedadCreate = () => {
                 </Alert>
               )}
               <Form.Group controlId="tipo" className="mb-3">
-                <Form.Label>Tipo </Form.Label>
+                <Form.Label>Elige el tipo de inmueble </Form.Label>
                 <Form.Select
                   type="select"
-                  placeholder="Ingrese el tipo de propiedad"
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
                   isInvalid={!!errors["tipo"]}
                 >
-                  <option>Elegir tipo de vivienda</option>
                   <option value="Piso">Piso</option>
                   <option value="Apartamento">Apartamento</option>
                   <option value="Casa">Casa</option>
